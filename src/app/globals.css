@@ -3,25 +3,82 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--primary-color: #23bdd9;
+	--primary-color-muted: white;
+	--primary-mix: linear-gradient(to right bottom, #d3f2f7, #1c97ae);
+	--secondary-color: #2b2727;
+	--color-text-base: coral;
+	--success-color: green;
+	--input-label: green;
+	--error-color: rgb(220, 38, 38);
+	--pending-color: rgb(244, 130, 32);
+	--light-blue: blue;
+	--foreground-rgb: 0, 0, 0;
+	--background-start-rgb: 214, 219, 220;
+	--background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+/* @media (prefers-color-scheme: dark) {
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+	}
+} */
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	color: rgb(var(--foreground-rgb));
+	background: linear-gradient(to bottom,
+			transparent,
+			rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+	background-repeat: no-repeat;
+}
+
+@layer components {
+	.container {
+		@apply w-full md:w-5/6 mx-auto;
+	}
+
+	.card {
+		@apply text-white rounded-lg py-4 px-5 text-primary dark:text-secondary dark:glass;
+	}
+
+	.container-text {
+		@apply px-4 md:px-6 2xl:px-10;
+	}
+
+	.clip-path {
+		clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100%);
+	}
+
+	.glass {
+		backdrop-filter: blur(10px);
+
+		background: rgba(255, 255, 255, 0.1);
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+	}
+
+	.glass-input {
+		background: rgba(255, 255, 255, 0.3);
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+	}
+}
+
+
+
+.input-style {
+	@apply border border-blue-100 dark:glass-input dark:border-none flex justify-between focus-within:border-none items-center form-input my-1 px-2 py-3 focus-within:ring-0 w-full;
+}
+
+input::placeholder {
+	@apply text-xs;
+}
+
+
+.btn-primary {
+	@apply py-3.5 px-5 w-full transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none hover:bg-primary-light dark:hover:bg-primary focus:z-10 focus:ring-1 focus:ring-secondary dark:focus:ring-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-gradient-to-r from-primary to-[#595555] hover:bg-gradient-to-l my-1;
+}
+
+.btn-primary:disabled {
+	@apply bg-primary-light dark:glass text-base-color hover:text-white cursor-not-allowed;
 }
