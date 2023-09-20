@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-	--primary-color: #23bdd9;
-	--primary-color-muted: white;
+	--primary-color: #1F295A;
+	--primary-color-light: #62698c;
 	--primary-mix: linear-gradient(to right bottom, #d3f2f7, #1c97ae);
 	--secondary-color: #2b2727;
 	--color-text-base: coral;
@@ -51,9 +51,13 @@ body {
 		clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100%);
 	}
 
+
+	.title {
+		@apply text-xl font-semibold;
+	}
+
 	.glass {
 		backdrop-filter: blur(10px);
-
 		background: rgba(255, 255, 255, 0.1);
 		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
 	}
@@ -76,7 +80,7 @@ input::placeholder {
 
 
 .btn-primary {
-	@apply py-3.5 px-5 w-full transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none hover:bg-primary-light dark:hover:bg-primary focus:z-10 focus:ring-1 focus:ring-secondary dark:focus:ring-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-gradient-to-r from-primary to-[#595555] hover:bg-gradient-to-l my-1;
+	@apply py-3.5 px-5 w-full transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none hover:bg-primary-light dark:hover:bg-primary focus:z-10 focus:ring-1 focus:ring-secondary dark:focus:ring-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-gradient-to-r from-primary to-gray-50 hover:bg-gradient-to-l my-1;
 }
 
 .btn-primary:disabled {

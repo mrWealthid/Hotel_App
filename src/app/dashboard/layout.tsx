@@ -12,11 +12,11 @@ export default function DashboardLayout({
 					<SideBar />
 				</section>
 
-				<section className="w-4/5 flex flex-col ">
-					<section className="py-5 px-2 bg-white">
+				<section className="w-4/5 flex flex-col gap-6 ">
+					<section className="py-5 container-text bg-white">
 						<h1>Header</h1>
 					</section>
-					<section> {children}</section>
+					<section className="container-text"> {children}</section>
 				</section>
 			</section>
 		</section>

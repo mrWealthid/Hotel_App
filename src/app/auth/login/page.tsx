@@ -11,7 +11,7 @@ const loginComponent = () => {
 	async function handleLogin() {
 		try {
 			const response = await axios.post(
-				'/auth/login',
+				'/api/auth/login',
 
 				{
 					email: 'test@gmail.com',

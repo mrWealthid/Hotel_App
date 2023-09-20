@@ -11,7 +11,7 @@ const config: Config = {
 			colors: {
 				primary: {
 					lighter: '#d3f2f7',
-					light: '#65d1e4',
+					light: 'var(--primary-color-light)',
 					100: '#20aac3',
 					200: '#1c97ae',
 					300: '#198498',

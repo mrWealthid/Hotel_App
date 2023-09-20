@@ -1,7 +1,6 @@
 import { connect } from '@/dbConfig/dbConfig';
 import User from '@/model/userModel';
 import { NextRequest, NextResponse } from 'next/server';
-import bcryptjs from 'bcryptjs';
 
 import jwt, { VerifyErrors, verify } from 'jsonwebtoken';
 
@@ -14,11 +13,12 @@ export async function GET(request: NextRequest) {
 		let cookie = request.cookies.get('token')?.value || '';
 		// console.log(jwtVerifyPromisified('cookie'));
 
-		console.log(getUserDetails(cookie));
+		// console.log(getUserDetails(cookie));
 
-		const userId = getUserDetails(cookie);
+		// const userId = getUserDetails(cookie);
 
-		const user = await User.findOne({ _id: userId });
+		const user = await User.find();
+		// const user = await User.findOne({ _id: userId });
 
 		const response = NextResponse.json({
 			status: 'success',
