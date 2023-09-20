@@ -33,12 +33,12 @@ export async function middleware(request: NextRequest) {
 	} else {
 		// console.log(request);
 
-		if (!token) {
-			return NextResponse.json(
-				{ error: 'Unauthorized to access resource' },
-				{ status: 401 }
-			);
-		}
+		// if (!token) {
+		// 	return NextResponse.json(
+		// 		{ error: 'Unauthorized to access resource' },
+		// 		{ status: 401 }
+		// 	);
+		// }
 
 		const requestHeaders = new Headers(request.headers);
 

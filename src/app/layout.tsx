@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Raleway } from 'next/font/google';
 import { QueryClient } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
 
 const raleway = Raleway({ subsets: ['latin'] });
 
@@ -37,6 +38,21 @@ export default function RootLayout({
 				</section> */}
 
 				{children}
+
+				<Toaster
+					position="top-center"
+					gutter={12}
+					containerStyle={{ margin: '8px' }}
+					toastOptions={{
+						success: { duration: 3000 },
+						error: { duration: 3000 },
+						style: {
+							fontSize: '16px',
+							maxWidth: '500px',
+							padding: '16px 24px'
+						}
+					}}
+				/>
 			</body>
 		</html>
 	);
