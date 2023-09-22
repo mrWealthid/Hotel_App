@@ -3,6 +3,7 @@ import axios from 'axios';
 import Table2 from './Table2';
 import Table from '@/components/Table/Table';
 import { data } from 'autoprefixer';
+import TableRow from '@/components/Table/TableRow';
 
 // async function fetchUser() {
 // 	const res = await axios('/api/users');
@@ -12,9 +13,15 @@ import { data } from 'autoprefixer';
 // }
 
 const CabinList = async () => {
-	const cabins = await getData('/api/users');
+	const cabins = await getData('/api/cabins');
 
-	const columns = ['image', 'cabin', 'capacity', 'price', 'discount'];
+	const columns = [
+		{ header: 'image', accessor: 'image' },
+		{ header: 'name', accessor: 'name' },
+		{ header: 'capacity', accessor: 'maxCapacity' },
+		{ header: 'price', accessor: 'regularPrice' },
+		{ header: 'discount', accessor: 'discount' }
+	];
 
 	const tableData: any = [
 		{
@@ -56,15 +63,18 @@ const CabinList = async () => {
 	];
 	return (
 		<div>
-			<p>Test</p>
-			{/* {cabins.data.map((data: any) => (
-				<p key={data.id}>{data.name}</p>
-			))} */}
 			<Table
 				columns={columns}
 				config={{ actionable: true }}
-				data={tableData}
-			/>
+				data={cabins.data}>
+				{cabins.data.map((data: any) => (
+					<TableRow
+						key={data.id}
+						columns={columns}
+						tableData={data}
+					/>
+				))}
+			</Table>
 		</div>
 	);
 };
