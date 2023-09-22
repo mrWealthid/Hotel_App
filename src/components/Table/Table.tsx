@@ -5,7 +5,7 @@ import TableRow from './TableRow';
 import TableHeader from './TableHeader';
 import toast from 'react-hot-toast';
 
-const Table = ({ columns, config, data }: ITableProps) => {
+const Table = ({ columns, config, data, children }: ITableProps) => {
 	function handleToast() {
 		toast.success('I worked');
 	}
@@ -93,7 +93,8 @@ const Table = ({ columns, config, data }: ITableProps) => {
 			<div className="relative overflow-x-auto">
 				<table className="w-full text-sm text-left text-gray-500 ">
 					<TableHeader columns={columns} />
-					<TableRow tableData={data} />
+
+					{children}
 				</table>
 			</div>
 		</section>
@@ -101,9 +102,10 @@ const Table = ({ columns, config, data }: ITableProps) => {
 };
 
 interface ITableProps {
-	columns: string[];
+	columns: Icolumn[];
 	config?: TableConfig;
 	data: any[];
+	children: React.ReactNode;
 }
 
 interface TableConfig {
@@ -111,4 +113,8 @@ interface TableConfig {
 	checkable?: boolean;
 }
 
+export interface Icolumn {
+	header: string;
+	accessor: string;
+}
 export default Table;

@@ -8,16 +8,21 @@ const ButtonComponent = ({
 	afterIcon = '',
 	beforeIcon = '',
 	type,
-	loading = false
+	handleClick,
+	loading = false,
+	disabled = false
 }: IButton) => {
 	return (
 		<Reveal
-			width="100%"
 			variant={{
 				hidden: { opacity: 0, x: 75, scale: 0.1 },
 				visible: { opacity: 1, x: 0, scale: 1 }
 			}}>
-			<button className={` btn-primary ${style}`} type={type}>
+			<button
+				onClick={handleClick}
+				className={` btn-primary ${style}`}
+				type={type}
+				disabled={disabled}>
 				{beforeIcon && (
 					<Image
 						className=" object-contain"
@@ -58,6 +63,8 @@ interface IButton {
 	afterIcon?: string;
 	beforeIcon?: string;
 	loading?: boolean;
+	handleClick?: () => void;
+	disabled?: boolean;
 }
 
 // interface IIcons {

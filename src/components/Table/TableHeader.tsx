@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icolumn } from './Table';
 
 const TableHeader = ({ columns }: any) => {
 	return (
@@ -18,9 +19,9 @@ const TableHeader = ({ columns }: any) => {
 					</label>
 				</th>
 
-				{columns.map((col: string) => (
-					<th key={col} scope="col" className="px-2 py-4 uppercase">
-						{col}
+				{columns.map((col: Icolumn) => (
+					<th key={col.header} scope="col" className="py-4 uppercase">
+						{col.header}
 					</th>
 				))}
 

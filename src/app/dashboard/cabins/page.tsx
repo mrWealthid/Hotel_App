@@ -1,18 +1,20 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import CabinList from './CabinList';
-import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
-import Table from './Table';
-import 'ag-grid-community/styles/ag-grid.css';
 
-const page = () => {
+import ButtonComponent from '@/components/shared/Button-component';
+import CabinForm from './CabinForm';
+
+const Page = () => {
 	return (
 		<div className="w-full">
-			<h1 className="title"> All Cabins</h1>
+			<div className="flex items-center justify-between">
+				<h1 className="title"> All Cabins </h1>
+			</div>
 
+			<CabinForm />
 			<CabinList />
-			<Table />
 		</div>
 	);
 };
 
-export default page;
+export default Page;
