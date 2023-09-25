@@ -5,23 +5,29 @@ import ButtonComponent from '@/components/shared/Button-component';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const CabinForm = () => {
-	const [show, setShow] = useState(false);
+const CabinForm = ({ cabin, onCloseModal }: any) => {
+	const isEditing = !!cabin?.id;
 
-	const { register, handleSubmit, getValues, formState } = useForm();
+	const { register, handleSubmit, getValues, formState } = useForm({
+		mode: 'onChange',
+		defaultValues: isEditing ? { ...cabin } : {}
+	});
 
 	const { errors, isSubmitting } = formState;
 
-	function handleToggle() {
-		setShow((prev) => !prev);
-	}
-
 	async function onSubmit(data: any) {
 		try {
-			const res = await fetch('http://localhost:3000/api/cabins', {
-				method: 'POST', // *GET, POST, PUT, DELETE, etc.
-				body: JSON.stringify(data) // body data type must match "Content-Type" header
-			});
+			const res = await fetch(
+				`${
+					isEditing
+						? `http://localhost:3000/api/cabins/${cabin.id}`
+						: `http://localhost:3000/api/cabins`
+				}`,
+				{
+					method: `${isEditing ? 'PATCH' : 'POST'}`, // *GET, POST, PUT, DELETE, etc.
+					body: JSON.stringify(data) // body data type must match "Content-Type" header
+				}
+			);
 
 			if (!res.ok) {
 				throw new Error(
@@ -38,18 +44,18 @@ const CabinForm = () => {
 		console.log(err);
 	}
 	return (
-		<div>
-			<div className="flex justify-end ">
+		<div className="w-full">
+			{/* <div className="flex justify-end ">
 				<ButtonComponent
 					type="button"
 					style="rounded-3xl  "
 					btnText={'Add New Cabin'}
 					handleClick={handleToggle}></ButtonComponent>
-			</div>
+			</div> */}
 
 			<form
 				onSubmit={handleSubmit(onSubmit, onError)}
-				className=" flex flex-1  p-6 bg-white w-2/3   items-center">
+				className=" flex flex-1  p-6 bg-white   items-center">
 				<section className="flex-col flex gap-2 w-full">
 					<TextInput
 						name={'name'}
@@ -60,7 +66,6 @@ const CabinForm = () => {
 							{...register('name', {
 								required: 'This field is required'
 							})}
-							disabled={isSubmitting}
 							className="input-style"
 							type="text"
 							id="name"
@@ -71,13 +76,24 @@ const CabinForm = () => {
 						name={'maxCapacity'}
 						placeholder="Enter MaxCapacity"
 						label="Max Capacity"
-						error={errors.name?.message?.toString()}>
+						error={errors?.['maxCapacity']?.message?.toString()}>
 						<input
 							{...register('maxCapacity', {
-								required: 'This field is required'
+								required: 'This field is required',
+
+								max: {
+									value: 5,
+									message:
+										'Max capacity must not be greater than five'
+								},
+								min: {
+									value: 1,
+									message:
+										'Max capacity must be greater than one'
+								}
 							})}
 							className="input-style"
-							type="text"
+							type="number"
 							disabled={isSubmitting}
 							id="maxCapacity"
 						/>
@@ -108,7 +124,7 @@ const CabinForm = () => {
 							{...register('discount', {
 								required: 'This field is required',
 								validate: (val) =>
-									val < getValues().regularPrice ||
+									val < parseInt(getValues().regularPrice) ||
 									' regular price should be more than discount'
 							})}
 							disabled={isSubmitting}
@@ -131,8 +147,8 @@ const CabinForm = () => {
 							})}
 							disabled={isSubmitting}
 							id="description"
-							cols={30}
-							rows={10}></textarea>
+							cols={40}
+							rows={3}></textarea>
 					</TextInput>
 					{/* <label htmlFor="photo">Photo</label>
 					<p>Image Upload</p> */}
@@ -140,6 +156,7 @@ const CabinForm = () => {
 					<section className="flex justify-end gap-4">
 						<ButtonComponent
 							type="reset"
+							handleClick={() => onCloseModal?.()}
 							style="rounded-3xl"
 							btnText={'Cancel'}></ButtonComponent>
 
@@ -147,7 +164,9 @@ const CabinForm = () => {
 							type="submit"
 							style="rounded-3xl"
 							disabled={!formState.isValid}
-							btnText={'Add  Cabin'}></ButtonComponent>
+							btnText={` ${
+								isEditing ? 'Update Cabin' : ' Add  Cabin'
+							}`}></ButtonComponent>
 					</section>
 				</section>
 			</form>
