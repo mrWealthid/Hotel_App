@@ -4,6 +4,9 @@ import React from 'react';
 import TableRow from './TableRow';
 import TableHeader from './TableHeader';
 import toast from 'react-hot-toast';
+import { createContext } from 'vm';
+
+const tableContext = createContext();
 
 const Table = ({ columns, config, data, children }: ITableProps) => {
 	function handleToast() {

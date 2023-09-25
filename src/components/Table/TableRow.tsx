@@ -1,7 +1,15 @@
-import React from 'react';
-import { Icolumn } from './Table';
+'use client';
 
-const TableRow = ({ tableData, columns }: any) => {
+import React, { use, useState } from 'react';
+import { Icolumn } from './Table';
+import CabinForm from '@/app/dashboard/cabins/CabinForm';
+import Link from 'next/link';
+
+const TableRow = ({
+	tableData,
+	columns,
+	children
+}: any) => {
 	return (
 		<tbody>
 			<tr className="bg-white relative border-b hover:bg-gray-50 ">
@@ -25,9 +33,8 @@ const TableRow = ({ tableData, columns }: any) => {
 					</td>
 				))}
 
-				<td className="p-2 md:px-2 md:py-4">
-					<button className="text-xl popup">...</button>
-				</td>
+				{/* This allows for content projection for row data- reusability */}
+				{children}
 			</tr>
 		</tbody>
 	);
