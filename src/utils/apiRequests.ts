@@ -13,6 +13,19 @@ export async function getData(url: any, revalidate = 0) {
 		console.log(err);
 	}
 }
+export async function findData(url: any, id: any, revalidate = 0) {
+	const host = headers().get('host');
+	const protocol = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
+	try {
+		const res = await fetch(`${protocol}://${host}/${url}/${id}`);
+		if (!res.ok) {
+			throw new Error(`HTTP error! Status: ${res.status}`);
+		}
+		return res.json();
+	} catch (err) {
+		console.log(err);
+	}
+}
 // Example POST method implementation:
 export async function createData(url = '', data = {}) {
 	try {
@@ -29,10 +42,10 @@ export async function createData(url = '', data = {}) {
 		console.log(err);
 	}
 }
-export async function updateData(url = '', data = {}) {
+export async function updateData(url: any, data: any) {
 	try {
-		const res = await fetch(url, {
-			method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+		const res = await fetch(`${url}/${data.id}`, {
+			method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
 			body: JSON.stringify(data) // body data type must match "Content-Type" header
 		});
 

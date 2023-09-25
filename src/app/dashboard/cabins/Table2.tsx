@@ -54,6 +54,74 @@ const Table2 = () => {
 		);
 	}
 
+	function TableHeader() {
+		return (
+			<thead className="text-xs wheat-light text-gray-700 uppercase ">
+				<tr>
+					<th scope="col" className="px-2 py-4 uppercase">
+						Name
+					</th>
+					<th scope="col" className="px-2 py-4 uppercase">
+						Email
+					</th>
+					<th scope="col" className="px-2 py-4 uppercase">
+						contact
+					</th>
+					<th scope="col" className="px-2 py-4 uppercase">
+						Sign up date
+					</th>
+					<th scope="col" className="px-2 py-4 uppercase">
+						Last Signed in
+					</th>
+					<th scope="col" className="px-2 py-4 uppercase">
+						Status
+					</th>
+					<th scope="col" className="px-2 py-4 uppercase">
+						Action
+					</th>
+				</tr>
+			</thead>
+		);
+	}
+
+	const tableData: any = [
+		{
+			id: 1,
+			name: 'Hotel2',
+			email: 'johndoe@gmail.com',
+			contact: '1234567890',
+			RegDate: '2020-01-01',
+			lastLogin: '2020-01-01',
+			status: 'Active'
+		},
+		{
+			id: 2,
+			name: 'Hotel2',
+			email: 'johndoe@gmail.com',
+			contact: '1234567890',
+			RegDate: '2020-01-01',
+			lastLogin: '2020-01-01',
+			status: 'Active'
+		},
+		{
+			id: 3,
+			name: 'Hotel2',
+			email: 'johndoe@gmail.com',
+			contact: '1234567890',
+			RegDate: '2020-01-01',
+			lastLogin: '2020-01-01',
+			status: 'Active'
+		},
+		{
+			id: 4,
+			name: 'Hotel4',
+			email: 'johndoe@gmail.com',
+			contact: '1234567890',
+			RegDate: '2020-01-01',
+			lastLogin: '2020-01-01',
+			status: 'Active'
+		}
+	];
 	return (
 		<section>
 			<div className="flex flex-col flex-wrap items-center  justify-between mb-2 px-3 overflow-x-auto md:flex-row">
@@ -160,7 +228,7 @@ const Table2 = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{[].map((item: any, index: number) => (
+						{tableData.map((item: any, index: number) => (
 							<Table {...item} key={index} />
 						))}
 					</tbody>

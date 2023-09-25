@@ -239,6 +239,11 @@
     superjson "^1.10.0"
     use-sync-external-store "^1.2.0"
 
+"@tanstack/react-query-next-experimental@^5.0.0-alpha.80":
+  version "5.0.0-alpha.80"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-next-experimental/-/react-query-next-experimental-5.0.0-alpha.80.tgz#8ecdb7251221c000b19872f7b92789dcd68ce2e8"
+  integrity sha512-J+rHrE+5BVEAoZVlvp5wryBdusKDBRrzysfpgOa4t6vcVRWHgzNlmWJFHelgipdHJrA3/4D6wSir8xmkp8ijtA==
+
 "@tanstack/react-query@4":
   version "4.35.3"
   resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.35.3.tgz#03d726ef6a19d426166427c6539b003dd9606d1b"
@@ -2272,6 +2277,11 @@ react-dom@18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-hook-form@7:
+  version "7.46.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.46.1.tgz#39347dbff19d980cb41087ac32a57abdc6045bb3"
+  integrity sha512-0GfI31LRTBd5tqbXMGXT1Rdsv3rnvy0FjEk8Gn9/4tp6+s77T7DPZuGEpBRXOauL+NhyGT5iaXzdIM2R6F/E+w==
 
 react-hot-toast@^2.4.1:
   version "2.4.1"
