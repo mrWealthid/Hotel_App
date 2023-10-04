@@ -4,14 +4,14 @@ import { Dropdown } from 'flowbite-react';
 
 import Link from 'next/link';
 import Modal from '@/components/shared/Modal-component';
-import CabinForm from '../CabinForm';
+import CabinForm from '../BookingForm';
 import ConfirmationPage from '../../../../components/ui/ConfirmationPage';
 import toast from 'react-hot-toast';
 import { DropdownHeader } from 'flowbite-react/lib/esm/components/Dropdown/DropdownHeader';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { useRouter } from 'next/navigation';
 
-const CabinRowActions = ({ rowData }: any) => {
+const BookingsRowActions = ({ rowData }: any) => {
 	const router = useRouter();
 	async function handleDelete(id: any, close: any) {
 		try {
@@ -158,4 +158,4 @@ const CabinRowActions = ({ rowData }: any) => {
 	);
 };
 
-export default CabinRowActions;
+export default BookingsRowActions;

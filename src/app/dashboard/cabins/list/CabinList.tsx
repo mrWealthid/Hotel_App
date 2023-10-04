@@ -1,11 +1,16 @@
+'use client';
+
 import { getData } from '@/utils/apiRequests';
 import axios from 'axios';
-import Table2 from '../Table2';
-import Table from '@/components/Table/Table';
+
+// import Table from '@/components/Table/Table';
+import Table from '@/components/Table2/Table';
 
 import TableRow from '@/components/Table/TableRow';
 import Link from 'next/link';
 import CabinRowActions from './CabinRowActions';
+import HeaderActions from '@/components/Table/HeaderActions';
+import CabinHeaderActions from './CabinHeaderActions';
 
 // async function fetchUser() {
 // 	const res = await axios('/api/users');
@@ -14,8 +19,8 @@ import CabinRowActions from './CabinRowActions';
 // 	return res.data;
 // }
 
-const CabinList = async () => {
-	const cabins = await getData('/api/cabins');
+const CabinList = () => {
+	// const cabins = await getData('/api/cabins', 'cabins', 'no-discount');
 
 	const columns = [
 		{ header: 'image', accessor: 'image' },
@@ -27,37 +32,15 @@ const CabinList = async () => {
 
 	return (
 		<Table
-			columns={columns}
-			config={{ actionable: true }}
-			data={cabins.data}>
-			{cabins.data.map((data: any) => (
-				<TableRow
-					key={data.id}
-					columns={columns}
-					shouldDelete={true}
-					tableData={data}>
-					<CabinRowActions rowData={data} />
-				</TableRow>
-			))}
+			headerActions={<CabinHeaderActions />}
+			url={'/api/cabins'}
+			columns={columns}>
+			<Table.TableHeader />
+			<Table.TableRow>
+				<CabinRowActions />
+			</Table.TableRow>
 		</Table>
 	);
 };
 
 export default CabinList;
-
-{
-	/* <Table
-	columns={columns}
-	config={{ actionable: true }}
-	data={cabins.data}
-	render={({ data } = cabins) => (
-		<TableRow
-			key={data?.id}
-			columns={columns}
-			shouldDelete={true}
-			tableData={data}>
-			<CabinRowActions rowData={data} />
-		</TableRow>
-	)}
-/>; */
-}
