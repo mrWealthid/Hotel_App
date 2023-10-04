@@ -1,18 +1,25 @@
 import { headers } from 'next/headers';
 
-export async function getData(url: any, revalidate = 0) {
+let data;
+export async function getData(url: any, tag?: any, params = 'All') {
 	const host = headers().get('host');
 	const protocol = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
 	try {
-		const res = await fetch(`${protocol}://${host}/${url}`);
+		const res = await fetch(`${protocol}://${host}/${url}`, {
+			next: { tags: [tag] }
+		});
 		if (!res.ok) {
 			throw new Error(`HTTP error! Status: ${res.status}`);
 		}
-		return res.json();
+
+		data = await res.json();
+
+		return data;
 	} catch (err) {
 		console.log(err);
 	}
 }
+
 export async function findData(url: any, id: any, revalidate = 0) {
 	const host = headers().get('host');
 	const protocol = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
