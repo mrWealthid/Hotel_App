@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Guest = require('./guestModel');
+const Cabin = require('./cabinModel');
 
 const BookingSchema = new mongoose.Schema(
 	{
@@ -26,8 +28,10 @@ const BookingSchema = new mongoose.Schema(
 		totalPrice: {
 			type: Number
 		},
-		status: {
-			enum: ['CHECKED_IN', 'APPROVED', 'UNCONFIRMED']
+		checkStatus: {
+			type: String,
+			enum: ['CHECKED_IN', 'APPROVED', 'UNCONFIRMED'],
+			default: 'UNCONFIRMED'
 		},
 
 		hasBreakfast: {
@@ -41,13 +45,13 @@ const BookingSchema = new mongoose.Schema(
 
 		guests: {
 			type: mongoose.Schema.ObjectId,
-			ref: 'Guest',
+			ref: Guest,
 			required: [true, 'Booking must belong to a Guest']
 		},
 
 		cabin: {
 			type: mongoose.Schema.ObjectId,
-			ref: 'Cabin',
+			ref: Cabin,
 			required: [true, 'Booking must have a Cabin']
 		},
 
@@ -138,6 +142,15 @@ const BookingSchema = new mongoose.Schema(
 // BookingSchema.pre(/^find/, function (next) {
 // 	// this.find({ active: false });
 // 	this.find({ active: { $ne: false } });
+// 	next();
+// });
+
+
+// BookingSchema.pre(/^find/, function (next) {
+// 	this.populate({
+// 		path: 'guides',
+// 		select: '-__v -passwordChangedAt'
+// 	});
 // 	next();
 // });
 
