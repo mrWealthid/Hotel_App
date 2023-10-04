@@ -1,15 +1,14 @@
 import { connect } from '@/dbConfig/dbConfig';
-import Cabin from '@/model/cabinModel';
-import { revalidateTag } from 'next/cache';
-import { NextRequest, NextResponse } from 'next/server';
+import Guest from '@/model/guestModel';
 import APIFeatures from '@/utils/services/apiFeatures';
+import { NextRequest, NextResponse } from 'next/server';
 
 connect();
 
 export async function POST(request: NextRequest) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
-		revalidateTag('cabins');
+
 		let cookie = request.cookies.get('token')?.value || '';
 		// console.log(jwtVerifyPromisified('cookie'));
 
@@ -19,12 +18,12 @@ export async function POST(request: NextRequest) {
 
 		const body = await request.json();
 
-		const cabin = await Cabin.create(body);
+		const guest = await Guest.create(body);
 
 		const response = NextResponse.json(
 			{
 				status: 'success',
-				data: cabin
+				data: guest
 			},
 			{ status: 201 }
 		);
@@ -69,7 +68,7 @@ export async function GET(request: NextRequest) {
 		console.log(transformedQuery);
 
 		let filter = {};
-		const features = new APIFeatures(Cabin.find(filter), transformedQuery)
+		const features = new APIFeatures(Guest.find(filter), transformedQuery)
 			.filter()
 			.sort()
 			.limitFields()
@@ -79,44 +78,16 @@ export async function GET(request: NextRequest) {
 		//   const doc = await Model.create(req.body);
 		// const user = await User.findOne({ _id: userId });
 
-		const response = NextResponse.json({
-			status: 'success',
-			data: cabin
-		});
+		const response = NextResponse.json(
+			{
+				status: 'success',
+				data: cabin
+			},
+			{ status: 200 }
+		);
 
 		return response;
 	} catch (error: any) {
 		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 }
-// export async function GET(request: NextRequest) {
-// 	try {
-// 		//2) Check if user exists & password is correct after it's hashed
-
-// 		let cookie = request.cookies.get('token')?.value || '';
-// 		// console.log(jwtVerifyPromisified('cookie'));
-
-// 		// console.log(getUserDetails(cookie));
-
-// 		// const userId = getUserDetails(cookie);
-
-// 		// const method = request.method;
-// 		// console.log(method);
-
-// 		// const body = await request.json();
-
-// 		const cabin = await Cabin.find();
-
-// 		//   const doc = await Model.create(req.body);
-// 		// const user = await User.findOne({ _id: userId });
-
-// 		const response = NextResponse.json({
-// 			status: 'success',
-// 			data: cabin
-// 		});
-
-// 		return response;
-// 	} catch (error: any) {
-// 		return NextResponse.json({ error: error.message }, { status: 500 });
-// 	}
-// }

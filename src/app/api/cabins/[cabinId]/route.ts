@@ -1,5 +1,6 @@
 import { connect } from '@/dbConfig/dbConfig';
 import Cabin from '@/model/cabinModel';
+import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 connect();
@@ -68,15 +69,11 @@ export async function PATCH(request: NextRequest, { params }: any) {
 	}
 }
 export async function DELETE(request: NextRequest, { params }: any) {
-	const body = await request.json();
-
 	try {
+		revalidateTag('cabins');
 		const cabinId = params.cabinId;
 
-		const cabin = await Cabin.findByIdAndUpdate(cabinId, body, {
-			new: true,
-			runValidators: true
-		});
+		const cabin = await Cabin.findByIdAndDelete(cabinId);
 
 		if (!cabin) {
 			return NextResponse.json(
