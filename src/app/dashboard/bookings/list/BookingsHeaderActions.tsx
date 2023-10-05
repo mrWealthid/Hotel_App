@@ -9,10 +9,13 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 	const router = useRouter();
 
 	const [asc, setAsc] = useState(false);
+
+	const [query, setQuery] = useState('all');
 	async function handleClick(query: any, operator = '=') {
+		setQuery(query?.val || 'all');
 		const url = query
-			? `http://localhost:3000/api/cabins?${query.name}${operator}${query.val}`
-			: `http://localhost:3000/api/cabins?`;
+			? `http://localhost:3000/api/bookings?${query.name}${operator}${query.val}`
+			: `http://localhost:3000/api/bookings?`;
 		try {
 			const res = await fetch(url, {
 				next: { tags: ['cabins'] }
@@ -20,7 +23,7 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 
 			if (!res.ok) {
 				throw new Error(
-					`Cabin could not be created Status: ${res.status}`
+					`Cabin could not be created checkStatus: ${res.status}`
 				);
 			}
 			// router.refresh();
@@ -41,48 +44,62 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 				<button
 					onClick={() => handleClick(null)}
 					type="button"
-					className="w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn">
+					className={`${
+						query === 'all' && 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					All
 				</button>
 			</div>
 
 			<div className="">
 				<button
-					onClick={() => handleClick({ name: 'discount', val: 0 })}
+					onClick={() =>
+						handleClick({ name: 'checkStatus', val: 'CHECKED_IN' })
+					}
 					type="button"
-					className="w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn">
-					No discount
+					className={`${
+						query === 'CHECKED_IN' && 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+					Checked In
 				</button>
 			</div>
-			{asc && (
-				<div className="">
-					<button
-						onClick={() => {
-							handleClick({
-								name: 'sort',
-								val: 'createdAt'
-							});
-							setAsc((prev) => !prev);
-						}}
-						type="button"
-						className="w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn">
-						Sort Down
-					</button>
-				</div>
-			)}
-			{!asc && (
-				<div className="">
-					<button
-						onClick={() => {
-							handleClick({ name: 'sort', val: '-createdAt' });
-							setAsc((prev) => !prev);
-						}}
-						type="button"
-						className="w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn">
-						Sort Up
-					</button>
-				</div>
-			)}
+			<div className="">
+				<button
+					onClick={() =>
+						handleClick({ name: 'checkStatus', val: 'CHECKED_OUT' })
+					}
+					type="button"
+					className={`${
+						query === 'CHECKED_OUT' && 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+					{' '}
+					Checked-Out
+				</button>
+			</div>
+
+			<div className="">
+				<button
+					onClick={() =>
+						handleClick({ name: 'checkStatus', val: 'UNCONFIRMED' })
+					}
+					type="button"
+					className={`${
+						query === 'UNCONFIRMED' && 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+					Un-Confirmed
+				</button>
+			</div>
+
+			<select
+				id="sort"
+				name="sort"
+				title="sortdropdown"
+				className="text-xs font-light text-gray-900 focus-within:ring-0 focus-within:border-none border border-gray-300 bg-gray-50 rounded">
+				<option value="">Sort By Amount(Highest)</option>
+				<option value="">Sort By Amount(Lowest)</option>
+				<option value="">Sort By Date(Recent)</option>
+				<option value="">Sort By Date(Lowest)</option>
+			</select>
 		</>
 	);
 };

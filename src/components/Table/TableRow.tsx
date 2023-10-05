@@ -5,11 +5,7 @@ import { Icolumn } from './Table';
 import CabinForm from '@/app/dashboard/cabins/CabinForm';
 import Link from 'next/link';
 
-const TableRow = ({
-	tableData,
-	columns,
-	children
-}: any) => {
+const TableRow = ({ tableData, columns, children }: any) => {
 	return (
 		<tbody>
 			<tr className="bg-white relative border-b hover:bg-gray-50 ">

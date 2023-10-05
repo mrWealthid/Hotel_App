@@ -12,6 +12,7 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { useRouter } from 'next/navigation';
 
 const BookingsRowActions = ({ rowData }: any) => {
+	console.log(rowData);
 	const router = useRouter();
 	async function handleDelete(id: any, close: any) {
 		try {
@@ -87,10 +88,15 @@ const BookingsRowActions = ({ rowData }: any) => {
 						</Modal.Open>
 					</Dropdown.Item>
 					<Dropdown.Item as="div">
-						<Modal.Open opens="confirm-duplicate">
-							<button type="button">Duplicate</button>
-						</Modal.Open>
+						<Link href={`bookings/${rowData.id}`}>
+							View details
+						</Link>
 					</Dropdown.Item>
+					{rowData.checkStatus === 'UNCONFIRMED' && (
+						<Dropdown.Item as="div">
+							<Link href={`checkin/${rowData.id}`}>Check-In</Link>
+						</Dropdown.Item>
+					)}
 				</Dropdown>
 
 				<Modal.Window name="edit-cabin-form">

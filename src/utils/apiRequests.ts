@@ -28,7 +28,8 @@ export async function findData(url: any, id: any, revalidate = 0) {
 		if (!res.ok) {
 			throw new Error(`HTTP error! Status: ${res.status}`);
 		}
-		return res.json();
+
+		return await res.json();
 	} catch (err) {
 		console.log(err);
 	}

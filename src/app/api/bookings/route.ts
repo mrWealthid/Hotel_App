@@ -70,10 +70,13 @@ export async function GET(request: NextRequest) {
 
 		let filter = {};
 
-		const bookingQuery = Booking.find(filter).populate({
-			path: 'guests',
-			select: 'name email '
-		});
+		const bookingQuery = Booking.find(filter).populate([
+			{
+				path: 'guests',
+				select: 'name email '
+			},
+			{ path: 'cabin', select: 'name ' }
+		]);
 		const features = new APIFeatures(bookingQuery, transformedQuery)
 			.filter()
 			.sort()
@@ -82,12 +85,25 @@ export async function GET(request: NextRequest) {
 
 		const bookings = await features.query;
 
-		//   const doc = await Model.create(req.body);
-		// const user = await User.findOne({ _id: userId });
+		let count;
+
+		// console.log( await Model.find(req.query))
+
+		//I did this because pagination of filtered data was impossible, The endpoint keeps returning the total count of all document
+
+		if (Object.values(query).length > 0) {
+			const excludedFields = ['page', 'sort', 'limit', 'fields'];
+			excludedFields.forEach((el) => delete query[el]);
+			count = await Booking.find(filter).find(query).count();
+		} else {
+			count = await Booking.count(filter);
+		}
 
 		const response = NextResponse.json(
 			{
 				status: 'success',
+				totalRecords: count,
+				results: bookings.length,
 				data: bookings
 			},
 			{ status: 200 }

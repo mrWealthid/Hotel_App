@@ -50,6 +50,8 @@ export async function GET(request: NextRequest) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
 
+		console.log('fetched from server');
+
 		let cookie = request.cookies.get('token')?.value || '';
 		// console.log(jwtVerifyPromisified('cookie'));
 
@@ -76,10 +78,27 @@ export async function GET(request: NextRequest) {
 			.paginate();
 		const cabin = await features.query;
 
-		//   const doc = await Model.create(req.body);
-		// const user = await User.findOne({ _id: userId });
+		let count;
+
+		// console.log( await Model.find(req.query))
+
+		//I did this because pagination of filtered data was impossible, The endpoint keeps returning the total count of all document
+
+		if (Object.values(transformedQuery).length > 0) {
+			const excludedFields = ['page', 'sort', 'limit', 'fields'];
+			excludedFields.forEach((el) => delete transformedQuery[el]);
+			count = await Cabin.find(filter).find(transformedQuery).count();
+
+			console.log(count);
+		} else {
+			count = await Cabin.count(filter);
+			console.log('yes', count);
+			console.log('cabin', cabin.length);
+		}
 
 		const response = NextResponse.json({
+			totalRecords: count,
+			results: cabin.length,
 			status: 'success',
 			data: cabin
 		});
