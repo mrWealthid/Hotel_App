@@ -45,9 +45,22 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 					onClick={() => handleClick(null)}
 					type="button"
 					className={`${
-						query === 'all' && 'bg-primary-light'
-					} w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn`}>
+						query === 'all' && 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					All
+				</button>
+			</div>
+
+			<div className="">
+				<button
+					onClick={() =>
+						handleClick({ name: 'checkStatus', val: 'CHECKED_IN' })
+					}
+					type="button"
+					className={`${
+						query === 'CHECKED_IN' && 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+					Checked In
 				</button>
 			</div>
 			<div className="">
@@ -57,10 +70,10 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 					}
 					type="button"
 					className={`${
-						query === 'CHECKED_OUT' && 'bg-primary-light'
-					} w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn`}>
+						query === 'CHECKED_OUT' && 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					{' '}
-					CheckedOut
+					Checked-Out
 				</button>
 			</div>
 
@@ -71,23 +84,12 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 					}
 					type="button"
 					className={`${
-						query === 'UNCONFIRMED' && 'bg-primary-light'
-					} w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn`}>
-					UnConfirmed
+						query === 'UNCONFIRMED' && 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+					Un-Confirmed
 				</button>
 			</div>
-			<div className="">
-				<button
-					onClick={() =>
-						handleClick({ name: 'checkStatus', val: 'APPROVED' })
-					}
-					type="button"
-					className={`${
-						query === 'APPROVED' && 'bg-primary-light'
-					} w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn`}>
-					Approved
-				</button>
-			</div>
+
 			<select
 				id="sort"
 				name="sort"

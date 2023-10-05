@@ -1,7 +1,26 @@
 import { cloneElement } from 'react';
 import BookingsRowActions from './BookingsRowActions';
+import { formatCurrency } from '@/utils/helpers';
 
 function BookingRow({ data, children }: any) {
+	function getStatusColor(val: string): string {
+		let style = '';
+		if (val === 'UNCONFIRMED') {
+			style = 'bg-pending text-white';
+		}
+		if (val === 'APPROVED') {
+			style = 'bg-success text-white';
+		}
+		if (val === 'CHECKED_OUT') {
+			style = 'bg-gray-300';
+		}
+
+		if (val === 'CHECKED_IN') {
+			style = 'bg-success text-white';
+		}
+		return style;
+	}
+
 	return (
 		<>
 			{data.map((row: any, i: any) => {
@@ -35,9 +54,12 @@ function BookingRow({ data, children }: any) {
 							</span>
 						</td>
 
-						<td>{row.totalPrice}</td>
+						<td>{formatCurrency(row.totalPrice)}</td>
 						<td>
-							<span className="bg-green-400 text-xs text-white py-2 px-3 rounded-3xl inline-flex">
+							<span
+								className={` ${getStatusColor(
+									row.checkStatus
+								)} text-xs text-white py-2 px-3 rounded-3xl inline-flex`}>
 								{row.checkStatus}
 							</span>
 						</td>

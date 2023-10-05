@@ -30,7 +30,7 @@ const BookingSchema = new mongoose.Schema(
 		},
 		checkStatus: {
 			type: String,
-			enum: ['CHECKED_IN', 'APPROVED', 'UNCONFIRMED', 'CHECKED_OUT'],
+			enum: ['CHECKED_IN', 'UNCONFIRMED', 'CHECKED_OUT'],
 			default: 'UNCONFIRMED'
 		},
 
@@ -57,8 +57,7 @@ const BookingSchema = new mongoose.Schema(
 
 		createdAt: {
 			type: Date,
-			default: Date.now(),
-			select: false
+			default: Date.now()
 		}
 	},
 	{ toJSON: { virtuals: true }, toObject: { virtuals: true } }

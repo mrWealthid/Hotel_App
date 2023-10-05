@@ -15,13 +15,6 @@ import { Icolumn } from '@/components/Table/Table';
 import BookingsRowActions from './BookingsRowActions';
 import BookingRow from './BookingRow';
 
-// async function fetchUser() {
-// 	const res = await axios('/api/users');
-
-// 	console.log(res.data);
-// 	return res.data;
-// }
-
 const BookingsList = () => {
 	// const cabins = await getData('/api/cabins', 'cabins', 'no-discount');
 
@@ -47,6 +40,7 @@ const BookingsList = () => {
 
 	return (
 		<Table
+			resourceName="bookings"
 			headerActions={<CabinHeaderActions />}
 			url={'/api/bookings'}
 			columns={columns}>
