@@ -12,6 +12,7 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { useRouter } from 'next/navigation';
 
 const BookingsRowActions = ({ rowData }: any) => {
+	console.log(rowData);
 	const router = useRouter();
 	async function handleDelete(id: any, close: any) {
 		try {

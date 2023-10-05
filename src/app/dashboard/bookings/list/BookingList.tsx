@@ -12,6 +12,8 @@ import CabinRowActions from './BookingsRowActions';
 import HeaderActions from '@/components/Table/HeaderActions';
 import CabinHeaderActions from './BookingsHeaderActions';
 import { Icolumn } from '@/components/Table/Table';
+import BookingsRowActions from './BookingsRowActions';
+import BookingRow from './BookingRow';
 
 // async function fetchUser() {
 // 	const res = await axios('/api/users');
@@ -24,12 +26,23 @@ const BookingsList = () => {
 	// const cabins = await getData('/api/cabins', 'cabins', 'no-discount');
 
 	const columns: Icolumn[] = [
-		{ header: 'cabin', accessor: 'cabin' },
-		{ header: 'guest', accessor: 'guests.email' },
+		{ header: 'cabin', accessor: 'cabin.name' },
+		{
+			header: 'guest',
+			accessor: 'guests.name,guests.email',
+			custom: { type: 'doubleCell' }
+		},
 		{ header: 'amount', accessor: 'totalPrice' },
-		{ header: 'status', accessor: 'checkStatus' },
-		{ header: 'start date', accessor: 'startDate' },
-		{ header: 'end Date', accessor: 'endDate' }
+		{
+			header: 'status',
+			accessor: 'checkStatus',
+			custom: { type: 'style' }
+		},
+
+		{
+			header: 'Dates',
+			accessor: ''
+		}
 	];
 
 	return (
@@ -38,8 +51,8 @@ const BookingsList = () => {
 			url={'/api/bookings'}
 			columns={columns}>
 			<Table.TableHeader />
-			<Table.TableRow>
-				<CabinRowActions />
+			<Table.TableRow customRow={true}>
+				<BookingRow />
 			</Table.TableRow>
 		</Table>
 	);
