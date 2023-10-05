@@ -8,10 +8,12 @@ import React, {
 } from 'react';
 import { createContext } from 'react';
 import { Icolumn } from '../Table/Table';
+import { formatCurrency } from '@/utils/helpers';
 
 const TableContext = createContext({});
 
 interface ITable {
+	resourceName?: string;
 	children: ReactNode;
 	url: string;
 	columns: Icolumn[];
@@ -20,6 +22,7 @@ interface ITable {
 }
 
 function Table({
+	resourceName = '',
 	children,
 	url,
 	columns,
@@ -32,11 +35,12 @@ function Table({
 	const [limit, setLimit] = useState(limitVal);
 
 	async function fetchTableData(page: number, limit: number) {
-		const response = await fetch(`${url}?limit=${limit}&page=${page}`);
+		const response = await fetch(`${url}?limit=${limit}&page=${page}`, {
+			next: { tags: [resourceName] }
+		});
 
 		const data = await response.json();
 
-		console.log(data.data.length);
 		SetTotalRecords(data.totalRecords);
 
 		setData(data.data);
@@ -84,9 +88,9 @@ function Table({
 function TableHeader() {
 	const { columns }: any = useContext(TableContext);
 	return (
-		<thead className="text-xs wheat-light text-gray-700 uppercase ">
+		<thead className="text-xs wheat-light bg-primary   text-white w-full uppercase">
 			<tr>
-				<th scope="col" className="px-2 py-4 uppercase">
+				<th className="px-2 py-4 uppercase">
 					<input
 						title="check"
 						id="checkbox-all-search"
@@ -101,10 +105,11 @@ function TableHeader() {
 				</th>
 
 				{columns.map((col: Icolumn) => (
-					<th key={col.header} scope="col" className="py-4 uppercase">
+					<th key={col.header} className="py-4  flex-grow uppercase">
 						{col.header}
 					</th>
 				))}
+				<th className="px-2 py-4 uppercase">Actions</th>
 			</tr>
 		</thead>
 	);
@@ -178,7 +183,7 @@ function TableRow({ children, customRow }: any) {
 							<tr
 								key={i}
 								className="bg-white relative border-b hover:bg-gray-50 ">
-								<td className="p-2 font-medium md:px-2 md:py-4 whitespace-nowrap">
+								<td className="p-2 font-medium md:px-2 md:py-2 whitespace-nowrap">
 									<input
 										title="check"
 										id="checkbox-all-search"
@@ -195,46 +200,10 @@ function TableRow({ children, customRow }: any) {
 								{columns.map((column: Icolumn, i: any) => {
 									//This logic helps check for more accessors; double items in a row cell
 									const value = column.accessor
-										.split(',')
-										.map((val) =>
-											val
-												?.split('.')
-												.reduce(
-													(obj, key) => obj[key],
-													row
-												)
-										);
+										?.split('.')
+										.reduce((obj, key) => obj[key], row);
 
 									if (column.custom) {
-										if (
-											column.custom.type === 'doubleCell'
-										) {
-											return (
-												<td
-													className={`${
-														column.custom.bolden &&
-														'font-semibold'
-													}`}
-													key={column.accessor + i}>
-													{value.map(
-														(
-															val: any,
-															ind: any
-														) => (
-															<span
-																key={ind}
-																className={`${
-																	ind === 0
-																		? 'text-sm font-semibold'
-																		: 'text-xs'
-																}  block  mb-1  rounded-3xl`}>
-																{val}
-															</span>
-														)
-													)}
-												</td>
-											);
-										}
 										if (column.custom.type === 'style') {
 											return (
 												<td
@@ -258,8 +227,32 @@ function TableRow({ children, customRow }: any) {
 													}`}
 													key={column.accessor + i}>
 													{new Date(
-														value[0]
+														value
 													).toDateString()}
+												</td>
+											);
+										}
+										if (column.custom.type === 'currency') {
+											return (
+												<td
+													className={`${
+														column.custom.bolden &&
+														'font-semibold'
+													}`}
+													key={column.accessor + i}>
+													{formatCurrency(value)}
+												</td>
+											);
+										}
+										if (column.custom.type === 'percent') {
+											return (
+												<td
+													className={`${
+														column.custom.bolden &&
+														'font-semibold'
+													}`}
+													key={column.accessor + i}>
+													{value} %
 												</td>
 											);
 										}
@@ -336,6 +329,7 @@ function Paginator({ data, totalRecords, page, limit, handlePaginate }: any) {
 						className="text-xs font-light text-gray-900 focus-within:ring-0 focus-within:border-none border border-gray-300 bg-gray-50 rounded">
 						<option value={5}>5</option>
 						<option value={10}>10</option>
+						<option value={15}>15</option>
 						<option value={20}>20</option>
 					</select>
 				</section>

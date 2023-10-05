@@ -41,7 +41,7 @@ const CabinHeaderActions = ({ updateStateData }: any) => {
 				<button
 					onClick={() => handleClick(null)}
 					type="button"
-					className="w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn">
+					className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
 					All
 				</button>
 			</div>
@@ -50,7 +50,7 @@ const CabinHeaderActions = ({ updateStateData }: any) => {
 				<button
 					onClick={() => handleClick({ name: 'discount', val: 0 })}
 					type="button"
-					className="w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn">
+					className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
 					No discount
 				</button>
 			</div>
@@ -65,7 +65,7 @@ const CabinHeaderActions = ({ updateStateData }: any) => {
 							setAsc((prev) => !prev);
 						}}
 						type="button"
-						className="w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn">
+						className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
 						Sort Down
 					</button>
 				</div>
@@ -78,7 +78,7 @@ const CabinHeaderActions = ({ updateStateData }: any) => {
 							setAsc((prev) => !prev);
 						}}
 						type="button"
-						className="w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn">
+						className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
 						Sort Up
 					</button>
 				</div>

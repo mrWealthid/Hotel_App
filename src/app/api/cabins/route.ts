@@ -50,6 +50,8 @@ export async function GET(request: NextRequest) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
 
+		console.log('fetched from server');
+
 		let cookie = request.cookies.get('token')?.value || '';
 		// console.log(jwtVerifyPromisified('cookie'));
 

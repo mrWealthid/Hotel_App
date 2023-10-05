@@ -11,6 +11,7 @@ import Link from 'next/link';
 import CabinRowActions from './CabinRowActions';
 import HeaderActions from '@/components/Table/HeaderActions';
 import CabinHeaderActions from './CabinHeaderActions';
+import { Icolumn } from '@/components/Table/Table';
 
 // async function fetchUser() {
 // 	const res = await axios('/api/users');
@@ -22,16 +23,25 @@ import CabinHeaderActions from './CabinHeaderActions';
 const CabinList = () => {
 	// const cabins = await getData('/api/cabins', 'cabins', 'no-discount');
 
-	const columns = [
+	const columns: Icolumn[] = [
 		{ header: 'image', accessor: 'image' },
 		{ header: 'name', accessor: 'name' },
 		{ header: 'capacity', accessor: 'maxCapacity' },
-		{ header: 'price', accessor: 'regularPrice' },
-		{ header: 'discount', accessor: 'discount' }
+		{
+			header: 'price',
+			accessor: 'regularPrice',
+			custom: { type: 'currency' }
+		},
+		{
+			header: 'discount',
+			accessor: 'discount',
+			custom: { type: 'percent' }
+		}
 	];
 
 	return (
 		<Table
+			resourceName="cabins"
 			headerActions={<CabinHeaderActions />}
 			url={'/api/cabins'}
 			columns={columns}>
