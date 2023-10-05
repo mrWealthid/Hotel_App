@@ -30,7 +30,7 @@ const BookingSchema = new mongoose.Schema(
 		},
 		checkStatus: {
 			type: String,
-			enum: ['CHECKED_IN', 'APPROVED', 'UNCONFIRMED'],
+			enum: ['CHECKED_IN', 'APPROVED', 'UNCONFIRMED', 'CHECKED_OUT'],
 			default: 'UNCONFIRMED'
 		},
 
@@ -144,7 +144,6 @@ const BookingSchema = new mongoose.Schema(
 // 	this.find({ active: { $ne: false } });
 // 	next();
 // });
-
 
 // BookingSchema.pre(/^find/, function (next) {
 // 	this.populate({
