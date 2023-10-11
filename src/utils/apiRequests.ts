@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 
 let data;
-export async function getData(url: any, tag?: any, params = 'All') {
+export async function getData(url: any, tag?: any) {
 	const host = headers().get('host');
 	const protocol = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
 	try {
@@ -12,9 +12,7 @@ export async function getData(url: any, tag?: any, params = 'All') {
 			throw new Error(`HTTP error! Status: ${res.status}`);
 		}
 
-		data = await res.json();
-
-		return data;
+		return await res.json();
 	} catch (err) {
 		console.log(err);
 	}

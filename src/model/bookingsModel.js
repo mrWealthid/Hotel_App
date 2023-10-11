@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Guest = require('./guestModel');
 const Cabin = require('./cabinModel');
+const { NextResponse } = require('next/server');
 
 const BookingSchema = new mongoose.Schema(
 	{
@@ -70,9 +71,15 @@ const BookingSchema = new mongoose.Schema(
 //   return Number(result.toString().slice(-7));
 // }
 
-// BookingSchema.pre('save', function (next) {
-//   this.accountNumber = generateUniqueAccountNumber();
-//   next();
+// BookingSchema.pre('save', function (NextResponse) {
+// 	this.totalPrice = this.cabinPrice + this.extrasPrice;
+// 	NextResponse.next();
+// });
+
+////DOCUMENT MIDDLEWARE: runs before .save() and .create() not on .insertMany
+// tourSchema.pre('save', function (next) {
+// 	this.slug = slugify(this.name, { lower: true });
+// 	next();
 // });
 
 // BookingSchema.virtual('imgUrl').get(function () {
