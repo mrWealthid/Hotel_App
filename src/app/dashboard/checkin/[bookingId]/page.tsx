@@ -11,6 +11,8 @@ const page = ({ params }: any) => {
 	const [data, setData] = useState<any>({});
 
 	const [hasPaid, setHasPaid] = useState(false);
+	const [withBreakfast, setWithBreakfast] = useState(false);
+	const [settings, setSettings] = useState<any>({});
 
 	useEffect(() => {
 		fetchData();
@@ -19,6 +21,13 @@ const page = ({ params }: any) => {
 		setHasPaid(data.isPaid);
 	}, [data]);
 
+	useEffect(() => {
+		setWithBreakfast(data.hasBreakfast);
+	}, [data]);
+	useEffect(() => {
+		fetchSettings();
+	}, []);
+
 	async function fetchData() {
 		const response = await fetch(`/api/bookings/${bookingId}`);
 
@@ -26,11 +35,40 @@ const page = ({ params }: any) => {
 
 		setData(data.data);
 	}
+
+	async function fetchSettings() {
+		const response = await fetch(`/api/settings`);
+
+		const data = await response.json();
+
+		setSettings(data.data);
+	}
+
+	function verifyPayment() {
+		let payload = {};
+		if (data.hasBreakfast) {
+			payload = { isPaid: hasPaid, checkStatus: 'CHECKED_IN' };
+		}
+		if (!data.hasBreakfast) {
+			payload = {
+				isPaid: hasPaid,
+				checkStatus: 'CHECKED_IN',
+				hasBreakfast: withBreakfast,
+				totalPrice: data.totalPrice + calculateBreakfastPrice(),
+				extrasPrice: settings.breakfastPrice
+			};
+		}
+		return payload;
+	}
+
 	async function handleCheckIn(data: any) {
+		if (!hasPaid) return;
+		let payload = verifyPayment();
+
 		try {
 			const res = await fetch(`/api/bookings/${bookingId}`, {
 				method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
-				body: JSON.stringify(data) // body data type must match "Content-Type" header
+				body: JSON.stringify(payload) // body data type must match "Content-Type" header
 			});
 
 			if (!res.ok) {
@@ -47,6 +85,21 @@ const page = ({ params }: any) => {
 		} catch (err) {
 			console.log(err);
 		}
+	}
+
+	function addBreakfast(e: any) {
+		if (e.target.checked) {
+			hasPaid && setHasPaid(!hasPaid);
+		} else if (!e.target.checked) {
+			setHasPaid(data.isPaid);
+		}
+		setWithBreakfast(e.target.checked);
+	}
+
+	function calculateBreakfastPrice() {
+		return (
+			parseInt(settings.breakfastPrice) * data.numNights * data.numGuests
+		);
 	}
 
 	return (
@@ -128,18 +181,18 @@ const page = ({ params }: any) => {
 						</span>
 					</section>
 					<section className="font-medium">
-						{' '}
 						{data.isPaid ? 'PAID' : 'NOT PAID'}
 					</section>
 				</section>
-				{!data.isPaid && (
-					<section className="bg-white py-6 items-center flex gap-2 px-4 m-3">
+
+				{!data.hasBreakfast && (
+					<section className="bg-white items-center flex gap-2 px-4 m-3">
 						<input
 							title="check"
 							id="checkbox-all-search"
 							type="checkbox"
-							checked={hasPaid}
-							onChange={(e) => setHasPaid(e.target.checked)}
+							checked={withBreakfast}
+							onChange={addBreakfast}
 							className="w-4 h-4 m-0 border-gray-300 rounded focus:ring-gray-500 "
 						/>
 						<label
@@ -148,14 +201,51 @@ const page = ({ params }: any) => {
 							#
 						</label>
 						<span>
-							I can confirm{' '}
+							Want to add breakfast for
 							<span>
-								{data?.guests?.name} has paid the total amount{' '}
-								{formatCurrency(data.totalPrice)}
+								{formatCurrency(calculateBreakfastPrice())}?
 							</span>
 						</span>
 					</section>
 				)}
+
+				<section className="bg-white items-center flex gap-2 px-4 m-3">
+					<input
+						title="check"
+						id="checkbox-all-search"
+						type="checkbox"
+						checked={hasPaid}
+						onChange={(e) => setHasPaid(e.target.checked)}
+						className="w-4 h-4 m-0 border-gray-300 rounded focus:ring-gray-500 "
+					/>
+					<label
+						htmlFor="checkbox-all-search text-sm"
+						className="sr-only">
+						#
+					</label>
+					<span>
+						I can confirm{' '}
+						<span>
+							<strong>{data?.guests?.name}</strong> has paid the
+							total amount{' '}
+							{!withBreakfast && (
+								<span>
+									<strong>
+										{formatCurrency(data.totalPrice)}
+									</strong>
+								</span>
+							)}
+							{withBreakfast && (
+								<span>
+									{formatCurrency(
+										data.totalPrice +
+											calculateBreakfastPrice()
+									)}
+								</span>
+							)}
+						</span>
+					</span>
+				</section>
 
 				<section className="flex items-center gap-3 justify-end px-4">
 					{data.checkStatus === 'UNCONFIRMED' && (
@@ -163,12 +253,7 @@ const page = ({ params }: any) => {
 							<button
 								disabled={!hasPaid}
 								type="button"
-								onClick={() =>
-									handleCheckIn({
-										isPaid: hasPaid,
-										checkStatus: 'CHECKED_IN'
-									})
-								}
+								onClick={handleCheckIn}
 								className=" bg-primary disabled:bg-primary-light disabled:cursor-not-allowed text-white px-4 py-2 rounded-3xl">
 								Check-In
 							</button>
