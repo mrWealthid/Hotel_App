@@ -1,4 +1,4 @@
-import { findData } from '@/utils/apiRequests';
+import { findData, getData } from '@/utils/apiRequests';
 import Link from 'next/link';
 import React from 'react';
 import { formatCurrency, getStatusColor } from '@/utils/helpers';
@@ -7,6 +7,7 @@ const page = async ({ params }: any) => {
 	const bookingId = params.bookingId;
 
 	const { data } = await findData('api/bookings', bookingId);
+	const { data: settings } = await getData('api/settings');
 
 	console.log(data);
 
@@ -74,10 +75,14 @@ const page = async ({ params }: any) => {
 						<span>
 							{formatCurrency(data.totalPrice)} (
 							{formatCurrency(data.cabinPrice)} cabin +{' '}
-							{formatCurrency(450)} breakfast ){' '}
+							{formatCurrency(settings.breakfastPrice)} breakfast
+							){' '}
 						</span>
 					</section>
-					<section> Will Pay at Arrival</section>
+					<section>
+						{' '}
+						{data.isPaid ? 'PAID' : 'Will pay on arrival'}
+					</section>
 				</section>
 
 				<section className="flex items-center gap-3 justify-end px-4">

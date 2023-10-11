@@ -10,66 +10,88 @@ import toast from 'react-hot-toast';
 import { DropdownHeader } from 'flowbite-react/lib/esm/components/Dropdown/DropdownHeader';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { useRouter } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { handleDelete } from '../service/cabins.service';
+import { useDeleteCabin, useDuplicateCabin } from '../hooks/useCabins';
 
 const CabinRowActions = ({ rowData }: any) => {
 	const router = useRouter();
-	async function handleDelete(id: any, close: any) {
-		try {
-			const res = await fetch(
-				`http://localhost:3000/api/cabins/${id}`,
 
-				{
-					method: 'DELETE' // *GET, POST, PUT, DELETE, etc.
-					// body data type must match "Content-Type" header
-				}
-			);
+	// return { isDeleting, deleteCabin };
+	// async function handleDelete(id: any, close: any) {
+	// 	try {
+	// 		const res = await fetch(
+	// 			`http://localhost:3000/api/cabins/${id}`,
 
-			if (!res.ok) {
-				throw new Error(
-					`Cabin could not be created Status: ${res.status}`
-				);
-			}
+	// 			{
+	// 				method: 'DELETE' // *GET, POST, PUT, DELETE, etc.
+	// 				// body data type must match "Content-Type" header
+	// 			}
+	// 		);
 
-			close();
-			toast.success('Cabin Deleted Successfully');
+	// 		if (!res.ok) {
+	// 			throw new Error(
+	// 				`Cabin could not be created Status: ${res.status}`
+	// 			);
+	// 		}
 
-			router.refresh();
-			return res.json(); // parses JSON response into native JavaScript objects
-		} catch (err) {
-			console.log(err);
-		}
-	}
+	// 		close();
+	// 		toast.success('Cabin Deleted Successfully');
 
-	async function handleDuplicateCabin(rowData: any, close: any) {
-		const { _id, id, ...rest } = rowData;
+	// 		router.refresh();
+	// 		return res.json(); // parses JSON response into native JavaScript objects
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// }
 
-		try {
-			const res = await fetch(
-				`http://localhost:3000/api/cabins`,
+	// async function handleDuplicateCabin(rowData: any, close: any) {
+	// 	const { _id, id, ...rest } = rowData;
 
-				{
-					method: 'POST', // *GET, POST, PUT, DELETE, etc.
-					body: JSON.stringify(rest) // body data type must match "Content-Type" header
-				}
-			);
+	// 	try {
+	// 		const res = await fetch(
+	// 			`http://localhost:3000/api/cabins`,
 
-			if (!res.ok) {
-				throw new Error(
-					`Cabin could not be created Status: ${res.status}`
-				);
-			}
+	// 			{
+	// 				method: 'POST', // *GET, POST, PUT, DELETE, etc.
+	// 				body: JSON.stringify(rest) // body data type must match "Content-Type" header
+	// 			}
+	// 		);
 
-			close();
-			toast.success('Cabin Duplicated Successfully');
+	// 		if (!res.ok) {
+	// 			throw new Error(
+	// 				`Cabin could not be created Status: ${res.status}`
+	// 			);
+	// 		}
 
-			router.refresh();
-			return res.json(); // parses JSON response into native JavaScript objects
-		} catch (err) {
-			console.log(err);
-		}
-	}
+	// 		close();
+	// 		toast.success('Cabin Duplicated Successfully');
+
+	// 		router.refresh();
+	// 		return res.json(); // parses JSON response into native JavaScript objects
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// }
+
+	// const { isLoading, mutate } = useMutation({
+	// 	mutationFn: (id: any) => handleDelete(id),
+	// 	onSuccess: () => {
+	// 		toast.success('Cabin successfully deleted');
+
+	// 		queryClient.invalidateQueries({
+	// 			queryKey: ['cabins']
+	// 		});
+	// 	},
+	// 	onError: (err: any) => toast.error(err.message)
+	// });
+
+	const { isDeleting, deleteCabin } = useDeleteCabin();
+	const { isDuplicating, duplicateCabin } = useDuplicateCabin();
+
 	return (
 		<td className="p-2 md:px-2 md:py-4 space-x-3">
+			{/* <button onClick={() => mutate(rowData.id)}>Test</button> */}
 			<Modal>
 				<Dropdown
 					arrowIcon={false}
@@ -99,17 +121,20 @@ const CabinRowActions = ({ rowData }: any) => {
 
 				<Modal.Window name="confirm-modal">
 					<ConfirmationPage
-						handler={(onCloseModal: any) =>
-							handleDelete(rowData.id, onCloseModal)
-						}
+						handler={(onCloseModal: any) => {
+							// handleDelete(rowData.id, onCloseModal)
+							deleteCabin(rowData.id);
+							onCloseModal();
+						}}
 						modalText={'Are you sure you want to delete cabin'}
 					/>
 				</Modal.Window>
 				<Modal.Window name="confirm-duplicate">
 					<ConfirmationPage
-						handler={(onCloseModal: any) =>
-							handleDuplicateCabin(rowData, onCloseModal)
-						}
+						handler={(onCloseModal: any) => {
+							duplicateCabin(rowData);
+							onCloseModal();
+						}}
 						modalText={'Are you sure you want to duplicate cabin'}
 					/>
 				</Modal.Window>

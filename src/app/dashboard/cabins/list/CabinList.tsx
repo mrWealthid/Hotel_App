@@ -13,6 +13,9 @@ import HeaderActions from '@/components/Table/HeaderActions';
 import CabinHeaderActions from './CabinHeaderActions';
 import { Icolumn } from '@/components/Table/Table';
 
+import { useCabins } from '../hooks/useCabins';
+import { fetchCabins } from '../service/cabins.service';
+
 // async function fetchUser() {
 // 	const res = await axios('/api/users');
 
@@ -41,7 +44,8 @@ const CabinList = () => {
 
 	return (
 		<Table
-			resourceName="cabins"
+			service={fetchCabins}
+			queryKey="cabins"
 			headerActions={<CabinHeaderActions />}
 			url={'/api/cabins'}
 			columns={columns}>

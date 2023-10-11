@@ -1,19 +1,13 @@
 'use client';
 
-import { getData } from '@/utils/apiRequests';
-import axios from 'axios';
-
 // import Table from '@/components/Table/Table';
 import Table from '@/components/Table2/Table';
 
-import TableRow from '@/components/Table/TableRow';
-import Link from 'next/link';
-import CabinRowActions from './BookingsRowActions';
-import HeaderActions from '@/components/Table/HeaderActions';
-import CabinHeaderActions from './BookingsHeaderActions';
+import BookingHeaderActions from './BookingsHeaderActions';
 import { Icolumn } from '@/components/Table/Table';
-import BookingsRowActions from './BookingsRowActions';
+
 import BookingRow from './BookingRow';
+import { fetchBookings } from '../service/bookings.service';
 
 const BookingsList = () => {
 	// const cabins = await getData('/api/cabins', 'cabins', 'no-discount');
@@ -39,16 +33,19 @@ const BookingsList = () => {
 	];
 
 	return (
-		<Table
-			resourceName="bookings"
-			headerActions={<CabinHeaderActions />}
-			url={'/api/bookings'}
-			columns={columns}>
-			<Table.TableHeader />
-			<Table.TableRow customRow={true}>
-				<BookingRow />
-			</Table.TableRow>
-		</Table>
+		<div className="h-80">
+			<Table
+				service={fetchBookings}
+				queryKey="bookings"
+				headerActions={<BookingHeaderActions />}
+				url={'/api/bookings'}
+				columns={columns}>
+				<Table.TableHeader />
+				<Table.TableRow customRow={true}>
+					<BookingRow />
+				</Table.TableRow>
+			</Table>
+		</div>
 	);
 };
 
