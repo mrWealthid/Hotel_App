@@ -9,75 +9,122 @@ import React, {
 import { createContext } from 'react';
 import { Icolumn } from '../Table/Table';
 import { formatCurrency } from '@/utils/helpers';
+import { IListResponse } from '@/app/dashboard/cabins/hooks/useCabins';
+import { useTable } from './hooks/useTable';
+import Modal from '../shared/Modal-component';
+import CabinForm from '@/app/dashboard/cabins/CabinForm';
 
 const TableContext = createContext({});
 
 interface ITable {
-	resourceName?: string;
+	queryKey?: string;
 	children: ReactNode;
 	url: string;
 	columns: Icolumn[];
 	headerActions?: ReactNode;
 	limit?: number;
+	service: any;
 }
 
 function Table({
-	resourceName = '',
+	queryKey = '',
 	children,
-	url,
 	columns,
 	headerActions,
-	limit: limitVal = 10
+	service,
+	limit: limitVal
 }: ITable) {
-	const [data, setData] = useState([]);
-	const [totalRecords, SetTotalRecords] = useState(0);
 	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(limitVal);
+	const [limit, setLimit] = useState(limitVal || 5);
+	const [search, setSearch] = useState<{
+		key: string;
+		value: string | number;
+	} | null>(null);
 
-	async function fetchTableData(page: number, limit: number) {
-		const response = await fetch(`${url}?limit=${limit}&page=${page}`, {
-			next: { tags: [resourceName] }
-		});
+	const { isLoading, error, data, totalRecords, results }: IListResponse =
+		useTable(page, limit, service, queryKey, search);
 
-		const data = await response.json();
+	// const { isPaginating, paginate } = usePaginate(page, service, queryKey);
 
-		SetTotalRecords(data.totalRecords);
+	// console.log(data);
 
-		setData(data.data);
-	}
-	useEffect(() => {
-		fetchTableData(page, limit);
-	}, []);
+	// useEffect(() => {
+	// 	useTable(page, limit, service, queryKey);
+	// }, [limit, page]);
+
+	// console.log(testData);
+	// console.log(loading);
+
+	// console.log('My data', myData);
+	// async function fetchTableData(page: number, limit: number) {
+	// 	const response = await fetch(`${url}?limit=${limit}&page=${page}`, {
+	// 		next: { tags: [resourceName] }
+	// 	});
+
+	// 	const data = await response.json();
+
+	// 	// SetTotalRecords(data.totalRecords);
+
+	// 	// setData(data.data);
+	// }
+	// useEffect(() => {
+	// 	// SetTotalRecords(myData.totalRecords);
+
+	// 	setData(data?.data);
+	// 	// fetchTableData(page, limit);
+	// }, []);
 
 	function updateStateData(data: any) {
-		setData(data);
+		// setData(data);
 	}
 
-	function handlePaginate(val: number, limit: number) {
-		setPage(val);
+	function handleFilter(val: { key: string; value: string | number } | null) {
+		setSearch(val);
+	}
+
+	// const queryClient = useQueryClient();
+
+	function handlePaginate(page: number, limit: number) {
+		setPage(page);
 		setLimit(limit);
-		fetchTableData(val, limit);
+	}
+
+	function updateLimit(val: number) {
+		setLimit(val);
+	}
+	function updatePage(val: number) {
+		setPage(val);
 	}
 
 	return (
 		<TableContext.Provider
-			value={{ data, updateStateData, columns, headerActions }}>
+			value={{
+				data,
+				updateStateData,
+				columns,
+				headerActions,
+				service,
+				limit,
+				page,
+				// updatePage,
+				updateLimit,
+				totalRecords,
+				handlePaginate,
+				handleFilter
+			}}>
 			<div className=" overflow-x-auto  bg-white p-2">
-				<TableHeaderAction updateData={updateStateData}>
+				<TableHeaderAction handleFilter={handleFilter}>
 					{headerActions}
 				</TableHeaderAction>
 
-				<table className="w-full text-sm text-left text-gray-500 ">
+				<table className="w-full text-sm  text-gray-500 ">
 					{children}
 				</table>
 
 				<div className="mt-3 text-xs">
 					<Paginator
-						totalRecords={totalRecords}
-						data={data}
-						limit={limit}
-						page={page}
-						handlePaginate={handlePaginate}
+
+					// handlePaginate={handlePaginate}
 					/>
 				</div>
 			</div>
@@ -88,7 +135,7 @@ function Table({
 function TableHeader() {
 	const { columns }: any = useContext(TableContext);
 	return (
-		<thead className="text-xs wheat-light bg-primary   text-white w-full uppercase">
+		<thead className="text-xs text-left wheat-light bg-primary   text-white w-full uppercase">
 			<tr>
 				<th className="px-2 py-4 uppercase">
 					<input
@@ -115,7 +162,7 @@ function TableHeader() {
 	);
 }
 export function TableHeaderAction({ children }: any) {
-	const { updateStateData }: any = useContext(TableContext);
+	const { handleFilter }: any = useContext(TableContext);
 	return (
 		<div className="flex flex-col flex-wrap items-center  justify-between mb-2 px-3 overflow-x-auto md:flex-row">
 			<div className="flex items-center gap-2 mt-4">
@@ -150,7 +197,23 @@ export function TableHeaderAction({ children }: any) {
 			</div>
 
 			<div className="flex flex-wrap items-center gap-3 mt-2 md:gap-2">
-				{cloneElement(children, { updateStateData })}
+				<div className="">
+					<Modal>
+						<Modal.Open opens="filter-form">
+							<button
+								type="button"
+								className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
+								Filter
+							</button>
+						</Modal.Open>
+
+						<Modal.Window name="filter-form">
+							<CabinForm />
+						</Modal.Window>
+					</Modal>
+				</div>
+
+				{cloneElement(children, { handleFilter })}
 
 				{/* <div className="">
 					<button
@@ -175,10 +238,22 @@ export function TableHeaderAction({ children }: any) {
 }
 function TableRow({ children, customRow }: any) {
 	const { columns, data }: any = useContext(TableContext);
+
+	if (data?.length < 1) {
+		return (
+			<tbody className=" w-full h-5">
+				<tr>
+					{' '}
+					<td className="  block p-2 text-sm ">No data available</td>
+				</tr>
+			</tbody>
+		);
+	}
+
 	return (
 		<tbody>
 			{!customRow
-				? data.map((row: any, i: any) => {
+				? data?.map((row: any, i: any) => {
 						return (
 							<tr
 								key={i}
@@ -286,9 +361,17 @@ function TableRow({ children, customRow }: any) {
 	);
 }
 
-function Paginator({ data, totalRecords, page, limit, handlePaginate }: any) {
+function Paginator() {
 	const [maxNumPage, setMaxNumPage] = useState(0);
 
+	const {
+		updateLimit,
+		data,
+		limit,
+		page,
+		totalRecords,
+		handlePaginate
+	}: any = useContext(TableContext);
 	function CalcNumOfPages(data: number, limit: number) {
 		return Math.ceil(data / limit);
 	}
@@ -309,7 +392,7 @@ function Paginator({ data, totalRecords, page, limit, handlePaginate }: any) {
 				<strong>Summary</strong>
 				<p>
 					{' '}
-					Showing <span>1</span> to <span>{data.length}</span> of{' '}
+					Showing <span>1</span> to <span>{data?.length}</span> of{' '}
 					<span>{totalRecords}</span> results
 				</p>
 				<hr />
@@ -321,7 +404,14 @@ function Paginator({ data, totalRecords, page, limit, handlePaginate }: any) {
 				<section className="flex items-center gap-1">
 					<span>Rows Per Page</span>
 					<select
-						onChange={(e) => handlePaginate(page, e.target.value)}
+						onChange={(e) => {
+							updateLimit(e.target.value);
+							// service(limit, page);
+							// setLimit(e.target.value);
+
+							// paginate(e.target.value)
+							// handlePaginate(page, e.target.value);
+						}}
 						value={limit}
 						id="sort"
 						name="sort"
@@ -364,7 +454,9 @@ function Paginator({ data, totalRecords, page, limit, handlePaginate }: any) {
 						.slice(page - 1, page + 2)
 						.map((val, index) => (
 							<li
-								onClick={() => handlePaginate(val, limit)}
+								onClick={() => {
+									handlePaginate(val, limit);
+								}}
 								key={val}>
 								<a
 									className={`${
