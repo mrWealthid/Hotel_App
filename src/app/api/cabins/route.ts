@@ -88,12 +88,8 @@ export async function GET(request: NextRequest) {
 			const excludedFields = ['page', 'sort', 'limit', 'fields'];
 			excludedFields.forEach((el) => delete transformedQuery[el]);
 			count = await Cabin.find(filter).find(transformedQuery).count();
-
-			console.log(count);
 		} else {
 			count = await Cabin.count(filter);
-			console.log('yes', count);
-			console.log('cabin', cabin.length);
 		}
 
 		const response = NextResponse.json({

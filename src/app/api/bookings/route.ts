@@ -18,7 +18,12 @@ export async function POST(request: NextRequest) {
 
 		const body = await request.json();
 
-		const Bookings = await Booking.create(body);
+		const payload = {
+			...body,
+			totalPrice: body.cabinPrice + body.extrasPrice || 0
+		};
+
+		const Bookings = await Booking.create(payload);
 
 		const response = NextResponse.json(
 			{
@@ -90,11 +95,11 @@ export async function GET(request: NextRequest) {
 		// console.log( await Model.find(req.query))
 
 		//I did this because pagination of filtered data was impossible, The endpoint keeps returning the total count of all document
-
-		if (Object.values(query).length > 0) {
+		console.log('Query', Object.values(transformedQuery).length);
+		if (Object.values(transformedQuery).length > 0) {
 			const excludedFields = ['page', 'sort', 'limit', 'fields'];
-			excludedFields.forEach((el) => delete query[el]);
-			count = await Booking.find(filter).find(query).count();
+			excludedFields.forEach((el) => delete transformedQuery[el]);
+			count = await Booking.find(filter).find(transformedQuery).count();
 		} else {
 			count = await Booking.count(filter);
 		}
