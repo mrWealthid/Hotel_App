@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={raleway.className}>
+			<body className={`${raleway.className} min-h-screen`}>
 				{/* <section className="flex  gap-3">
 					<section className="w-1/4">
 						<SideBar />
@@ -37,7 +37,7 @@ export default function RootLayout({
 						{children}
 					</section>
 				</section> */}
-				{children}
+				<Providers>{children}</Providers>
 
 				<Toaster
 					position="top-center"
