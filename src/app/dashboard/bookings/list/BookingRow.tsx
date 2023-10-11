@@ -23,7 +23,7 @@ function BookingRow({ data, children }: any) {
 
 	return (
 		<>
-			{data.map((row: any, i: any) => {
+			{data?.map((row: any, i: any) => {
 				return (
 					<tr
 						key={i}

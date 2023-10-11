@@ -5,37 +5,51 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-const BookingsHeaderActions = ({ updateStateData }: any) => {
+const BookingsHeaderActions = ({ handleFilter }: any) => {
 	const router = useRouter();
 
 	const [asc, setAsc] = useState(false);
+	const searchParams = useSearchParams()!;
 
-	const [query, setQuery] = useState('all');
-	async function handleClick(query: any, operator = '=') {
-		setQuery(query?.val || 'all');
-		const url = query
-			? `http://localhost:3000/api/bookings?${query.name}${operator}${query.val}`
-			: `http://localhost:3000/api/bookings?`;
-		try {
-			const res = await fetch(url, {
-				next: { tags: ['cabins'] }
-			});
+	const params = new URLSearchParams(searchParams);
 
-			if (!res.ok) {
-				throw new Error(
-					`Cabin could not be created checkStatus: ${res.status}`
-				);
-			}
-			// router.refresh();
-			const data = await res.json();
+	// params.set('name', 'wealth');
 
-			console.log(data.data);
-			updateStateData(data.data);
+	console.log(params);
 
-			// parses JSON response into native JavaScript objects
-		} catch (err) {
-			console.log(err);
-		}
+	const [query, setQuery] = useState<{
+		key: string;
+		value: string | number;
+	} | null>(null);
+
+	console.log(query);
+	async function handleClick(query: any) {
+		setQuery(query);
+		query === 'val' ? handleFilter(null) : handleFilter(query);
+
+		// const url = query
+		// 	? `http://localhost:3000/api/bookings?${query.name}${operator}${query.val}`
+		// 	: `http://localhost:3000/api/bookings?`;
+		// try {
+		// 	const res = await fetch(url, {
+		// 		next: { tags: ['cabins'] }
+		// 	});
+
+		// 	if (!res.ok) {
+		// 		throw new Error(
+		// 			`Cabin could not be created checkStatus: ${res.status}`
+		// 		);
+		// 	}
+		// 	// router.refresh();
+		// 	const data = await res.json();
+
+		// 	console.log(data.data);
+		// 	updateStateData(data.data);
+
+		// 	// parses JSON response into native JavaScript objects
+		// } catch (err) {
+		// 	console.log(err);
+		// }
 	}
 
 	return (
@@ -45,7 +59,7 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 					onClick={() => handleClick(null)}
 					type="button"
 					className={`${
-						query === 'all' && 'bg-primary text-white'
+						query === null && 'bg-primary text-white'
 					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					All
 				</button>
@@ -54,11 +68,11 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 			<div className="">
 				<button
 					onClick={() =>
-						handleClick({ name: 'checkStatus', val: 'CHECKED_IN' })
+						handleClick({ key: 'checkStatus', value: 'CHECKED_IN' })
 					}
 					type="button"
 					className={`${
-						query === 'CHECKED_IN' && 'bg-primary text-white'
+						query?.value === 'CHECKED_IN' && 'bg-primary text-white'
 					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					Checked In
 				</button>
@@ -66,11 +80,15 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 			<div className="">
 				<button
 					onClick={() =>
-						handleClick({ name: 'checkStatus', val: 'CHECKED_OUT' })
+						handleClick({
+							key: 'checkStatus',
+							value: 'CHECKED_OUT'
+						})
 					}
 					type="button"
 					className={`${
-						query === 'CHECKED_OUT' && 'bg-primary text-white'
+						query?.value === 'CHECKED_OUT' &&
+						'bg-primary text-white'
 					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					{' '}
 					Checked-Out
@@ -80,16 +98,20 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 			<div className="">
 				<button
 					onClick={() =>
-						handleClick({ name: 'checkStatus', val: 'UNCONFIRMED' })
+						handleClick({
+							key: 'checkStatus',
+							value: 'UNCONFIRMED'
+						})
 					}
 					type="button"
 					className={`${
-						query === 'UNCONFIRMED' && 'bg-primary text-white'
+						query?.value === 'UNCONFIRMED' &&
+						'bg-primary text-white'
 					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					Un-Confirmed
 				</button>
 			</div>
-
+			{/*
 			<select
 				id="sort"
 				name="sort"
@@ -99,7 +121,7 @@ const BookingsHeaderActions = ({ updateStateData }: any) => {
 				<option value="">Sort By Amount(Lowest)</option>
 				<option value="">Sort By Date(Recent)</option>
 				<option value="">Sort By Date(Lowest)</option>
-			</select>
+			</select> */}
 		</>
 	);
 };
