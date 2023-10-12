@@ -1,6 +1,6 @@
 import { connect } from '@/dbConfig/dbConfig';
 import Guest from '@/model/guestModel';
-import APIFeatures from '@/utils/services/apiFeatures';
+import APIFeatures from '../utils/apiFeatures';
 import { NextRequest, NextResponse } from 'next/server';
 
 connect();

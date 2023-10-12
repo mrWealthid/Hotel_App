@@ -2,8 +2,7 @@ import { connect } from '@/dbConfig/dbConfig';
 import Cabin from '@/model/cabinModel';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
-import APIFeatures from '@/utils/services/apiFeatures';
-
+import APIFeatures from '../utils/apiFeatures';
 connect();
 
 export async function POST(request: NextRequest) {

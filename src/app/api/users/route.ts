@@ -3,6 +3,8 @@ import User from '@/model/userModel';
 import { NextRequest, NextResponse } from 'next/server';
 
 import jwt, { VerifyErrors, verify } from 'jsonwebtoken';
+import APIFeatures from '../utils/apiFeatures';
+import { mapToObject } from '../utils/helpers';
 
 connect();
 
@@ -17,12 +19,39 @@ export async function GET(request: NextRequest) {
 
 		// const userId = getUserDetails(cookie);
 
-		const user = await User.find();
+		let filter = {};
+		const query: any = request.nextUrl.searchParams;
+		const transformedQuery = mapToObject(query);
+
+		const features = new APIFeatures(User.find(filter), transformedQuery)
+			.filter()
+			.sort()
+			.limitFields()
+			.paginate();
+
+		const users = await features.query;
+
+		let count;
+
+		// console.log( await Model.find(req.query))
+
+		//I did this because pagination of filtered data was impossible, The endpoint keeps returning the total count of all document
+		console.log('Query', Object.values(transformedQuery).length);
+		if (Object.values(transformedQuery).length > 0) {
+			const excludedFields = ['page', 'sort', 'limit', 'fields'];
+			excludedFields.forEach((el) => delete transformedQuery[el]);
+			count = await User.find(filter).find(transformedQuery).count();
+		} else {
+			count = await User.count(filter);
+		}
+
 		// const user = await User.findOne({ _id: userId });
 
 		const response = NextResponse.json({
 			status: 'success',
-			data: user
+			totalRecords: count,
+			results: users.length,
+			data: users
 		});
 
 		return response;
