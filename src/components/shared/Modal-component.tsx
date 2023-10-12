@@ -12,7 +12,7 @@ import { useOutsideClick } from './hooks/useOutSideClick';
 
 const ModalContext = createContext({});
 
-function Modal({ children }: any) {
+function Modal({ children, size = 'w-1/2' }: any) {
 	const [openName, setOpenName] = useState('');
 
 	const close = () => setOpenName('');
@@ -20,7 +20,7 @@ function Modal({ children }: any) {
 	const open = setOpenName;
 
 	return (
-		<ModalContext.Provider value={{ openName, close, open }}>
+		<ModalContext.Provider value={{ openName, close, open, size }}>
 			{children}
 		</ModalContext.Provider>
 	);
@@ -33,7 +33,7 @@ function Open({ children, opens }: any) {
 }
 
 const Window = ({ name, children }: any) => {
-	const { openName, close, open }: any = useContext(ModalContext);
+	const { openName, close, open, size }: any = useContext(ModalContext);
 
 	useOutsideClick(close);
 	// useEffect(() => {
@@ -59,8 +59,8 @@ const Window = ({ name, children }: any) => {
 						: 'invisible scale-50  opacity-0'
 				} overflow-y-auto backdrop overflow-x-hidden fixed top-0 right-0 bg-gray-800 bg-opacity-80 left-0 z-50 md:inset-0 h-modal h-full justify-center items-center flex transition-all ease-in-out duration-1500`}
 				id="popup-modal">
-				<div className="relative p-6  h-auto">
-					<div className="relative bg-white skin rounded-lg shadow  p-4">
+				<div className={`${size} relative p-6  h-auto`}>
+					<div className="relative  bg-white skin rounded-lg shadow  p-4">
 						<button
 							className="absolute top-3 right-2.5 text-white bg-primary z-50 hover:bg-primary hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-primary dark:hover:text-white"
 							data-modal-toggle="popup-modal"

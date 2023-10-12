@@ -13,7 +13,7 @@ const TextInput = ({
 		<div className="w-full">
 			{label && (
 				<label htmlFor={name} className="block cursor-pointer text-xs">
-					<span className="text-gray-700">{label}</span>
+					<span className="text-gray-700 capitalize">{label}</span>
 				</label>
 			)}
 
@@ -22,7 +22,7 @@ const TextInput = ({
 					type={type}
 					required
 					name={name}
-					className={`input-style ${style}`}
+					className={`input-style  ${style}`}
 					placeholder={placeholder}
 				/>
 			)}
@@ -35,7 +35,7 @@ const TextInput = ({
 interface ITextInput {
 	label?: string;
 	name: string;
-	placeholder: string;
+	placeholder?: string;
 	type?: string;
 	style?: string;
 	error?: string;
