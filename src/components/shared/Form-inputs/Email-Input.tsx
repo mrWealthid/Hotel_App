@@ -28,7 +28,7 @@ interface IEmailInput {
 	label?: string;
 	name: string;
 	error?: string;
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	style?: string;
 }
 

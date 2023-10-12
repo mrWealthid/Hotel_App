@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import NavigationComponent, { IRoute } from './shared/Navigation-component';
+import NavigationComponent, { IRoute } from '../shared/Navigation/Navigation-component';
 
 export const HeaderComponent = () => {
 	// const routes: IRoute[] = [
