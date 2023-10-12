@@ -7,14 +7,13 @@ export function useTable(
 	limit: number,
 	service: any,
 	queryKey: string,
-	singleSearch?: any
+	search?: any
 ): IListResponse {
 	const { isLoading, data, error } = useQuery({
-		queryKey: [queryKey, limit, page, singleSearch],
-		queryFn: () => service(page, limit, singleSearch),
+		queryKey: [queryKey, limit, page, search],
+		queryFn: () => service(page, limit, search),
 		keepPreviousData: true
 	});
-	console.log('hooks', singleSearch);
 
 	return {
 		isLoading,
@@ -25,29 +24,29 @@ export function useTable(
 	};
 }
 
-export function usePaginate(
-	page: number,
+// export function usePaginate(
+// 	page: number,
 
-	service: any,
-	queryKey: string
-) {
-	const queryClient = useQueryClient();
-	const { isLoading: isPaginating, mutate: paginate }: any = useMutation({
-		mutationFn: (limit) => service(page, limit),
-		onSuccess: () => {
-			// toast.success('Bookings checked-out successfully');
-			queryClient.invalidateQueries({
-				queryKey: [queryKey]
-			});
-		},
-		onError: (err: any) => toast.error(err.message)
-	});
+// 	service: any,
+// 	queryKey: string
+// ) {
+// 	const queryClient = useQueryClient();
+// 	const { isLoading: isPaginating, mutate: paginate }: any = useMutation({
+// 		mutationFn: (limit) => service(page, limit),
+// 		onSuccess: () => {
+// 			// toast.success('Bookings checked-out successfully');
+// 			queryClient.invalidateQueries({
+// 				queryKey: [queryKey]
+// 			});
+// 		},
+// 		onError: (err: any) => toast.error(err.message)
+// 	});
 
-	return {
-		isPaginating,
-		paginate
-	};
-}
+// 	return {
+// 		isPaginating,
+// 		paginate
+// 	};
+// }
 
 // function handlePaginate(val: number, limit: number) {
 // 	// setPage(val);

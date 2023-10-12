@@ -13,13 +13,17 @@ import { IListResponse } from '@/app/dashboard/cabins/hooks/useCabins';
 import { useTable } from './hooks/useTable';
 import Modal from '../shared/Modal-component';
 import CabinForm from '@/app/dashboard/cabins/CabinForm';
+import TextInput from '@/components/form-inputs/Text-Input';
+import { useForm } from 'react-hook-form';
+import ButtonComponent from '../shared/Button-component';
+import { stringify } from 'querystring';
 
 const TableContext = createContext({});
 
 interface ITable {
-	queryKey?: string;
+	queryKey: string;
 	children: ReactNode;
-	url: string;
+
 	columns: Icolumn[];
 	headerActions?: ReactNode;
 	limit?: number;
@@ -27,7 +31,7 @@ interface ITable {
 }
 
 function Table({
-	queryKey = '',
+	queryKey,
 	children,
 	columns,
 	headerActions,
@@ -36,50 +40,30 @@ function Table({
 }: ITable) {
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(limitVal || 5);
-	const [search, setSearch] = useState<{
-		key: string;
-		value: string | number;
-	} | null>(null);
+	const [search, setSearch] = useState<string | null>(null);
+	const [filterIsActive, setfilterIsActive] = useState(false);
 
 	const { isLoading, error, data, totalRecords, results }: IListResponse =
 		useTable(page, limit, service, queryKey, search);
 
-	// const { isPaginating, paginate } = usePaginate(page, service, queryKey);
+	function handleFilter(val: { key: string; value: string | number } | null) {
+		let transformedSearchQuery = '';
+		if (!val) {
+			setfilterIsActive(false);
+			setSearch(null);
+			return;
+		}
 
-	// console.log(data);
+		transformedSearchQuery = objectToQueryParams(val);
 
-	// useEffect(() => {
-	// 	useTable(page, limit, service, queryKey);
-	// }, [limit, page]);
+		setSearch(transformedSearchQuery);
 
-	// console.log(testData);
-	// console.log(loading);
-
-	// console.log('My data', myData);
-	// async function fetchTableData(page: number, limit: number) {
-	// 	const response = await fetch(`${url}?limit=${limit}&page=${page}`, {
-	// 		next: { tags: [resourceName] }
-	// 	});
-
-	// 	const data = await response.json();
-
-	// 	// SetTotalRecords(data.totalRecords);
-
-	// 	// setData(data.data);
-	// }
-	// useEffect(() => {
-	// 	// SetTotalRecords(myData.totalRecords);
-
-	// 	setData(data?.data);
-	// 	// fetchTableData(page, limit);
-	// }, []);
-
-	function updateStateData(data: any) {
-		// setData(data);
+		setfilterIsActive(true);
 	}
 
-	function handleFilter(val: { key: string; value: string | number } | null) {
-		setSearch(val);
+	function cancelFilter() {
+		setfilterIsActive(false);
+		setSearch(null);
 	}
 
 	// const queryClient = useQueryClient();
@@ -96,21 +80,48 @@ function Table({
 		setPage(val);
 	}
 
+	function removeEmptyKeys(obj: { [key: string]: any }): {
+		[key: string]: any;
+	} {
+		const cleanedObj: { [key: string]: any } = {};
+		Object.keys(obj).forEach((key) => {
+			if (
+				obj[key] !== null &&
+				obj[key] !== undefined &&
+				obj[key] !== ''
+			) {
+				cleanedObj[key] = obj[key];
+			}
+		});
+		return cleanedObj;
+	}
+	function objectToQueryParams(obj: { [key: string]: any }): string {
+		return Object.keys(removeEmptyKeys(obj))
+			.map(
+				(key) =>
+					`${encodeURIComponent(key)}=${encodeURIComponent(
+						obj[key].toString()
+					)}`
+			)
+			.join('&');
+	}
+
 	return (
 		<TableContext.Provider
 			value={{
 				data,
-				updateStateData,
 				columns,
 				headerActions,
 				service,
 				limit,
 				page,
-				// updatePage,
 				updateLimit,
 				totalRecords,
 				handlePaginate,
-				handleFilter
+				handleFilter,
+				objectToQueryParams,
+				cancelFilter,
+				filterIsActive
 			}}>
 			<div className=" overflow-x-auto  bg-white p-2">
 				<TableHeaderAction handleFilter={handleFilter}>
@@ -129,6 +140,214 @@ function Table({
 				</div>
 			</div>
 		</TableContext.Provider>
+	);
+}
+
+function TableFilterForm({ column, onCloseModal }: any) {
+	const { objectToQueryParams, handleFilter, cancelFilter }: any =
+		useContext(TableContext);
+	const { register, handleSubmit, getValues, formState } = useForm({
+		mode: 'onChange'
+	});
+	const { errors, isSubmitting } = formState;
+
+	const { columns }: any = useContext(TableContext);
+
+	async function onSubmit(data: any, onCloseModal: any) {
+		console.log(data);
+
+		handleFilter(data);
+
+		onCloseModal();
+		// console.log(objectToQueryParams(data));
+	}
+
+	return (
+		<form
+			onSubmit={handleSubmit((data) => onSubmit(data, onCloseModal))}
+			className=' flex flex-col gap-3 p-6 bg-white items-center"'>
+			<section className=" grid gap-3 grid-cols-2 ">
+				{columns.map((column: any) => {
+					if (column.searchType === 'TEXT') {
+						return (
+							<TextInput
+								key={column.accessor}
+								name={column.header}
+								label={column.header}
+								error={errors?.[
+									`${column.header}`
+								]?.message?.toString()}>
+								<input
+									{...register(column.header, {})}
+									className="input-style"
+									placeholder={`Enter ${column.header}`}
+									type="text"
+									id={column.header}
+								/>
+							</TextInput>
+						);
+					}
+					if (column.searchType === 'NUMBER') {
+						return (
+							<TextInput
+								key={column.accessor}
+								name={column.header}
+								label={column.header}
+								error={errors?.[
+									`${column.header}`
+								]?.message?.toString()}>
+								<input
+									{...register(column.header)}
+									className="input-style"
+									type="number"
+									id={column.header}
+								/>
+							</TextInput>
+						);
+					}
+				})}
+			</section>
+			{/* <TextInput
+				name={'description'}
+				placeholder="Enter Description"
+				label="Description"
+				error={errors?.['description']?.message?.toString()}>
+				<textarea
+					className="input-style"
+					{...register('description', {
+						required: 'This field is required'
+					})}
+					disabled={isSubmitting}
+					id="description"
+					cols={40}
+					rows={3}></textarea>
+			</TextInput> */}
+
+			{/* <TextInput
+				name={column.header}
+				placeholder={`Enter ${column.header}`}
+				label={column.header}
+				error={errors?.[`${column.header}`]?.message?.toString()}>
+				<input
+					{...register(column.header, {
+						required: 'This field is required'
+					})}
+					className="input-style"
+					type="text"
+					id={column.header}
+				/>
+			</TextInput> */}
+
+			<section className="flex justify-end gap-4">
+				<ButtonComponent
+					type="reset"
+					handleClick={() => {
+						cancelFilter();
+						onCloseModal();
+					}}
+					style="rounded-3xl"
+					btnText={'Cancel'}></ButtonComponent>
+
+				<ButtonComponent
+					type="submit"
+					// handleClick={onCloseModal}
+					style="rounded-3xl"
+					disabled={!formState.isValid}
+					btnText={`Search
+					`}></ButtonComponent>
+
+				{/* <button type="submit" onClick={onCloseModal}>
+					search
+				</button> */}
+			</section>
+		</form>
+	);
+}
+// if (column.searchType === 'TEXT') {
+// 	input = (
+// 		<TextInput
+// 			name={column.header}
+// 			placeholder={`Enter ${column.header}`}
+// 			label={column.header}
+// 			error={errors?.[`${column.header}`]?.message?.toString()}>
+// 			<input
+// 				{...register(column.header, {
+// 					required: 'This field is required'
+// 				})}
+// 				className="input-style"
+// 				type="text"
+// 				id={column.header}
+// 			/>
+// 		</TextInput>
+// 	);
+// }
+// if (column.searchType === 'TEXT') {
+// 	input = (
+// 		<TextInput
+// 			name={column.header}
+// 			placeholder={`Enter ${column.header}`}
+// 			label={column.header}
+// 			error={errors?.[`${column.header}`]?.message?.toString()}>
+// 			<input
+// 				{...register(column.header, {
+// 					required: 'This field is required'
+// 				})}
+// 				className="input-style"
+// 				type="number"
+// 				id={column.header}
+// 			/>
+// 		</TextInput>
+// 	);
+// }
+// if(column.searchType === 'NUMBER')  {
+
+// 	return <TextInput
+// 					name={column.header}
+// 					placeholder={`Enter ${column.header}`}
+// 					label={column.header}
+// 					error={errors?.[`${column.header}`]?.message?.toString()}>
+// 					<input
+// 						{...register(column.header, {
+// 							required: 'This field is required'
+// 						})}
+// 						className="input-style"
+// 						type="text"
+// 						id={column.header}
+// 					/>
+// 				</TextInput>
+
+// 	}
+
+// 	return input;
+// }
+
+function TableFilter() {
+	const { columns, filterIsActive }: any = useContext(TableContext);
+	return (
+		<div className="">
+			<Modal>
+				<Modal.Open opens="filter-form">
+					<button
+						type="button"
+						className={`  ${
+							filterIsActive
+								? 'ring-1  ring-offset-2 text-success  ring-success'
+								: ''
+						} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+						Filter
+					</button>
+				</Modal.Open>
+
+				<Modal.Window name="filter-form">
+					<TableFilterForm />
+					{/* {columns.map((column: Icolumn) =>
+						console.log(column)
+						// <TableFilterForm column={column} />
+					)} */}
+					{/* <CabinForm /> */}
+				</Modal.Window>
+			</Modal>
+		</div>
 	);
 }
 
@@ -180,38 +399,10 @@ export function TableHeaderAction({ children }: any) {
 							d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
 					</svg>
 				</div> */}
-				<form>
-					<label
-						htmlFor="default-search"
-						className="mb-2 text-xs font-medium text-gray-900 sr-only">
-						Search
-					</label>
-					<input
-						type="search"
-						id="default-search"
-						className="bg-gray-100  text-sm rounded-lg border border-none focus-within:ring-0 htmlForm-control"
-						placeholder="Search"
-						required
-					/>
-				</form>
 			</div>
 
-			<div className="flex flex-wrap items-center gap-3 mt-2 md:gap-2">
-				<div className="">
-					<Modal>
-						<Modal.Open opens="filter-form">
-							<button
-								type="button"
-								className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
-								Filter
-							</button>
-						</Modal.Open>
-
-						<Modal.Window name="filter-form">
-							<CabinForm />
-						</Modal.Window>
-					</Modal>
-				</div>
+			<div className="flex py-1 flex-wrap items-center gap-3 mt-2 md:gap-2">
+				<TableFilter />
 
 				{cloneElement(children, { handleFilter })}
 
@@ -243,7 +434,6 @@ function TableRow({ children, customRow }: any) {
 		return (
 			<tbody className=" w-full h-5">
 				<tr>
-					{' '}
 					<td className="  block p-2 text-sm ">No data available</td>
 				</tr>
 			</tbody>
@@ -257,8 +447,8 @@ function TableRow({ children, customRow }: any) {
 						return (
 							<tr
 								key={i}
-								className="bg-white relative border-b hover:bg-gray-50 ">
-								<td className="p-2 font-medium md:px-2 md:py-2 whitespace-nowrap">
+								className="bg-white px-2 py-1 relative border-b hover:bg-gray-50 ">
+								<td className=" font-medium whitespace-nowrap">
 									<input
 										title="check"
 										id="checkbox-all-search"
