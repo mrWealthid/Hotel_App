@@ -13,7 +13,7 @@ const Table = ({
 
 	children,
 	headerContent
-}: ITableProps) => {
+}: any) => {
 	function handleToast() {
 		toast.success('I worked');
 	}
@@ -37,28 +37,4 @@ const Table = ({
 	);
 };
 
-interface ITableProps {
-	columns: Icolumn[];
-	config?: TableConfig;
-	data: any[];
-	children: React.ReactNode;
-	headerContent?: any;
-}
-
-interface TableConfig {
-	actionable?: boolean;
-	checkable?: boolean;
-}
-
-export interface Icolumn {
-	header: string;
-	accessor: string;
-	key?: string;
-	custom?: {
-		type: string;
-		suffix?: string;
-		prefix?: string;
-		bolden?: boolean;
-	};
-}
 export default Table;

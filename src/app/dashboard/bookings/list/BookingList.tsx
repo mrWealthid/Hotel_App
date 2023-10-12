@@ -4,7 +4,7 @@
 import Table from '@/components/Table2/Table';
 
 import BookingHeaderActions from './BookingsHeaderActions';
-import { Icolumn } from '@/components/Table/Table';
+import { Icolumn } from '@/components/Table2/models/table.model';
 
 import BookingRow from './BookingRow';
 import { fetchBookings } from '../service/bookings.service';
@@ -38,7 +38,6 @@ const BookingsList = () => {
 				service={fetchBookings}
 				queryKey="bookings"
 				headerActions={<BookingHeaderActions />}
-				url={'/api/bookings'}
 				columns={columns}>
 				<Table.TableHeader />
 				<Table.TableRow customRow={true}>

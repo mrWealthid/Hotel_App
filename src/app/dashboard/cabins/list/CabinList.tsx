@@ -11,7 +11,7 @@ import Link from 'next/link';
 import CabinRowActions from './CabinRowActions';
 import HeaderActions from '@/components/Table/HeaderActions';
 import CabinHeaderActions from './CabinHeaderActions';
-import { Icolumn } from '@/components/Table/Table';
+import { Icolumn } from '@/components/Table2/models/table.model';
 
 import { useCabins } from '../hooks/useCabins';
 import { fetchCabins } from '../service/cabins.service';

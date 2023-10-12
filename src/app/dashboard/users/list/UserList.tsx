@@ -1,6 +1,6 @@
 'use client';
 
-import { Icolumn } from '@/components/Table/Table';
+import { Icolumn } from '@/components/Table2/models/table.model';
 import Table from '@/components/Table2/Table';
 import React from 'react';
 import { fetchUsers } from '../service/user.service';
@@ -23,7 +23,7 @@ const UserList = () => {
 		<Table
 			headerActions={<UserHeaderActions />}
 			service={fetchUsers}
-			queryKey="cabins"
+			queryKey="users"
 			columns={columns}>
 			<Table.TableHeader />
 			<Table.TableRow>

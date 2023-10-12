@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EmailInput = ({ label, name, style }: IEmailInput) => {
+const EmailInput = ({ label, name, style, children, error }: IEmailInput) => {
 	return (
 		<div className="w-full">
 			{label && (
@@ -9,13 +9,17 @@ const EmailInput = ({ label, name, style }: IEmailInput) => {
 				</label>
 			)}
 
-			<input
-				type="email"
-				required
-				name={name}
-				className={`input-style ${style}`}
-				placeholder="Enter Email"
-			/>
+			{children || (
+				<input
+					type="email"
+					required
+					name={name}
+					className={`input-style  ${style}`}
+					placeholder={'Enter your email'}
+				/>
+			)}
+
+			{error && <span className="text-sm text-red-500">{error}</span>}
 		</div>
 	);
 };
@@ -23,7 +27,8 @@ const EmailInput = ({ label, name, style }: IEmailInput) => {
 interface IEmailInput {
 	label?: string;
 	name: string;
-
+	error?: string;
+	children: React.ReactNode;
 	style?: string;
 }
 
