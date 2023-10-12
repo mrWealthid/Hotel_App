@@ -1,27 +1,9 @@
 'use client';
-
-import { getData } from '@/utils/apiRequests';
-import axios from 'axios';
-
-// import Table from '@/components/Table/Table';
-import Table from '@/components/Table2/Table';
-
-import TableRow from '@/components/Table/TableRow';
-import Link from 'next/link';
+import Table from '@/components/Table/Table';
 import CabinRowActions from './CabinRowActions';
-import HeaderActions from '@/components/Table/HeaderActions';
 import CabinHeaderActions from './CabinHeaderActions';
-import { Icolumn } from '@/components/Table2/models/table.model';
-
-import { useCabins } from '../hooks/useCabins';
+import { Icolumn } from '@/components/Table/models/table.model';
 import { fetchCabins } from '../service/cabins.service';
-
-// async function fetchUser() {
-// 	const res = await axios('/api/users');
-
-// 	console.log(res.data);
-// 	return res.data;
-// }
 
 const CabinList = () => {
 	// const cabins = await getData('/api/cabins', 'cabins', 'no-discount');

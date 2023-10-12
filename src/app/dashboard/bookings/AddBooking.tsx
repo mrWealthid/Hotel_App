@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import BookingForm from './BookingForm';
-import Modal from '@/components/shared/Modal-component';
+import Modal from '@/components/shared/Modal/Modal-component';
 
 const AddBooking = () => {
 	const [isOpen, setIsOpen] = useState(false);

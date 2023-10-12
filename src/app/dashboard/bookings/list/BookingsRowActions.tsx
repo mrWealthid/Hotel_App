@@ -3,7 +3,7 @@ import React, { cloneElement, use, useContext, useState } from 'react';
 import { Dropdown } from 'flowbite-react';
 
 import Link from 'next/link';
-import Modal from '@/components/shared/Modal-component';
+import Modal from '@/components/shared/Modal/Modal-component';
 import CabinForm from '../BookingForm';
 import ConfirmationPage from '../../../../components/ui/ConfirmationPage';
 import toast from 'react-hot-toast';

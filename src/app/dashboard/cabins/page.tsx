@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CabinList from './list/CabinList';
 
-import ButtonComponent from '@/components/shared/Button-component';
-import CabinForm from './CabinForm';
 import AddCabin from './AddCabin';
 
 const Page = () => {
@@ -14,7 +12,6 @@ const Page = () => {
 				<AddCabin />
 			</div>
 
-			{/* <CabinForm /> */}
 			<CabinList />
 		</div>
 	);

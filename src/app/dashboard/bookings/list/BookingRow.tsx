@@ -1,8 +1,7 @@
-import { cloneElement } from 'react';
 import BookingsRowActions from './BookingsRowActions';
 import { formatCurrency } from '@/utils/helpers';
 
-function BookingRow({ data, children }: any) {
+function BookingRow({ data }: any) {
 	function getStatusColor(val: string): string {
 		let style = '';
 		if (val === 'UNCONFIRMED') {

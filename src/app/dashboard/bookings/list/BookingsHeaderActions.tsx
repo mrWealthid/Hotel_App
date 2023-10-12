@@ -1,5 +1,5 @@
 'use client';
-import { revalidateTag } from 'next/cache';
+
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
@@ -25,30 +25,6 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 	async function handleClick(query: any) {
 		setQuery(query);
 		query === 'val' ? handleFilter(null) : handleFilter(query);
-
-		// const url = query
-		// 	? `http://localhost:3000/api/bookings?${query.name}${operator}${query.val}`
-		// 	: `http://localhost:3000/api/bookings?`;
-		// try {
-		// 	const res = await fetch(url, {
-		// 		next: { tags: ['cabins'] }
-		// 	});
-
-		// 	if (!res.ok) {
-		// 		throw new Error(
-		// 			`Cabin could not be created checkStatus: ${res.status}`
-		// 		);
-		// 	}
-		// 	// router.refresh();
-		// 	const data = await res.json();
-
-		// 	console.log(data.data);
-		// 	updateStateData(data.data);
-
-		// 	// parses JSON response into native JavaScript objects
-		// } catch (err) {
-		// 	console.log(err);
-		// }
 	}
 
 	return (

@@ -1,7 +1,7 @@
 'use client';
 
-import TextInput from '@/components/form-inputs/Text-Input';
-import ButtonComponent from '@/components/shared/Button-component';
+import TextInput from '@/components/shared/Form-inputs/Text-Input';
+import ButtonComponent from '@/components/shared/Form-inputs/Button-component';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 

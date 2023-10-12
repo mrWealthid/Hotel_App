@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import Reveal from './Reveal';
+import Reveal from '../Animations/Reveal';
 
 const ButtonComponent = ({
 	btnText,

@@ -1,7 +1,6 @@
 'use client';
-
-import { Icolumn } from '@/components/Table2/models/table.model';
-import Table from '@/components/Table2/Table';
+import { Icolumn } from '@/components/Table/models/table.model';
+import Table from '@/components/Table/Table';
 import React from 'react';
 import { fetchUsers } from '../service/user.service';
 import UserRowAction from './UserRowAction';

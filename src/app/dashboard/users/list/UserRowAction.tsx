@@ -1,4 +1,4 @@
-import Modal from '@/components/shared/Modal-component';
+import Modal from '@/components/shared/Modal/Modal-component';
 import { Dropdown } from 'flowbite-react';
 import React from 'react';
 import CabinForm from '../../cabins/CabinForm';

@@ -1,8 +1,8 @@
 'use client';
 
-import TextInput from '@/components/form-inputs/Text-Input';
-import ButtonComponent from '@/components/shared/Button-component';
-import React, { useState } from 'react';
+import TextInput from '@/components/shared/Form-inputs/Text-Input';
+import ButtonComponent from '@/components/shared/Form-inputs/Button-component';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
 const CabinForm = ({ cabin, onCloseModal }: any) => {
@@ -45,14 +45,6 @@ const CabinForm = ({ cabin, onCloseModal }: any) => {
 	}
 	return (
 		<div className="w-full">
-			{/* <div className="flex justify-end ">
-				<ButtonComponent
-					type="button"
-					style="rounded-3xl  "
-					btnText={'Add New Cabin'}
-					handleClick={handleToggle}></ButtonComponent>
-			</div> */}
-
 			<form
 				onSubmit={handleSubmit(onSubmit, onError)}
 				className=" flex flex-1  p-6 bg-white   items-center">

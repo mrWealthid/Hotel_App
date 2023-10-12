@@ -1,11 +1,7 @@
 'use client';
-
-// import Table from '@/components/Table/Table';
-import Table from '@/components/Table2/Table';
-
+import Table from '@/components/Table/Table';
 import BookingHeaderActions from './BookingsHeaderActions';
-import { Icolumn } from '@/components/Table2/models/table.model';
-
+import { Icolumn } from '@/components/Table/models/table.model';
 import BookingRow from './BookingRow';
 import { fetchBookings } from '../service/bookings.service';
 

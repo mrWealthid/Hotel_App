@@ -1,14 +1,7 @@
-import CabinForm from '@/app/dashboard/cabins/CabinForm';
-import React, {
-	cloneElement,
-	useContext,
-	useEffect,
-	useRef,
-	useState
-} from 'react';
+import React, { cloneElement, useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { createContext } from 'react';
-import { useOutsideClick } from './hooks/useOutSideClick';
+import { useOutsideClick } from '../Hooks/useOutSideClick';
 
 const ModalContext = createContext({});
 
