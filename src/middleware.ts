@@ -25,20 +25,20 @@ export async function middleware(request: NextRequest) {
 		if (isPublic && token) {
 			return NextResponse.redirect(new URL('/', request.nextUrl));
 		}
-		// if (!isPublic && !token) {
-		// 	return NextResponse.redirect(
-		// 		new URL('/auth/login', request.nextUrl)
-		// 	);
-		// }
+		if (!isPublic && !token) {
+			return NextResponse.redirect(
+				new URL('/auth/login', request.nextUrl)
+			);
+		}
 	} else {
 		// console.log(request);
 
-		// if (!token) {
-		// 	return NextResponse.json(
-		// 		{ error: 'Unauthorized to access resource' },
-		// 		{ status: 401 }
-		// 	);
-		// }
+		if (!token) {
+			return NextResponse.json(
+				{ error: 'Unauthorized to access resource' },
+				{ status: 401 }
+			);
+		}
 
 		const requestHeaders = new Headers(request.headers);
 
@@ -63,7 +63,7 @@ export async function middleware(request: NextRequest) {
 }
 // See "Matching Paths" below to learn more
 export const config = {
-	matcher: ['/', '/dashboard', '/signup', '/auth/login', '/api/users']
+	matcher: ['/', '/dashboard/:path*', '/signup', '/auth/login', '/api/users']
 };
 
 // function addBearerToken(request: any, pathName: string) {
