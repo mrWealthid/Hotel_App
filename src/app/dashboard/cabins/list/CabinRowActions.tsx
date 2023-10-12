@@ -90,7 +90,7 @@ const CabinRowActions = ({ rowData }: any) => {
 	const { isDuplicating, duplicateCabin } = useDuplicateCabin();
 
 	return (
-		<td className="p-2 md:px-2 md:py-4 space-x-3">
+		<td className="p-2 md:px-2 md:py-2 space-x-3">
 			{/* <button onClick={() => mutate(rowData.id)}>Test</button> */}
 			<Modal>
 				<Dropdown

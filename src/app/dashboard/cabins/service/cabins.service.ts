@@ -1,15 +1,13 @@
 export async function fetchCabins(
 	page: number,
 	limit: number,
-	singleSearch?: any
+	search: string | null
 ) {
-	const url = !singleSearch
+	const url = !search
 		? `http://localhost:3000/api/cabins?limit=${limit}&page=${page}`
-		: `http://localhost:3000/api/cabins?limit=${limit}&page=${page}&${singleSearch.key}=${singleSearch.val}`;
+		: `http://localhost:3000/api/cabins?limit=${limit}&page=${page}&${search}`;
 	try {
-		const response = await fetch(
-			`http://localhost:3000/api/cabins?limit=${limit}&page=${page}`
-		);
+		const response = await fetch(url);
 
 		if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);

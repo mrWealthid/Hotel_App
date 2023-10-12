@@ -28,17 +28,19 @@ const CabinList = () => {
 
 	const columns: Icolumn[] = [
 		{ header: 'image', accessor: 'image' },
-		{ header: 'name', accessor: 'name' },
-		{ header: 'capacity', accessor: 'maxCapacity' },
+		{ header: 'name', accessor: 'name', searchType: 'TEXT' },
+		{ header: 'capacity', accessor: 'maxCapacity', searchType: 'NUMBER' },
 		{
 			header: 'price',
 			accessor: 'regularPrice',
-			custom: { type: 'currency' }
+			custom: { type: 'currency' },
+			searchType: 'NUMBER'
 		},
 		{
 			header: 'discount',
 			accessor: 'discount',
-			custom: { type: 'percent' }
+			custom: { type: 'percent' },
+			searchType: 'NUMBER'
 		}
 	];
 
@@ -47,7 +49,6 @@ const CabinList = () => {
 			service={fetchCabins}
 			queryKey="cabins"
 			headerActions={<CabinHeaderActions />}
-			url={'/api/cabins'}
 			columns={columns}>
 			<Table.TableHeader />
 			<Table.TableRow>
