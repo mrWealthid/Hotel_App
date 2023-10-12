@@ -5,26 +5,44 @@ import TextInput from '@/components/form-inputs/Text-Input';
 import ButtonComponent from '@/components/shared/Button-component';
 import React from 'react';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 // import axiosInstance from '@/app/utils/intercerptor';
 
 const loginComponent = () => {
-	async function handleLogin() {
+	const { register, handleSubmit, getValues, formState } = useForm({
+		mode: 'onChange'
+	});
+
+	const router = useRouter();
+
+	async function onSubmit(data: any) {
 		try {
-			const response = await axios.post(
-				'/api/auth/login',
+			const res = await fetch(`http://localhost:3000/api/auth/login`, {
+				method: 'POST', // *GET, POST, PUT, DELETE, etc.
+				body: JSON.stringify(data) // body data type must match "Content-Type" header
+			});
 
-				{
-					email: 'test@gmail.com',
-					password: '12345678'
-				}
-			);
+			if (!res.ok) {
+				throw new Error(
+					`Cabin could not be created Status: ${res.status}`
+				);
+			}
 
-			console.log(response.data);
+			router.push('/dashboard');
+
+			return res.json(); // parses JSON response into native JavaScript objects
 		} catch (err) {
 			console.log(err);
 		}
 	}
 
+	const { errors, isSubmitting } = formState;
+
+	function onError(err: any) {
+		console.log(err);
+	}
 	return (
 		<>
 			<section className="flex flex-col min-h-screen h-fit items-center justify-center">
@@ -34,9 +52,7 @@ const loginComponent = () => {
 					</p>
 
 					<section className="flex flex-col gap-3 items-center justify-center w-full">
-						<button
-							onClick={handleLogin}
-							className="btn flex gap-3 btn-primary !w-5/6">
+						<button className="btn flex gap-3 btn-primary !w-5/6">
 							Google
 						</button>
 
@@ -47,21 +63,40 @@ const loginComponent = () => {
 
 					<section className="w-full">
 						<form
+							onSubmit={handleSubmit(onSubmit, onError)}
 							action=""
 							className="w-full flex flex-col justify-center gap-2 items-center">
-							<EmailInput name={'email'} label="Email" />
+							<EmailInput name={'email'} label="Email">
+								<input
+									{...register('email', {
+										required: 'This field is required'
+									})}
+									className="input-style"
+									type="email"
+									id="name"
+								/>
+							</EmailInput>
 							<TextInput
 								name={'password'}
 								placeholder="Enter Password"
 								label="Password"
-								type="password"
-							/>
+								type="password">
+								<input
+									{...register('password', {
+										required: 'This field is required'
+									})}
+									className="input-style"
+									type="password"
+									id="name"
+								/>
+							</TextInput>
 
 							<section className=" ">
 								<ButtonComponent
 									style="rounded-3xl 2xl:w-1/5"
 									btnText="Submit"
 									type="submit"
+									disabled={!formState.isValid}
 									afterIcon="/assets/send.svg"
 								/>
 							</section>
@@ -73,7 +108,11 @@ const loginComponent = () => {
 							</p>
 							<p className="flex gap-3 text-sm text-primary dark:text-label-color">
 								Need An Account ?
-								<a className="text-blue-600 text-sm">Sign up</a>
+								<Link
+									href={'/auth/signup'}
+									className="text-blue-600 text-sm">
+									Sign up
+								</Link>
 							</p>
 						</form>
 					</section>
