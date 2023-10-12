@@ -1,14 +1,11 @@
 export async function fetchBookings(
 	page: number,
 	limit: number,
-	query: {
-		key: string;
-		value: string | number;
-	} | null
+	query: string | null
 ) {
 	console.log('service', query);
 	const url = query
-		? `http://localhost:3000/api/bookings?limit=${limit}&page=${page}&${query.key}=${query.value}`
+		? `http://localhost:3000/api/bookings?limit=${limit}&page=${page}&${query}`
 		: `http://localhost:3000/api/bookings?limit=${limit}&page=${page}`;
 	try {
 		const response = await fetch(url);

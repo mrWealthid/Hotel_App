@@ -13,17 +13,17 @@ const BookingsList = () => {
 	// const cabins = await getData('/api/cabins', 'cabins', 'no-discount');
 
 	const columns: Icolumn[] = [
-		{ header: 'cabin', accessor: 'cabin.name' },
+		{ header: 'cabin', accessor: 'cabin.name', searchType: 'TEXT' },
 		{
 			header: 'guest',
-			accessor: 'guests.name,guests.email',
-			custom: { type: 'doubleCell' }
+			accessor: 'guests.name',
+			searchType: 'TEXT'
 		},
-		{ header: 'amount', accessor: 'totalPrice' },
+		{ header: 'amount', accessor: 'totalPrice', searchType: 'NUMBER' },
 		{
 			header: 'status',
 			accessor: 'checkStatus',
-			custom: { type: 'style' }
+			searchType: 'DROPDOWN'
 		},
 
 		{

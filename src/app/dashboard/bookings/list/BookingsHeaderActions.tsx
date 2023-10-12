@@ -18,8 +18,7 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 	console.log(params);
 
 	const [query, setQuery] = useState<{
-		key: string;
-		value: string | number;
+		checkStatus: string;
 	} | null>(null);
 
 	console.log(query);
@@ -67,12 +66,11 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 
 			<div className="">
 				<button
-					onClick={() =>
-						handleClick({ key: 'checkStatus', value: 'CHECKED_IN' })
-					}
+					onClick={() => handleClick({ checkStatus: 'CHECKED_IN' })}
 					type="button"
 					className={`${
-						query?.value === 'CHECKED_IN' && 'bg-primary text-white'
+						query?.checkStatus === 'CHECKED_IN' &&
+						'bg-primary text-white'
 					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					Checked In
 				</button>
@@ -81,13 +79,12 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 				<button
 					onClick={() =>
 						handleClick({
-							key: 'checkStatus',
-							value: 'CHECKED_OUT'
+							checkStatus: 'CHECKED_OUT'
 						})
 					}
 					type="button"
 					className={`${
-						query?.value === 'CHECKED_OUT' &&
+						query?.checkStatus === 'CHECKED_OUT' &&
 						'bg-primary text-white'
 					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					{' '}
@@ -99,13 +96,12 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 				<button
 					onClick={() =>
 						handleClick({
-							key: 'checkStatus',
-							value: 'UNCONFIRMED'
+							checkStatus: 'UNCONFIRMED'
 						})
 					}
 					type="button"
 					className={`${
-						query?.value === 'UNCONFIRMED' &&
+						query?.checkStatus === 'UNCONFIRMED' &&
 						'bg-primary text-white'
 					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					Un-Confirmed
