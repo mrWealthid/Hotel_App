@@ -6,11 +6,11 @@ import { findData, getData, updateData } from '@/utils/apiRequests';
 const page = async () => {
 	const settings = await getData('/api/settings');
 
-	console.log(settings);
+	// console.log(settings);
 
 	return (
 		<div>
-			Settings page
+			<h1 className="title">Settings </h1>
 			<div className="w-full">
 				<SettingsForm settings={settings.data} />
 			</div>

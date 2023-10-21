@@ -1,10 +1,10 @@
 import { headers } from 'next/headers';
 
-let data;
 export async function getData(url: any, tag?: any) {
 	const host = headers().get('host');
 	const protocol = process?.env.NODE_ENV === 'development' ? 'http' : 'https';
 	try {
+		console.log(url);
 		const res = await fetch(`${protocol}://${host}/${url}`, {
 			next: { tags: [tag] }
 		});
