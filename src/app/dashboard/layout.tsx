@@ -1,4 +1,5 @@
 import SideBar from '@/components/ui/SideBar';
+import Header from './header/Header';
 
 export default function DashboardLayout({
 	children // will be a page or nested layout
@@ -8,6 +9,8 @@ export default function DashboardLayout({
 	return (
 		<section className="min-h-screen">
 			{/* Name */}
+
+			<Header />
 			<section>
 				<SideBar />
 			</section>
@@ -32,10 +35,10 @@ export default function DashboardLayout({
 			</button> */}
 
 			<section className=" sm:ml-64 flex flex-col h-screen gap-6 ">
-				<section className="py-5  pl-16 sm:pl-5 z-10   w-full fixed container-text bg-white">
-					<h1>Header</h1>
-				</section>
-				<section className="container-text mt-20 ">{children}</section>
+				{/* <section className="py-5  pl-16 sm:pl-5 z-10   w-full fixed container-text bg-white">
+					<Header />
+				</section> */}
+				<section className="container-text mt-5 ">{children}</section>
 			</section>
 		</section>
 	);
