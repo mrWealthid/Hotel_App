@@ -7,9 +7,10 @@ const page = async ({ params }: any) => {
 	const bookingId = params.bookingId;
 
 	const { data } = await findData('api/bookings', bookingId);
-	const { data: settings } = await getData('api/settings');
+	const { data: settings } = await getData('api/settings', 'settings');
+	// const { data: user } = (await getData('api/users/me', 'profile')) || {};
 
-	console.log(data);
+	// console.log(user);
 
 	return (
 		<section className="flex  flex-col gap-3">
