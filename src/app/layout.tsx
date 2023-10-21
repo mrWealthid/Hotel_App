@@ -5,6 +5,7 @@ import { Raleway } from 'next/font/google';
 import { QueryClient } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/utils/Providers';
+import { HeaderComponent } from '@/components/ui/Header-component';
 
 const raleway = Raleway({ subsets: ['latin'] });
 
@@ -37,6 +38,8 @@ export default function RootLayout({
 						{children}
 					</section>
 				</section> */}
+
+				{/* <HeaderComponent /> */}
 				<Providers>{children}</Providers>
 
 				<Toaster

@@ -2,7 +2,6 @@ import jwt, { VerifyErrors, verify } from 'jsonwebtoken';
 import { usePathname } from 'next/navigation';
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
-import { promisify } from 'util';
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -54,6 +53,14 @@ export async function middleware(request: NextRequest) {
 
 		// Set a new response header `x-hello-from-middleware2`
 		response.headers.set('Authorization', `Bearer ${token}`);
+
+		const twoMinutes = 30 * 60 * 1000; // 2 minutes in milliseconds
+		const expires = new Date(Date.now() + twoMinutes);
+		response.cookies.set('token', token, {
+			httpOnly: true,
+			expires
+		});
+
 		return response;
 	}
 
@@ -63,7 +70,19 @@ export async function middleware(request: NextRequest) {
 }
 // See "Matching Paths" below to learn more
 export const config = {
-	matcher: ['/', '/dashboard/:path*', '/signup', '/auth/login', '/api/users']
+	matcher: [
+		'/',
+		'/dashboard/:path*',
+		'/signup',
+		'/auth/login',
+		'/api/users'
+		// '/^/api((?!/auth/(login|register))/?.*',
+		// '/(^/api(/(?!auth/(login|register)))?.*$',
+		// '/((?!api|auth/login|auth/register).*)',
+		// '/((?!/api/auth/login|/api/auth/register)|/api))'
+
+		// '/((?!api|_next/static|_next/image|favicon.ico).*)'
+	]
 };
 
 // function addBearerToken(request: any, pathName: string) {
@@ -118,16 +137,16 @@ export const config = {
 // 	return response;
 // }
 
-function jwtVerifyPromisified(token: string) {
-	try {
-		const decodedToken: any = verify(token, process.env.JWT_SECRET!);
-		console.log(decodedToken);
-		console.log('I got here');
-		return decodedToken;
-	} catch (err: any) {
-		throw new Error(err.message);
-	}
-}
+// function jwtVerifyPromisified(token: string) {
+// 	try {
+// 		const decodedToken: any = verify(token, process.env.JWT_SECRET!);
+// 		console.log(decodedToken);
+// 		console.log('I got here');
+// 		return decodedToken;
+// 	} catch (err: any) {
+// 		throw new Error(err.message);
+// 	}
+// }
 // return new Promise((resolve, reject) => {
 // 	verify(token, process.env.JWT_SECRET!, {}, (err, payload) => {
 // 		if (err) {
