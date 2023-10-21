@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-const signupComponent = () => {
+const SignupComponent = () => {
 	const { register, handleSubmit, getValues, formState } = useForm({
 		mode: 'onChange'
 	});
@@ -137,4 +137,4 @@ const signupComponent = () => {
 	);
 };
 
-export default signupComponent;
+export default SignupComponent;

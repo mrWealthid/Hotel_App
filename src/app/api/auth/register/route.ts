@@ -36,7 +36,13 @@ const createSendToken = (user: any, statusCode: any) => {
 		},
 		{ status: 201 }
 	);
-	response.cookies.set('token', token, { httpOnly: true });
+	const timeInMs = Number(process.env.JWT_COOKIE_EXPIRES_IN) * 60 * 1000; // 2 minutes in milliseconds
+	const expires = new Date(Date.now() + timeInMs);
+	response.cookies.set('token', token, {
+		httpOnly: true,
+		expires
+	});
+
 	return response;
 };
 

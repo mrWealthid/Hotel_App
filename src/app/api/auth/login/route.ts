@@ -45,8 +45,8 @@ export async function POST(request: NextRequest) {
 		});
 
 		console.log('cookie exp', process.env.JWT_COOKIE_EXPIRES_IN);
-		const twoMinutes = 2 * 60 * 1000; // 2 minutes in milliseconds
-		const expires = new Date(Date.now() + twoMinutes);
+		const timeInMs = Number(process.env.JWT_COOKIE_EXPIRES_IN) * 60 * 1000; // 2 minutes in milliseconds
+		const expires = new Date(Date.now() + timeInMs);
 		response.cookies.set('token', token, {
 			httpOnly: true,
 			expires

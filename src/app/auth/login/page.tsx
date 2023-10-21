@@ -10,18 +10,18 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 // import axiosInstance from '@/app/utils/intercerptor';
 
-const loginComponent = () => {
+const LoginComponent = () => {
 	const { register, handleSubmit, getValues, formState } = useForm({
 		mode: 'onChange'
 	});
 
 	const router = useRouter();
 
-	async function onSubmit(data: any) {
+	async function onSubmit(payload: any) {
 		try {
 			const res = await fetch(`http://localhost:3000/api/auth/login`, {
 				method: 'POST', // *GET, POST, PUT, DELETE, etc.
-				body: JSON.stringify(data) // body data type must match "Content-Type" header
+				body: JSON.stringify(payload) // body data type must match "Content-Type" header
 			});
 
 			if (!res.ok) {
@@ -32,7 +32,13 @@ const loginComponent = () => {
 
 			router.push('/dashboard');
 
-			return res.json(); // parses JSON response into native JavaScript objects
+			const data = await res.json(); // parses JSON response into native JavaScript objects
+
+			localStorage.setItem('token', data.token);
+
+			console.log(data.token);
+
+			return data;
 		} catch (err) {
 			console.log(err);
 		}
@@ -122,4 +128,4 @@ const loginComponent = () => {
 	);
 };
 
-export default loginComponent;
+export default LoginComponent;
