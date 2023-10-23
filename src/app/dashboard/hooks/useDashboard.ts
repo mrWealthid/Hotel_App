@@ -71,7 +71,8 @@ export function useRecentStays(days: number) {
 	return {
 		staysLoading: isLoading,
 		staysError: error,
-		stays: data?.data
+		stays: data?.data,
+		numDays: days
 	};
 }
 export function useDeleteBooking() {

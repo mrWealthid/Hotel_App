@@ -1,7 +1,7 @@
 export async function fetchCabins(
 	page: number,
 	limit: number,
-	search: string | null
+	search?: string | null
 ) {
 	const url = !search
 		? `http://localhost:3000/api/cabins?limit=${limit}&page=${page}`

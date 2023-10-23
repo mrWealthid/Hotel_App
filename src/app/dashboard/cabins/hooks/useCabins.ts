@@ -14,11 +14,7 @@ export interface IListResponse {
 	results: number;
 }
 
-export function useCabins(
-	page: number,
-	limit: number,
-	singleSearch: any
-): IListResponse {
+export function useCabins(page: number = 1, limit: number = 10): IListResponse {
 	const { isLoading, data, error } = useQuery({
 		queryKey: ['cabins'],
 		queryFn: () => fetchCabins(page, limit)
