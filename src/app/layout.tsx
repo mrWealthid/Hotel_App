@@ -1,11 +1,11 @@
-import SideBar from '@/components/ui/SideBar';
+import SideBar from '@/components/ui/SideBarComponent';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Raleway } from 'next/font/google';
 import { QueryClient } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/utils/Providers';
-import { HeaderComponent } from '@/components/ui/Header-component';
+import { HeaderComponent } from '@/components/ui/HeaderComponent';
 
 const raleway = Raleway({ subsets: ['latin'] });
 

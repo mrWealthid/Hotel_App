@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useRef, useState } from 'react';
-import useClickOutside from '../shared/hooks/ClickOutside';
+import useClickOutside from '../shared/Hooks/ClickOutside';
 
 export interface IRoute {
 	name: string;
