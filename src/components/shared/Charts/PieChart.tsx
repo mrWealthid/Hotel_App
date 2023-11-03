@@ -133,8 +133,7 @@ function PieCharts({ confirmedStays }: any) {
 	console.log(data);
 
 	return (
-		<section className="p-2 text-sm  bg-white rounded-lg flex  flex-col justify-end">
-			<p className="font-medium text-sm">Stay duration summary</p>
+		<section className="text-sm  ">
 			<ResponsiveContainer width="100%" height={240}>
 				<PieChart>
 					<Pie

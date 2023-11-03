@@ -11,6 +11,7 @@ import StatComponent from '@/components/ui/StatComponent';
 import { useCabins } from './cabins/hooks/useCabins';
 import AreaCharts from '@/components/shared/Charts/AreaChart';
 import PieCharts from '@/components/shared/Charts/PieChart';
+import TodayActivity from './checkin/[bookingId]/TodayActivity';
 
 const Page = () => {
 	const [days, setDays] = useState<number>(7);
@@ -83,14 +84,19 @@ const Page = () => {
 				/>
 			</section>
 
-			<section className="w-full flex-1 flex ">
-				<section className="w-1/2">
-					<p className="font-medium text-sm">
+			<section className="w-full flex-1 gap-3 flex ">
+				<section className=" card w-1/2">
+					<p className="font-medium mb-3 text-sm">
 						Today&apos;s Activities
 					</p>
+
+					<TodayActivity daily={daily} />
 				</section>
 
-				<section className="w-1/2">
+				<section className="w-1/2 card">
+					<p className="font-medium mb-3  text-sm">
+						Stay duration summary
+					</p>
 					<PieCharts confirmedStays={stays} />
 				</section>
 			</section>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-const page = ({ params }: any) => {
+const Page = ({ params }: any) => {
 	const bookingId = params.bookingId;
 	const router = useRouter();
 	const [data, setData] = useState<any>({});
@@ -269,4 +269,4 @@ const page = ({ params }: any) => {
 	);
 };
 
-export default page;
+export default Page;

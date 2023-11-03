@@ -112,7 +112,7 @@ export function useCheckOutBooking(id: any) {
 		onSuccess: () => {
 			toast.success('Bookings checked-out successfully');
 			queryClient.invalidateQueries({
-				queryKey: ['bookings']
+				queryKey: ['daily_activities']
 			});
 		},
 		onError: (err: any) => toast.error(err.message)
