@@ -6,16 +6,16 @@ const { NextResponse } = require('next/server');
 const BookingSchema = new mongoose.Schema(
 	{
 		startDate: {
-			type: Date,
-			default: Date.now()
+			type: Date
+			// default: Date.now()
 		},
 		endDate: {
-			type: Date,
-			default: Date.now()
+			type: Date
+			// default: Date.now()
 		},
-		numNights: {
-			type: Number
-		},
+		// numNights: {
+		// 	type: Number
+		// },
 		numGuests: {
 			type: Number
 		},
