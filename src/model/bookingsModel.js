@@ -13,9 +13,9 @@ const BookingSchema = new mongoose.Schema(
 			type: Date
 			// default: Date.now()
 		},
-		// numNights: {
-		// 	type: Number
-		// },
+		numNights: {
+			type: Number
+		},
 		numGuests: {
 			type: Number
 		},

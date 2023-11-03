@@ -11,11 +11,14 @@ import { DropdownHeader } from 'flowbite-react/lib/esm/components/Dropdown/Dropd
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { useRouter } from 'next/navigation';
 import { useDeleteBooking, useCheckOutBooking } from '../hooks/useBookings';
+import {
+	HiArrowDownOnSquare,
+	HiArrowUpOnSquare,
+	HiEye,
+	HiTrash
+} from 'react-icons/hi2';
 
 const BookingsRowActions = ({ rowData }: any) => {
-	console.log(rowData);
-	const router = useRouter();
-
 	const { isDeleting, deleteBooking } = useDeleteBooking();
 	const { isCheckingOut, checkOutBooking } = useCheckOutBooking(rowData.id);
 	// const { isDeleting, deleteBooking } = useDeleteBooking();
@@ -74,35 +77,51 @@ const BookingsRowActions = ({ rowData }: any) => {
 	// 	}
 	// }
 	return (
-		<td className="p-2 md:px-2 md:py-4 space-x-3">
+		<td className="py-2 px-4  md:px-2 md:py-4 space-x-3">
 			<Modal>
 				<Dropdown
 					arrowIcon={false}
-					className="z-50 w-1/6 !text-black"
+					className="z-50 translate-x-6  !text-black"
 					style={{ color: 'black' }}
 					label={<span>...</span>}>
-					<Dropdown.Item as="div">
-						{rowData.checkStatus === 'CHECKED_IN' && (
+					{rowData.checkStatus === 'CHECKED_IN' && (
+						<Dropdown.Item as="div">
 							<Modal.Open opens="check-out">
-								<button type="button">Check-Out</button>
+								<button
+									className="flex gap-1 items-center"
+									type="button">
+									<HiArrowUpOnSquare /> Check-Out
+								</button>
 							</Modal.Open>
-						)}
-					</Dropdown.Item>
+						</Dropdown.Item>
+					)}
+
 					<Dropdown.Item as="div">
-						<Modal.Open opens="delete-booking">
-							<button type="button">Delete</button>
-						</Modal.Open>
-					</Dropdown.Item>
-					<Dropdown.Item as="div">
-						<Link href={`bookings/${rowData.id}`}>
-							View details
+						<Link
+							className="flex gap-1 items-center"
+							href={`bookings/${rowData.id}`}>
+							<HiEye /> View details
 						</Link>
 					</Dropdown.Item>
 					{rowData.checkStatus === 'UNCONFIRMED' && (
 						<Dropdown.Item as="div">
-							<Link href={`checkin/${rowData.id}`}>Check-In</Link>
+							<Link
+								className="flex gap-1 items-center"
+								href={`checkin/${rowData.id}`}>
+								<HiArrowDownOnSquare /> {''} Check-In
+							</Link>
 						</Dropdown.Item>
 					)}
+
+					<Dropdown.Item as="div">
+						<Modal.Open opens="delete-booking">
+							<button
+								className="flex gap-1 items-center"
+								type="button">
+								<HiArrowUpOnSquare /> Delete
+							</button>
+						</Modal.Open>
+					</Dropdown.Item>
 				</Dropdown>
 
 				<Modal.Window name="delete-booking">

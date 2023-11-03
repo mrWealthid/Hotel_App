@@ -4,35 +4,18 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { HiArrowDownCircle, HiArrowUpCircle } from 'react-icons/hi2';
 
-const CabinHeaderActions = ({ updateStateData }: any) => {
+const CabinHeaderActions = ({ handleFilter }: any) => {
 	const router = useRouter();
 
 	const [asc, setAsc] = useState(false);
-	async function handleClick(query: any, operator = '=') {
-		const url = query
-			? `http://localhost:3000/api/cabins?${query.name}${operator}${query.val}`
-			: `http://localhost:3000/api/cabins?`;
-		try {
-			const res = await fetch(url, {
-				next: { tags: ['cabins'] }
-			});
-
-			if (!res.ok) {
-				throw new Error(
-					`Cabin could not be created Status: ${res.status}`
-				);
-			}
-			// router.refresh();
-			const data = await res.json();
-
-			console.log(data.data);
-			updateStateData(data.data);
-
-			// parses JSON response into native JavaScript objects
-		} catch (err) {
-			console.log(err);
-		}
+	const [query, setQuery] = useState<{
+		discount: string | number;
+	} | null>(null);
+	async function handleClick(query: any) {
+		setQuery(query);
+		query ? handleFilter(query) : handleFilter(null);
 	}
 
 	return (
@@ -41,16 +24,20 @@ const CabinHeaderActions = ({ updateStateData }: any) => {
 				<button
 					onClick={() => handleClick(null)}
 					type="button"
-					className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
+					className={`${
+						query ?? 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					All
 				</button>
 			</div>
 
 			<div className="">
 				<button
-					onClick={() => handleClick({ name: 'discount', val: 0 })}
+					onClick={() => handleClick({ discount: 0 })}
 					type="button"
-					className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
+					className={`${
+						query?.discount === 0 && 'bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					No discount
 				</button>
 			</div>
@@ -59,13 +46,13 @@ const CabinHeaderActions = ({ updateStateData }: any) => {
 					<button
 						onClick={() => {
 							handleClick({
-								name: 'sort',
-								val: 'createdAt'
+								sort: 'createdAt'
 							});
 							setAsc((prev) => !prev);
 						}}
 						type="button"
-						className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
+						className="w-full  flex gap-2 items-center  text-xs px-2 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
+						<HiArrowDownCircle color="red" size={20} />
 						Sort Down
 					</button>
 				</div>
@@ -74,11 +61,12 @@ const CabinHeaderActions = ({ updateStateData }: any) => {
 				<div className="">
 					<button
 						onClick={() => {
-							handleClick({ name: 'sort', val: '-createdAt' });
+							handleClick({ sort: '-createdAt' });
 							setAsc((prev) => !prev);
 						}}
 						type="button"
-						className="w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
+						className="w-full  flex gap-2 items-center text-xs px-2 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
+						<HiArrowUpCircle size={20} color="green" />
 						Sort Up
 					</button>
 				</div>
