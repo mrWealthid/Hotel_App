@@ -46,11 +46,15 @@ export async function POST(request: NextRequest) {
 
 		const numNights = calculateDaysBetweenDates(startDate, endDate);
 
+		const computedEndDate = new Date(endDate).setDate(
+			new Date(endDate).getDate() + 1
+		);
+
 		const payload = {
 			...body,
 			numNights,
 			startDate: new Date(startDate).setHours(24, 0, 0, 0),
-			endDate: new Date(endDate).setHours(24, 0, 0, 0),
+			endDate: new Date(computedEndDate).setHours(24, 0, 0, 0),
 			totalPrice: body.cabinPrice + body.extrasPrice || 0
 		};
 

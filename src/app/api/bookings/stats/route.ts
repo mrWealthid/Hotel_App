@@ -152,8 +152,7 @@ export async function GET(request: NextRequest, { params }: any) {
 				$sort: {
 					'time.monthNum': 1
 				}
-			},
-			{ $limit: 12 }
+			}
 		]);
 
 		const response = NextResponse.json({
