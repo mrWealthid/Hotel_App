@@ -9,6 +9,7 @@ import Modal from '../shared/Modal/Modal-component';
 import TextInput from '@/components/shared/Form-inputs/Text-Input';
 import { useForm } from 'react-hook-form';
 import ButtonComponent from '../shared/Form-inputs/Button-component';
+import { FcEmptyFilter, FcFilledFilter } from 'react-icons/fc';
 
 const TableContext = createContext({});
 
@@ -245,63 +246,6 @@ function TableFilterForm({ column, onCloseModal }: any) {
 		</form>
 	);
 }
-// if (column.searchType === 'TEXT') {
-// 	input = (
-// 		<TextInput
-// 			name={column.header}
-// 			placeholder={`Enter ${column.header}`}
-// 			label={column.header}
-// 			error={errors?.[`${column.header}`]?.message?.toString()}>
-// 			<input
-// 				{...register(column.header, {
-// 					required: 'This field is required'
-// 				})}
-// 				className="input-style"
-// 				type="text"
-// 				id={column.header}
-// 			/>
-// 		</TextInput>
-// 	);
-// }
-// if (column.searchType === 'TEXT') {
-// 	input = (
-// 		<TextInput
-// 			name={column.header}
-// 			placeholder={`Enter ${column.header}`}
-// 			label={column.header}
-// 			error={errors?.[`${column.header}`]?.message?.toString()}>
-// 			<input
-// 				{...register(column.header, {
-// 					required: 'This field is required'
-// 				})}
-// 				className="input-style"
-// 				type="number"
-// 				id={column.header}
-// 			/>
-// 		</TextInput>
-// 	);
-// }
-// if(column.searchType === 'NUMBER')  {
-
-// 	return <TextInput
-// 					name={column.header}
-// 					placeholder={`Enter ${column.header}`}
-// 					label={column.header}
-// 					error={errors?.[`${column.header}`]?.message?.toString()}>
-// 					<input
-// 						{...register(column.header, {
-// 							required: 'This field is required'
-// 						})}
-// 						className="input-style"
-// 						type="text"
-// 						id={column.header}
-// 					/>
-// 				</TextInput>
-
-// 	}
-
-// 	return input;
-// }
 
 function TableFilter() {
 	const { columns, filterIsActive }: any = useContext(TableContext);
@@ -315,18 +259,18 @@ function TableFilter() {
 							filterIsActive
 								? 'ring-1  ring-offset-2 text-success  ring-success'
 								: ''
-						} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+						} w-full flex items-center gap-1  text-xs px-4 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+						{filterIsActive ? (
+							<FcFilledFilter size={15} color="green" />
+						) : (
+							<FcEmptyFilter size={15} />
+						)}
 						Filter
 					</button>
 				</Modal.Open>
 
 				<Modal.Window name="filter-form">
 					<TableFilterForm />
-					{/* {columns.map((column: Icolumn) =>
-						console.log(column)
-						// <TableFilterForm column={column} />
-					)} */}
-					{/* <CabinForm /> */}
 				</Modal.Window>
 			</Modal>
 		</div>
@@ -366,22 +310,7 @@ export function TableHeaderAction({ children }: any) {
 	const { handleFilter }: any = useContext(TableContext);
 	return (
 		<div className="flex flex-col flex-wrap items-center  justify-between mb-2 px-3 overflow-x-auto md:flex-row">
-			<div className="flex items-center gap-2 mt-4">
-				{/* <div>
-					<svg
-						className="w-6 h-6 text-gray-300"
-						fill="gray-200"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg">
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth="2"
-							d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
-					</svg>
-				</div> */}
-			</div>
+			<div className="flex items-center gap-2 mt-4"></div>
 
 			<div className="flex py-1 flex-wrap items-center gap-3 mt-2 md:gap-2">
 				<TableFilter />
