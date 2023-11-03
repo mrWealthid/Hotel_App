@@ -1,11 +1,12 @@
 'use client';
-import React, { cloneElement, use, useContext, useState } from 'react';
+import React from 'react';
 import { Dropdown } from 'flowbite-react';
 
 import Modal from '@/components/shared/Modal/Modal-component';
 import CabinForm from '../CabinForm';
 import ConfirmationPage from '../../../../components/ui/ConfirmationPage';
-import toast from 'react-hot-toast';
+
+import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
 
 import { useRouter } from 'next/navigation';
 
@@ -27,17 +28,33 @@ const CabinRowActions = ({ rowData }: any) => {
 					label={<span>...</span>}>
 					<Dropdown.Item as="div">
 						<Modal.Open opens="edit-cabin-form">
-							<button type="button">Edit</button>
+							<button
+								className="flex gap-1 items-center"
+								type="button">
+								{' '}
+								<HiPencil /> Edit
+							</button>
 						</Modal.Open>
 					</Dropdown.Item>
 					<Dropdown.Item as="div">
 						<Modal.Open opens="confirm-modal">
-							<button type="button">Delete</button>
+							<button
+								className="flex gap-1 items-center"
+								type="button">
+								{' '}
+								<HiTrash />
+								Delete
+							</button>
 						</Modal.Open>
 					</Dropdown.Item>
 					<Dropdown.Item as="div">
 						<Modal.Open opens="confirm-duplicate">
-							<button type="button">Duplicate</button>
+							<button
+								className="flex gap-1 items-center"
+								type="button">
+								<HiSquare2Stack />
+								Duplicate
+							</button>
 						</Modal.Open>
 					</Dropdown.Item>
 				</Dropdown>

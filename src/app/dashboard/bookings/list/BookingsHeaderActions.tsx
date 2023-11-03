@@ -24,7 +24,7 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 	console.log(query);
 	async function handleClick(query: any) {
 		setQuery(query);
-		query === 'val' ? handleFilter(null) : handleFilter(query);
+		query ? handleFilter(query) : handleFilter(null);
 	}
 
 	return (
@@ -34,7 +34,7 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 					onClick={() => handleClick(null)}
 					type="button"
 					className={`${
-						query === null && 'bg-primary text-white'
+						query ?? 'bg-primary text-white'
 					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
 					All
 				</button>
