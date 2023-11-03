@@ -1,10 +1,16 @@
 'use client';
 import React, { useState } from 'react';
-import { useRecentBookings, useRecentStays } from './hooks/useDashboard';
+import {
+	useDailyActivites,
+	useRecentBookings,
+	useRecentStays
+} from './hooks/useDashboard';
 import StatsComponent from '@/components/ui/StatsComponent';
 
 import StatComponent from '@/components/ui/StatComponent';
 import { useCabins } from './cabins/hooks/useCabins';
+import AreaCharts from '@/components/shared/Charts/AreaChart';
+import PieCharts from '@/components/shared/Charts/PieChart';
 
 const Page = () => {
 	const [days, setDays] = useState<number>(7);
@@ -18,6 +24,7 @@ const Page = () => {
 	const { bookingsError, bookingsLoading, bookings } =
 		useRecentBookings(days);
 	const { staysLoading, staysError, stays, numDays } = useRecentStays(days);
+	const { dailyLoading, dailyError, daily } = useDailyActivites();
 	const { totalRecords } = useCabins();
 
 	// function handleFilter() {
@@ -75,6 +82,19 @@ const Page = () => {
 					stays={stays}
 				/>
 			</section>
+
+			<section className="w-full flex-1 flex ">
+				<section className="w-1/2">
+					<p className="font-medium text-sm">
+						Today&apos;s Activities
+					</p>
+				</section>
+
+				<section className="w-1/2">
+					<PieCharts confirmedStays={stays} />
+				</section>
+			</section>
+			<AreaCharts bookings={bookings} numDays={numDays} />
 		</div>
 	);
 };
