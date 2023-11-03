@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import {
 	fetchBookingsAfterDate,
+	fetchDailyStats,
 	fetchStaysAfterDate,
 	handleCheckout,
 	handleDeleteBookings
@@ -75,6 +76,20 @@ export function useRecentStays(days: number) {
 		numDays: days
 	};
 }
+export function useDailyActivites() {
+	const { isLoading, data, error } = useQuery({
+		queryKey: ['daily_activities'],
+		queryFn: () => fetchDailyStats(),
+		keepPreviousData: true
+	});
+
+	return {
+		dailyLoading: isLoading,
+		dailyError: error,
+		daily: data?.data
+	};
+}
+
 export function useDeleteBooking() {
 	const queryClient = useQueryClient();
 	const { isLoading: isDeleting, mutate: deleteBooking } = useMutation({

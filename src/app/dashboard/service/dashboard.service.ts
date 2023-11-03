@@ -29,6 +29,22 @@ export async function fetchStaysAfterDate(days: number) {
 	}
 }
 
+export async function fetchDailyStats() {
+	const url = `http://localhost:3000/api/bookings/daily`;
+
+	try {
+		const response = await fetch(url);
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+
+		return await response.json();
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 export async function handleDeleteBookings(id: any) {
 	try {
 		const res = await fetch(
