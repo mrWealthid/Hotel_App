@@ -41,11 +41,11 @@ body {
 	}
 
 	.card {
-		@apply text-white rounded-lg py-4 px-5 text-primary dark:text-secondary dark:glass;
+		@apply text-white rounded-lg py-4 px-5 text-primary bg-white dark:text-secondary dark:glass;
 	}
 
 	.container-text {
-		@apply px-4 md:px-6 2xl:px-10;
+		@apply px-4 md:px-4 2xl:px-10;
 	}
 
 	.clip-path {
