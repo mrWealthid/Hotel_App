@@ -5,6 +5,30 @@ import { NextRequest, NextResponse } from 'next/server';
 
 connect();
 
+function calculateDaysBetweenDates(startDate: Date, endDate: Date) {
+	// One day in milliseconds
+	const oneDay = 1000 * 60 * 60 * 24;
+
+	// Convert both dates to milliseconds
+	const startDate_ms = new Date(startDate).getTime();
+	const endDate_ms = new Date(endDate).getTime();
+
+	// Calculate the difference in milliseconds
+	const difference_ms = Math.abs(startDate_ms - endDate_ms);
+
+	// Convert back to days and return
+	return Math.round(difference_ms / oneDay);
+}
+
+// Example usage:
+// Assuming you have two dates in the format 'yyyy-mm-dd'
+// const startDate = new Date('2023-11-01');
+// const endDate = new Date('2023-11-10');
+
+// const daysBetween = calculateDaysBetweenDates(startDate, endDate);
+
+// console.log(daysBetween); // Output will be the number of days between the two dates
+
 export async function POST(request: NextRequest) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
@@ -18,8 +42,15 @@ export async function POST(request: NextRequest) {
 
 		const body = await request.json();
 
+		const { startDate, endDate } = body;
+
+		const numNights = calculateDaysBetweenDates(startDate, endDate);
+
 		const payload = {
 			...body,
+			numNights,
+			startDate: new Date(startDate).setHours(24, 0, 0, 0),
+			endDate: new Date(endDate).setHours(24, 0, 0, 0),
 			totalPrice: body.cabinPrice + body.extrasPrice || 0
 		};
 
