@@ -1,6 +1,6 @@
 'use client';
 import { createContext, useContext, useEffect } from 'react';
-import { useLocalStorageState } from '../Hooks/useLocalStorage';
+import { useLocalStorageState } from '@/components/shared/Hooks/useLocalStorage';
 
 const DarkModeContext = createContext({});
 

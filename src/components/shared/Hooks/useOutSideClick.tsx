@@ -1,4 +1,5 @@
-import { createRef, useEffect, useRef } from 'react';
+'use client';
+import { useEffect, useRef } from 'react';
 
 export const useOutsideClick = (handler: any, listenCapturing = true) => {
 	const ref = useRef<any>();

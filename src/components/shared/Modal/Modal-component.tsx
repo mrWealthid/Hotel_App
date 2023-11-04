@@ -1,7 +1,7 @@
 import React, { cloneElement, useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { createContext } from 'react';
-import { useOutsideClick } from '../Hooks/useOutSideClick';
+import { useOutsideClick } from '@/components/shared/Hooks/useOutSideClick';
 
 const ModalContext = createContext({});
 
