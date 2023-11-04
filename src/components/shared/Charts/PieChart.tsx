@@ -157,9 +157,9 @@ function PieCharts({ confirmedStays }: any) {
 					<Legend
 						verticalAlign="middle"
 						align="right"
-						width={'30%'}
+						width={100}
 						layout="vertical"
-						iconSize={15}
+						iconSize={10}
 						iconType="circle"
 					/>
 				</PieChart>
