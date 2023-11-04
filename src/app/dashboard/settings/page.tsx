@@ -4,7 +4,7 @@ import SettingsForm from './SettingsForm';
 import { findData, getData, updateData } from '@/utils/apiRequests';
 
 const page = async () => {
-	const settings = await getData('/api/settings');
+	const settings = await getData('/api/settings', 'settings');
 
 	// console.log(settings);
 
