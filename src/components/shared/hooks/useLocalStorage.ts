@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect } from 'react';
 
 export function useLocalStorageState(initialState: any, key: any) {

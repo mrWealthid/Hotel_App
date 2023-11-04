@@ -1,3 +1,4 @@
+'use client';
 import { createContext, useContext, useEffect } from 'react';
 import { useLocalStorageState } from '../Hooks/useLocalStorage';
 
