@@ -19,7 +19,7 @@ const MapComponent = ({ location, zoomLevel }: any) => {
 			<div className="google-map w-full h-96">
 				<GoogleMapReact
 					bootstrapURLKeys={{
-						key: process.env.GOOGLE_MAP_KEY
+						key: process.env.GOOGLE_MAP_KEY!
 					}}
 					defaultCenter={defaultProps.center}
 					defaultZoom={defaultProps.zoom}>

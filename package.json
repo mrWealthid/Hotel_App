@@ -43,6 +43,7 @@
     "validator": "^13.11.0"
   },
   "devDependencies": {
+    "@types/google-map-react": "^2.1.9",
     "@types/jsonwebtoken": "^9.0.2"
   }
 }
