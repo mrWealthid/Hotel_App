@@ -53,16 +53,6 @@ export async function middleware(request: NextRequest) {
 
 		// Set a new response header `x-hello-from-middleware2`
 		response.headers.set('Authorization', `Bearer ${token}`);
-		response.headers.append('Access-Control-Allow-Credentials', 'true');
-		response.headers.append('Access-Control-Allow-Origin', '*'); // replace this your actual origin
-		response.headers.append(
-			'Access-Control-Allow-Methods',
-			'GET,DELETE,PATCH,POST,PUT'
-		);
-		response.headers.append(
-			'Access-Control-Allow-Headers',
-			'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-		);
 
 		const twoMinutes = 30 * 60 * 1000; // 2 minutes in milliseconds
 		const expires = new Date(Date.now() + twoMinutes);
