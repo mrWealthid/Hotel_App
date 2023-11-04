@@ -5,8 +5,8 @@ export async function fetchBookings(
 ) {
 	console.log('service', query);
 	const url = query
-		? `http://localhost:3000/api/bookings?limit=${limit}&page=${page}&${query}`
-		: `http://localhost:3000/api/bookings?limit=${limit}&page=${page}`;
+		? `/api/bookings?limit=${limit}&page=${page}&${query}`
+		: `/api/bookings?limit=${limit}&page=${page}`;
 	try {
 		const response = await fetch(url);
 
@@ -23,7 +23,7 @@ export async function fetchBookings(
 export async function handleDeleteBookings(id: any) {
 	try {
 		const res = await fetch(
-			`http://localhost:3000/api/bookings/${id}`,
+			`/api/bookings/${id}`,
 
 			{
 				method: 'DELETE' // *GET, POST, PUT, DELETE, etc.
@@ -43,7 +43,7 @@ export async function handleDeleteBookings(id: any) {
 
 export async function handleCheckout(payload: any, id: any) {
 	try {
-		const res = await fetch(`http://localhost:3000/api/bookings/${id}`, {
+		const res = await fetch(`/api/bookings/${id}`, {
 			method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
 			body: JSON.stringify(payload) // body data type must match "Content-Type" header
 		});

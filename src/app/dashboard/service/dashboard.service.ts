@@ -1,5 +1,5 @@
 export async function fetchBookingsAfterDate(days: number) {
-	const url = `http://localhost:3000/api/bookings/stats?days=${days}`;
+	const url = `/api/bookings/stats?days=${days}`;
 
 	try {
 		const response = await fetch(url);
@@ -14,7 +14,7 @@ export async function fetchBookingsAfterDate(days: number) {
 	}
 }
 export async function fetchStaysAfterDate(days: number) {
-	const url = `http://localhost:3000/api/stays?days=${days}`;
+	const url = `/api/stays?days=${days}`;
 
 	try {
 		const response = await fetch(url);
@@ -30,7 +30,7 @@ export async function fetchStaysAfterDate(days: number) {
 }
 
 export async function fetchDailyStats() {
-	const url = `http://localhost:3000/api/bookings/daily`;
+	const url = `/api/bookings/daily`;
 
 	try {
 		const response = await fetch(url);
@@ -48,7 +48,7 @@ export async function fetchDailyStats() {
 export async function handleDeleteBookings(id: any) {
 	try {
 		const res = await fetch(
-			`http://localhost:3000/api/bookings/${id}`,
+			`/api/bookings/${id}`,
 
 			{
 				method: 'DELETE' // *GET, POST, PUT, DELETE, etc.
@@ -68,7 +68,7 @@ export async function handleDeleteBookings(id: any) {
 
 export async function handleCheckout(payload: any, id: any) {
 	try {
-		const res = await fetch(`http://localhost:3000/api/bookings/${id}`, {
+		const res = await fetch(`/api/bookings/${id}`, {
 			method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
 			body: JSON.stringify(payload) // body data type must match "Content-Type" header
 		});

@@ -4,8 +4,8 @@ export async function fetchCabins(
 	search?: string | null
 ) {
 	const url = !search
-		? `http://localhost:3000/api/cabins?limit=${limit}&page=${page}`
-		: `http://localhost:3000/api/cabins?limit=${limit}&page=${page}&${search}`;
+		? `/api/cabins?limit=${limit}&page=${page}`
+		: `/api/cabins?limit=${limit}&page=${page}&${search}`;
 	try {
 		const response = await fetch(url);
 
@@ -24,7 +24,7 @@ export async function fetchCabins(
 export async function handleDelete(id: any) {
 	try {
 		const res = await fetch(
-			`http://localhost:3000/api/cabins/${id}`,
+			`/api/cabins/${id}`,
 
 			{
 				method: 'DELETE' // *GET, POST, PUT, DELETE, etc.
@@ -47,7 +47,7 @@ export async function handleDuplicateCabin(rowData: any, close?: any) {
 
 	try {
 		const res = await fetch(
-			`http://localhost:3000/api/cabins`,
+			`/api/cabins`,
 
 			{
 				method: 'POST', // *GET, POST, PUT, DELETE, etc.

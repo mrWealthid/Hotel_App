@@ -4,8 +4,8 @@ export async function fetchUsers(
 	search: string | null
 ) {
 	const url = !search
-		? `http://localhost:3000/api/users?limit=${limit}&page=${page}`
-		: `http://localhost:3000/api/users?limit=${limit}&page=${page}&${search}`;
+		? `/api/users?limit=${limit}&page=${page}`
+		: `/api/users?limit=${limit}&page=${page}&${search}`;
 	try {
 		const response = await fetch(url);
 

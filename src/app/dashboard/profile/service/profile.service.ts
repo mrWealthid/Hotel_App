@@ -1,5 +1,5 @@
 export async function fetchProfile() {
-	const url = `http://localhost:3000/api/users/me`;
+	const url = `/api/users/me`;
 	try {
 		const response = await fetch(url);
 
