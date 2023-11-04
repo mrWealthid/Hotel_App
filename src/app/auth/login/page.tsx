@@ -3,7 +3,7 @@
 import EmailInput from '@/components/shared/Form-inputs/Email-Input';
 import TextInput from '@/components/shared/Form-inputs/Text-Input';
 import ButtonComponent from '@/components/shared/Form-inputs/Button-component';
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
@@ -15,11 +15,29 @@ const LoginComponent = () => {
 		mode: 'onChange'
 	});
 
+	useEffect(() => {
+		test();
+	});
+
+	async function test() {
+		try {
+			const res = await axios('/api/users');
+
+			const data = await res.data; // parses JSON response into native JavaScript objects
+
+			console.log(data);
+
+			return data;
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
 	const router = useRouter();
 
 	async function onSubmit(payload: any) {
 		try {
-			const res = await fetch(`http://localhost:3000/api/auth/login`, {
+			const res = await fetch(`/api/auth/login`, {
 				method: 'POST', // *GET, POST, PUT, DELETE, etc.
 				body: JSON.stringify(payload) // body data type must match "Content-Type" header
 			});
