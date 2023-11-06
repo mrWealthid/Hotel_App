@@ -19,6 +19,40 @@ export async function fetchBookings(
 		console.log(err);
 	}
 }
+export async function fetchGuests(query: string | null) {
+	console.log('service', query);
+	const url = query
+		? `/api/guests/searchterm?name=${query}`
+		: `/api/guests/searchterm`;
+	try {
+		const response = await fetch(url);
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+
+		return await response.json();
+	} catch (err) {
+		console.log(err);
+	}
+}
+export async function fetchCabins(query: string | null) {
+	console.log('service', query);
+	const url = query
+		? `/api/cabins/searchterm?name=${query}`
+		: `/api/cabins/searchterm`;
+	try {
+		const response = await fetch(url);
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+
+		return await response.json();
+	} catch (err) {
+		console.log(err);
+	}
+}
 
 export async function handleDeleteBookings(id: any) {
 	try {
