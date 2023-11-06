@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import BookingForm from './BookingForm';
 import Modal from '@/components/shared/Modal/Modal-component';
+import { getData } from '@/utils/apiRequests';
 
-const AddBooking = () => {
+const AddBooking = ({ settings }: any) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	function handleToggle() {
@@ -20,7 +21,7 @@ const AddBooking = () => {
 				</div>
 			</Modal.Open>
 			<Modal.Window name="Booking-form">
-				<BookingForm />
+				<BookingForm settings={settings} />
 			</Modal.Window>
 		</Modal>
 
