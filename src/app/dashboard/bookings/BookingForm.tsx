@@ -1,31 +1,52 @@
 'use client';
 
 import TextInput from '@/components/shared/Form-inputs/Text-Input';
-import ButtonComponent from '@/components/shared/Form-inputs/Button-component';
+import ButtonComponent from '@/components/shared/Form-inputs/Button';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import AutoComplete from '@/components/shared/AutoComplete/AutoComplete';
+import { fetchCabins, fetchGuests } from './service/bookings.service';
 
-const BookingForm = ({ cabin, onCloseModal }: any) => {
-	const isEditing = !!cabin?.id;
+const BookingForm = ({ booking, onCloseModal, settings }: any) => {
+	const isEditing = !!booking?.id;
 
 	const { register, handleSubmit, getValues, formState } = useForm({
 		mode: 'onChange',
-		defaultValues: isEditing ? { ...cabin } : {}
+		defaultValues: isEditing ? { ...booking } : {}
 	});
+
+	const [autoCompleteValue, setAutoCompleteValue] = useState<{
+		guests: any;
+		cabin: any;
+	} | null>(null);
 
 	const { errors, isSubmitting } = formState;
 
+	function handleAutoCompleteValues(values: any) {
+		setAutoCompleteValue({ ...autoCompleteValue, ...values });
+	}
+
 	async function onSubmit(data: any) {
+		const { guests, cabin }: any = autoCompleteValue;
+
+		const payload = {
+			...data,
+			guests: guests.id,
+			cabin: cabin.id,
+			regularPrice: cabin.regularPrice
+		};
+
+		console.log(payload);
 		try {
 			const res = await fetch(
 				`${
 					isEditing
-						? `http://localhost:3000/api/cabins/${cabin.id}`
-						: `http://localhost:3000/api/cabins`
+						? `http://localhost:3000/api/bookings/${booking.id}`
+						: `http://localhost:3000/api/bookings`
 				}`,
 				{
 					method: `${isEditing ? 'PATCH' : 'POST'}`, // *GET, POST, PUT, DELETE, etc.
-					body: JSON.stringify(data) // body data type must match "Content-Type" header
+					body: JSON.stringify(payload) // body data type must match "Content-Type" header
 				}
 			);
 
@@ -58,62 +79,63 @@ const BookingForm = ({ cabin, onCloseModal }: any) => {
 				className=" flex flex-1  p-6 bg-white   items-center">
 				<section className="flex-col flex gap-2 w-full">
 					<TextInput
-						name={'name'}
-						placeholder="Enter Cabin"
-						label="Cabin Name"
-						error={errors?.['name']?.message?.toString()}>
+						name={'numGuests'}
+						placeholder="Enter Number Of Guests"
+						label="Number Of Guest"
+						error={errors?.['numGuests']?.message?.toString()}>
 						<input
-							{...register('name', {
-								required: 'This field is required'
-							})}
-							className="input-style"
-							type="text"
-							id="name"
-						/>
-					</TextInput>
-
-					<TextInput
-						name={'maxCapacity'}
-						placeholder="Enter MaxCapacity"
-						label="Max Capacity"
-						error={errors?.['maxCapacity']?.message?.toString()}>
-						<input
-							{...register('maxCapacity', {
+							{...register('numGuests', {
 								required: 'This field is required',
 
 								max: {
-									value: 5,
-									message:
-										'Max capacity must not be greater than five'
+									value: settings.maxGuestsPerBooking,
+									message: `Number of Guests must not be greater than five ${settings.maxGuestsPerBooking}`
 								},
 								min: {
 									value: 1,
 									message:
-										'Max capacity must be greater than one'
+										'Number of Guests must be greater than one'
 								}
 							})}
 							className="input-style"
 							type="number"
 							disabled={isSubmitting}
-							id="maxCapacity"
+							id="numGuests"
 						/>
 					</TextInput>
+
+					<AutoComplete
+						queryKey="guests"
+						service={fetchGuests}
+						label={'Guest'}
+						displayValue={'name'}
+						handler={handleAutoCompleteValues}
+					/>
+					<AutoComplete
+						queryKey="cabin"
+						service={fetchCabins}
+						label={'Cabin'}
+						displayValue={'name'}
+						handler={handleAutoCompleteValues}
+					/>
+
 					<TextInput
 						name={'regularPrice'}
 						placeholder="Enter regularPrice"
 						label="Regular Price"
 						error={errors?.['regularPrice']?.message?.toString()}>
 						<input
-							{...register('regularPrice', {
-								required: 'This field is required'
-							})}
+							title="regularPrice"
+							value={autoCompleteValue?.cabin?.regularPrice}
 							className="input-style"
 							type="text"
+							readOnly
 							disabled={isSubmitting}
 							id="regularPrice"
 						/>
 					</TextInput>
 
+					{/* <span>{autoCompleteValue?.cabin?.regularPrice}</span> */}
 					<TextInput
 						name={'discount'}
 						placeholder="Enter Discount"
@@ -124,7 +146,11 @@ const BookingForm = ({ cabin, onCloseModal }: any) => {
 							{...register('discount', {
 								required: 'This field is required',
 								validate: (val) =>
-									val < parseInt(getValues().regularPrice) ||
+									val <
+										parseInt(
+											autoCompleteValue?.cabin
+												?.regularPrice
+										) ||
 									' regular price should be more than discount'
 							})}
 							disabled={isSubmitting}
@@ -136,20 +162,21 @@ const BookingForm = ({ cabin, onCloseModal }: any) => {
 					</TextInput>
 
 					<TextInput
-						name={'description'}
-						placeholder="Enter Description"
-						label="Description"
-						error={errors?.['description']?.message?.toString()}>
+						name={'observation'}
+						placeholder="Enter observation"
+						label="observation"
+						error={errors?.['observation']?.message?.toString()}>
 						<textarea
 							className="input-style"
-							{...register('description', {
+							{...register('observation', {
 								required: 'This field is required'
 							})}
 							disabled={isSubmitting}
-							id="description"
+							id="observation"
 							cols={40}
 							rows={3}></textarea>
 					</TextInput>
+
 					{/* <label htmlFor="photo">Photo</label>
 					<p>Image Upload</p> */}
 
