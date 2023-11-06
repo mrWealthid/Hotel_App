@@ -27,7 +27,7 @@ function BookingRow({ data }: any) {
 					<tr
 						key={i}
 						className="bg-white relative border-b hover:bg-gray-50 ">
-						<td className="p-2 font-medium md:px-2 md:py-4 whitespace-nowrap">
+						{/* <td className="p-2 font-medium md:px-2 md:py-4 whitespace-nowrap">
 							<input
 								title="check"
 								id="checkbox-all-search"
@@ -39,6 +39,9 @@ function BookingRow({ data }: any) {
 								className="sr-only">
 								#
 							</label>
+						</td> */}
+						<td className="p-2 font-medium md:px-2 md:py-4 whitespace-nowrap">
+							<span>{i + 1}.</span>
 						</td>
 						<td>{row.cabin.name}</td>
 						<td>
