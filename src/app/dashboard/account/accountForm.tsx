@@ -1,7 +1,7 @@
 'use client';
 
 import TextInput from '@/components/shared/Form-inputs/Text-Input';
-import ButtonComponent from '@/components/shared/Form-inputs/Button-component';
+import ButtonComponent from '@/components/shared/Form-inputs/Button';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import EmailInput from '@/components/shared/Form-inputs/Email-Input';

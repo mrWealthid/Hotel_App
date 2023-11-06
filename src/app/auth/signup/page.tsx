@@ -2,7 +2,7 @@
 // import axiosInstance from '@/app/utils/intercerptor';
 import EmailInput from '@/components/shared/Form-inputs/Email-Input';
 import TextInput from '@/components/shared/Form-inputs/Text-Input';
-import ButtonComponent from '@/components/shared/Form-inputs/Button-component';
+import ButtonComponent from '@/components/shared/Form-inputs/Button';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React from 'react';

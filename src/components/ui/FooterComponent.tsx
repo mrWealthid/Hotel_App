@@ -1,7 +1,7 @@
 import React from 'react';
 import TextInput from '../shared/Form-inputs/Text-Input';
 import EmailInput from '../shared/Form-inputs/Email-Input';
-import ButtonComponent from '../shared/Form-inputs/Button-component';
+import ButtonComponent from '../shared/Form-inputs/Button';
 import Reveal from '../shared/Animations/Reveal';
 
 const FooterComponent = () => {

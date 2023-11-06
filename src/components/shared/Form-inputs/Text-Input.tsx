@@ -1,4 +1,5 @@
 import React from 'react';
+import Label from './Label';
 
 const TextInput = ({
 	label,
@@ -11,11 +12,7 @@ const TextInput = ({
 }: ITextInput) => {
 	return (
 		<div className="w-full">
-			{label && (
-				<label htmlFor={name} className="block cursor-pointer text-xs">
-					<span className="text-gray-700 capitalize">{label}</span>
-				</label>
-			)}
+			{label && <Label name={name} text={label} />}
 
 			{children || (
 				<input

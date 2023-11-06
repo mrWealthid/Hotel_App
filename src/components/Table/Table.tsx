@@ -8,7 +8,7 @@ import { useTable } from './hooks/useTable';
 import Modal from '../shared/Modal/Modal-component';
 import TextInput from '@/components/shared/Form-inputs/Text-Input';
 import { useForm } from 'react-hook-form';
-import ButtonComponent from '../shared/Form-inputs/Button-component';
+import ButtonComponent from '../shared/Form-inputs/Button';
 import { FcEmptyFilter, FcFilledFilter } from 'react-icons/fc';
 
 const TableContext = createContext({});
@@ -282,7 +282,7 @@ function TableHeader() {
 	return (
 		<thead className="text-xs text-left wheat-light bg-primary   text-white w-full uppercase">
 			<tr>
-				<th className="px-2 py-4 uppercase">
+				{/* <th className="px-2 py-4 uppercase">
 					<input
 						title="check"
 						id="checkbox-all-search"
@@ -294,10 +294,16 @@ function TableHeader() {
 						className="sr-only">
 						#
 					</label>
-				</th>
+				</th> */}
+
+				<td className="p-2 font-medium md:px-2 md:py-4 whitespace-nowrap">
+					<span>S/N</span>
+				</td>
 
 				{columns.map((col: Icolumn) => (
-					<th key={col.header} className="py-4  flex-grow uppercase">
+					<th
+						key={col.header}
+						className="py-4 px-2  flex-grow uppercase">
 						{col.header}
 					</th>
 				))}
@@ -358,8 +364,8 @@ function TableRow({ children, customRow }: any) {
 						return (
 							<tr
 								key={i}
-								className="bg-white px-2 py-1 relative border-b hover:bg-gray-50 ">
-								<td className=" font-medium whitespace-nowrap">
+								className="bg-white text-left px-2 py-1 relative border-b hover:bg-gray-50 ">
+								{/* <td className=" font-medium whitespace-nowrap">
 									<input
 										title="check"
 										id="checkbox-all-search"
@@ -371,6 +377,9 @@ function TableRow({ children, customRow }: any) {
 										className="sr-only">
 										#
 									</label>
+								</td> */}
+								<td className="p-2 font-medium md:px-2 md:py-4 whitespace-nowrap">
+									<span>{i + 1}.</span>
 								</td>
 
 								{columns.map((column: Icolumn, i: any) => {
@@ -388,7 +397,7 @@ function TableRow({ children, customRow }: any) {
 														'font-semibold'
 													}`}
 													key={column.accessor + i}>
-													<span className="bg-green-400 text-xs text-white py-2 px-3 rounded-3xl inline-flex">
+													<span className="bg-green-400  text-xs w-1/2 justify-center text-white py-2 px-3 rounded-3xl inline-flex">
 														{value}
 													</span>
 												</td>
