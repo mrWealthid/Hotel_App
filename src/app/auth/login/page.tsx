@@ -15,24 +15,6 @@ const LoginComponent = () => {
 		mode: 'onChange'
 	});
 
-	useEffect(() => {
-		test();
-	});
-
-	async function test() {
-		try {
-			const res = await axios('/api/users');
-
-			const data = await res.data; // parses JSON response into native JavaScript objects
-
-			console.log(data);
-
-			return data;
-		} catch (err) {
-			console.log(err);
-		}
-	}
-
 	const router = useRouter();
 
 	async function onSubmit(payload: any) {

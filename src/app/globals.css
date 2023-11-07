@@ -85,3 +85,9 @@ input::placeholder {
 .btn-primary:disabled {
 	@apply bg-primary-light dark:glass text-base-color hover:text-white cursor-not-allowed;
 }
+
+/* Date Range Picker */
+
+.react-datepicker-wrapper {
+	width: 100%;
+}
