@@ -36,10 +36,12 @@ const BookingSchema = new mongoose.Schema(
 		},
 
 		hasBreakfast: {
-			type: Boolean
+			type: Boolean,
+			default: false
 		},
 		isPaid: {
-			type: Boolean
+			type: Boolean,
+			default: false
 		},
 
 		observations: { type: String },
