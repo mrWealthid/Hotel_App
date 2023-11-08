@@ -26,7 +26,7 @@ const StatsComponent = ({ bookings, stays, numDays, cabinCount }: any) => {
 		(numDays * cabinCount);
 	// num checked in nights / all available nights (num days * num cabins)
 	return (
-		<div className="flex gap-4">
+		<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-col-1 sm:grid-cols-2  gap-4">
 			<StatComponent
 				title="Bookings"
 				icon={<HiOutlineBriefcase color="blue" />}

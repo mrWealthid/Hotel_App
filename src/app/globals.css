@@ -13,22 +13,21 @@
 	--error-color: rgb(220, 38, 38);
 	--pending-color: rgb(244, 130, 32);
 	--light-blue: blue;
-	--foreground-rgb: 0, 0, 0;
-	--background-start-rgb: 214, 219, 220;
-	--background-end-rgb: 255, 255, 255;
+	--background-color: #eceef1;
+	--text-color: #0000004d
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
 	:root {
-		--foreground-rgb: 255, 255, 255;
-		--background-start-rgb: 0, 0, 0;
-		--background-end-rgb: 0, 0, 0;
+		--background-color: #333333;
+		--text-color: #0000004d
+			/* --background-color: rgba(0, 0, 0, 0.3) */
 	}
-} */
+}
 
 body {
-	background-color: #eceef1;
-	/* color: rgb(var(--foreground-rgb));
+	background-color: var(--background-color)
+		/* color: rgb(var(--foreground-rgb));
 	background: linear-gradient(to bottom,
 			transparent,
 			rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
@@ -41,7 +40,7 @@ body {
 	}
 
 	.card {
-		@apply text-white rounded-lg py-4 px-5 text-primary bg-white dark:text-secondary dark:glass;
+		@apply text-secondary bg-white rounded-lg py-4 px-5 dark:text-white dark:glass;
 	}
 
 	.container-text {
@@ -54,13 +53,14 @@ body {
 
 
 	.title {
-		@apply text-xl mb-2 font-semibold;
+		@apply dark:text-white text-secondary text-xl mb-2 font-semibold;
 	}
 
 	.glass {
-		backdrop-filter: blur(10px);
-		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(30px);
+		background: rgba(255, 255, 255, 0.2);
 		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+		z-index: 1;
 	}
 
 	.glass-input {
@@ -86,8 +86,12 @@ input::placeholder {
 	@apply bg-primary-light dark:glass text-base-color hover:text-white cursor-not-allowed;
 }
 
-/* Date Range Picker */
 
+.ellipsis-overflow {
+	@apply overflow-ellipsis overflow-hidden whitespace-nowrap w-[50px] lg:w-[70px]
+}
+
+/* Date Range Picker */
 .react-datepicker-wrapper {
 	width: 100%;
 }
