@@ -14,7 +14,6 @@ export async function fetchBookings(
 		const data = await response.data;
 		return data;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(
 			`Booking could not be loaded Status: ${err.response.status}`
 		);
@@ -30,7 +29,6 @@ export async function fetchGuests(query: string | null) {
 		const data = await response.data;
 		return data;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(
 			`Guest could not be loaded Status: ${err.response.status}`
 		);
@@ -46,7 +44,6 @@ export async function fetchCabins(query: string | null) {
 		const data = await response.data;
 		return data;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(`Cabins could not loaded: ${err.response.status}`);
 	}
 }
@@ -64,7 +61,6 @@ export async function handleCreateBooking(
 		const resData = await res.data;
 		return resData;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(
 			`Booking could not be created Status: ${err.response.status}`
 		);
@@ -78,7 +74,6 @@ export async function handleDeleteBookings(id: any) {
 		const data = await res.data;
 		return data;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(
 			`Booking could not be deleted Status: ${err.response.status}`
 		);
@@ -92,7 +87,6 @@ export async function handleCheckout(payload: any, id: any) {
 		const data = await res.data;
 		return data;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(
 			`Guest could not be checked out Status: ${err.response.status}`
 		);

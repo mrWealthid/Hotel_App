@@ -14,7 +14,6 @@ export async function fetchCabins(
 		const data = await response.data;
 		return data;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(
 			`Cabins could not be loaded Status: ${err.response.status}`
 		);
@@ -25,12 +24,11 @@ export async function handleCreateCabin(data: any, cabin: any, isEditing: any) {
 	try {
 		const res = isEditing
 			? await axios.patch(`/api/cabins/${cabin?.id}`, data)
-			: await axios.post(`api/cabinsa`, data);
+			: await axios.post(`/api/cabins`, data);
 
 		const resData = await res.data;
 		return resData;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(
 			`Cabin could not be created Status: ${err.response.status}`
 		);
@@ -43,7 +41,6 @@ export async function handleDelete(id: any) {
 		const data = await response.data;
 		return data;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(
 			`Cabin could not be deleted Status: ${err.response.status}`
 		);
@@ -58,7 +55,6 @@ export async function handleDuplicateCabin(rowData: any) {
 		const data = await response.data;
 		return data;
 	} catch (err: any) {
-		console.log(err);
 		throw new Error(
 			`Booking could not be created Status: ${err.response.status}`
 		);
