@@ -55,12 +55,14 @@ export function useDuplicateCabin() {
 // 	});
 // }
 
-export function useCreateCabin(cabinId: any, isEditing: any) {
+export function useCreateCabin(cabinId: any, isEditing: any, close: any) {
 	const queryClient = useQueryClient();
 	const { isLoading: isCreating, mutate: createCabin } = useMutation({
 		mutationFn: (payload) => handleCreateCabin(payload, cabinId, isEditing),
 		onSuccess: () => {
 			toast.success('Cabin successfully created...');
+
+			close();
 			queryClient.invalidateQueries({
 				queryKey: ['cabins']
 			});

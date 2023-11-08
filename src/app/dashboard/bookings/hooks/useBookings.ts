@@ -16,7 +16,7 @@ export interface IListResponse {
 	results: number;
 }
 
-export function useCreateBooking(bookingId: any, isEditing: any) {
+export function useCreateBooking(bookingId: any, isEditing: any, close: any) {
 	const queryClient = useQueryClient();
 	const { isLoading: isCreating, mutate: createBooking } = useMutation({
 		mutationFn: (payload) =>
@@ -26,6 +26,8 @@ export function useCreateBooking(bookingId: any, isEditing: any) {
 			queryClient.invalidateQueries({
 				queryKey: ['bookings']
 			});
+
+			close();
 		},
 		onError: (err: any) => toast.error(err.message)
 	});
