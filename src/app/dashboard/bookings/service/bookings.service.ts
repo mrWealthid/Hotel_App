@@ -3,7 +3,6 @@ export async function fetchBookings(
 	limit: number,
 	query: string | null
 ) {
-	console.log('service', query);
 	const url = query
 		? `/api/bookings?limit=${limit}&page=${page}&${query}`
 		: `/api/bookings?limit=${limit}&page=${page}`;
@@ -20,7 +19,6 @@ export async function fetchBookings(
 	}
 }
 export async function fetchGuests(query: string | null) {
-	console.log('service', query);
 	const url = query
 		? `/api/guests/searchterm?name=${query}`
 		: `/api/guests/searchterm`;
@@ -37,7 +35,6 @@ export async function fetchGuests(query: string | null) {
 	}
 }
 export async function fetchCabins(query: string | null) {
-	console.log('service', query);
 	const url = query
 		? `/api/cabins/searchterm?name=${query}`
 		: `/api/cabins/searchterm`;
@@ -49,6 +46,38 @@ export async function fetchCabins(query: string | null) {
 		}
 
 		return await response.json();
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+export async function handleCreateBooking(
+	data: any,
+	booking: any,
+	isEditing: any
+) {
+	try {
+		const res = await fetch(
+			`${
+				isEditing
+					? `http://localhost:3000/api/bookings/${booking.id}`
+					: `http://localhost:3000/api/bookings`
+			}`,
+			{
+				method: `${isEditing ? 'PATCH' : 'POST'}`, // *GET, POST, PUT, DELETE, etc.
+				body: JSON.stringify(data) // body data type must match "Content-Type" header
+			}
+		);
+
+		if (!res.ok) {
+			throw new Error(`Cabin could not be created Status: ${res.status}`);
+		}
+		// toast.success(
+		// 	`Cabin ${isEditing ? 'Updated' : 'Created'} Successfully... `
+		// );
+		// onCloseModal();
+		// invalidateQuery(['cabins', 5, 1, null]);
+		// router.refresh();
 	} catch (err) {
 		console.log(err);
 	}

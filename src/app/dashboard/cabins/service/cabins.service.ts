@@ -21,6 +21,33 @@ export async function fetchCabins(
 	}
 }
 
+export async function handleCreateCabin(data: any, cabin: any, isEditing: any) {
+	try {
+		const res = await fetch(
+			`${
+				isEditing
+					? `http://localhost:3000/api/cabins/${cabin.id}`
+					: `http://localhost:3000/api/cabins`
+			}`,
+			{
+				method: `${isEditing ? 'PATCH' : 'POST'}`, // *GET, POST, PUT, DELETE, etc.
+				body: JSON.stringify(data) // body data type must match "Content-Type" header
+			}
+		);
+
+		if (!res.ok) {
+			throw new Error(`Cabin could not be created Status: ${res.status}`);
+		}
+		// toast.success(
+		// 	`Cabin ${isEditing ? 'Updated' : 'Created'} Successfully... `
+		// );
+		// onCloseModal();
+		// invalidateQuery(['cabins', 5, 1, null]);
+		// router.refresh();
+	} catch (err) {
+		console.log(err);
+	}
+}
 export async function handleDelete(id: any) {
 	try {
 		const res = await fetch(
