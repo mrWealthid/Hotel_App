@@ -251,17 +251,17 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 					</TextInput> */}
 
 					<TextInput
-						name={'observation'}
+						name={'observations'}
 						placeholder="Enter observation"
 						label="observation"
-						error={errors?.['observation']?.message?.toString()}>
+						error={errors?.['observations']?.message?.toString()}>
 						<textarea
 							className="input-style"
-							{...register('observation', {
+							{...register('observations', {
 								required: 'This field is required'
 							})}
 							disabled={isSubmitting}
-							id="observation"
+							id="observations"
 							cols={40}
 							rows={3}></textarea>
 					</TextInput>
