@@ -9,11 +9,12 @@ import {
 	YAxis,
 	Tooltip
 } from 'recharts';
-import { useDarkMode } from '../Context/DarkModeContext';
+// import { useDarkMode } from '../Context/DarkModeContext';
 import { subDays } from 'date-fns/esm';
 
 const AreaCharts = ({ bookings, numDays }: any) => {
-	const { isDarkMode }: any = useDarkMode();
+	// const { isDarkMode }: any = useDarkMode();
+	// const { isDarkMode }: any =
 	// const data = [
 	// 	{ label: 'Jan 09', totalSales: 480, extrasSales: 320 - 300 },
 	// 	{ label: 'Jan 10', totalSales: 580, extrasSales: 400 - 300 },
@@ -46,19 +47,18 @@ const AreaCharts = ({ bookings, numDays }: any) => {
 	// 	{ label: 'Feb 06', totalSales: 1450, extrasSales: 900 - 500 }
 	// ];
 
-	const colors = isDarkMode
-		? {
-				totalSales: { stroke: '#4f46e5', fill: '#4f46e5' },
-				extrasSales: { stroke: '#22c55e', fill: '#22c55e' },
-				text: '#0000004d',
-				background: '#18212f'
-		  }
-		: {
-				totalSales: { stroke: '#4f46e5', fill: '#c7d2fe' },
-				extrasSales: { stroke: '#16a34a', fill: '#dcfce7' },
-				text: '#374151',
-				background: '#fff'
-		  };
+	const colors = {
+		totalSales: { stroke: '#4f46e5', fill: '#4f46e5' },
+		extrasSales: { stroke: '#22c55e', fill: '#22c55e' },
+		text: '#0000004d',
+		background: '#18212f'
+	};
+	// : {
+	// 		totalSales: { stroke: '#4f46e5', fill: '#c7d2fe' },
+	// 		extrasSales: { stroke: '#16a34a', fill: '#dcfce7' },
+	// 		text: '#374151',
+	// 		background: '#fff'
+	//   };
 
 	const allDates = eachDayOfInterval({
 		start: subDays(new Date(), numDays - 1),
