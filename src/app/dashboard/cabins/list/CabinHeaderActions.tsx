@@ -25,8 +25,8 @@ const CabinHeaderActions = ({ handleFilter }: any) => {
 					onClick={() => handleClick(null)}
 					type="button"
 					className={`${
-						query ?? 'bg-primary text-white'
-					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+						query ?? '!bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl    dark:glass dark:border-none bg-gray-50 font-light text-black border btn`}>
 					All
 				</button>
 			</div>
@@ -36,8 +36,8 @@ const CabinHeaderActions = ({ handleFilter }: any) => {
 					onClick={() => handleClick({ discount: 0 })}
 					type="button"
 					className={`${
-						query?.discount === 0 && 'bg-primary text-white'
-					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+						query?.discount === 0 && '!bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  dark:glass dark:border-none  bg-gray-50 font-light text-black border btn`}>
 					No discount
 				</button>
 			</div>
@@ -51,7 +51,7 @@ const CabinHeaderActions = ({ handleFilter }: any) => {
 							setAsc((prev) => !prev);
 						}}
 						type="button"
-						className="w-full  flex gap-2 items-center  text-xs px-2 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
+						className="w-full  flex gap-2 items-center  dark:glass dark:border-none  text-xs px-2 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
 						<HiArrowDownCircle color="red" size={20} />
 						Sort Down
 					</button>
@@ -65,7 +65,7 @@ const CabinHeaderActions = ({ handleFilter }: any) => {
 							setAsc((prev) => !prev);
 						}}
 						type="button"
-						className="w-full  flex gap-2 items-center text-xs px-2 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
+						className="w-full  flex gap-2 items-center  dark:glass dark:border-none text-xs px-2 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">
 						<HiArrowUpCircle size={20} color="green" />
 						Sort Up
 					</button>

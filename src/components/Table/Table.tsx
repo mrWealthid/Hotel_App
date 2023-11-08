@@ -106,12 +106,12 @@ function Table({
 				cancelFilter,
 				filterIsActive
 			}}>
-			<div className=" overflow-x-auto  bg-white p-2">
+			<div className=" overflow-x-auto   card p-2">
 				<TableHeaderAction handleFilter={handleFilter}>
 					{headerActions}
 				</TableHeaderAction>
 
-				<table className="w-full text-sm  text-gray-500 ">
+				<table className="w-full   text-sm  text-gray-500 ">
 					{children}
 				</table>
 
@@ -358,13 +358,13 @@ function TableRow({ children, customRow }: any) {
 	}
 
 	return (
-		<tbody>
+		<tbody className="">
 			{!customRow
 				? data?.map((row: any, i: any) => {
 						return (
 							<tr
 								key={i}
-								className="bg-white text-left px-2 py-1 relative border-b hover:bg-gray-50 ">
+								className="text-left dark:border-none dark:text-white text-secondary px-2 py-1 relative border-b hover:glass ">
 								{/* <td className=" font-medium whitespace-nowrap">
 									<input
 										title="check"
@@ -397,7 +397,9 @@ function TableRow({ children, customRow }: any) {
 														'font-semibold'
 													}`}
 													key={column.accessor + i}>
-													<span className="bg-green-400  text-xs w-1/2 justify-center text-white py-2 px-3 rounded-3xl inline-flex">
+													<span
+														title={value}
+														className="bg-green-400    text-xs w-1/2 justify-center text-white py-2 px-3 rounded-3xl inline-flex">
 														{value}
 													</span>
 												</td>
@@ -409,7 +411,10 @@ function TableRow({ children, customRow }: any) {
 													className={`${
 														column.custom.bolden &&
 														'font-semibold'
-													}`}
+													} ellipisis-overflow block`}
+													title={new Date(
+														value
+													).toDateString()}
 													key={column.accessor + i}>
 													{new Date(
 														value
@@ -423,9 +428,15 @@ function TableRow({ children, customRow }: any) {
 													className={`${
 														column.custom.bolden &&
 														'font-semibold'
-													}`}
+													}  `}
 													key={column.accessor + i}>
-													{formatCurrency(value)}
+													<span
+														title={formatCurrency(
+															value
+														)}
+														className="ellipsis-overflow block">
+														{formatCurrency(value)}
+													</span>
 												</td>
 											);
 										}
@@ -435,7 +446,8 @@ function TableRow({ children, customRow }: any) {
 													className={`${
 														column.custom.bolden &&
 														'font-semibold'
-													}`}
+													} `}
+													title={value}
 													key={column.accessor + i}>
 													{value} %
 												</td>
@@ -457,7 +469,11 @@ function TableRow({ children, customRow }: any) {
 									}
 									return (
 										<td key={column.accessor + i}>
-											{value}
+											<span
+												title={value}
+												className="block ellipsis-overflow">
+												{value}
+											</span>
 										</td>
 									);
 								})}
@@ -498,7 +514,7 @@ function Paginator() {
 
 	return (
 		<section className="flex justify-between items-center">
-			<section className="flex-col flex  p-2 gap-1">
+			<section className="flex-col flex  border-t p-2 gap-1">
 				<strong>Summary</strong>
 				<p>
 					{' '}
@@ -542,7 +558,7 @@ function Paginator() {
 						<a
 							className={`${
 								page === 1 && 'cursor-not-allowed'
-							} flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}>
+							} flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:glass dark:border-none dark:text-white dark:hover:bg-gray-700 dark:hover:text-white`}>
 							<span className="sr-only">Previous</span>
 							<svg
 								className="w-3 h-3"
@@ -571,9 +587,9 @@ function Paginator() {
 								<a
 									className={`${
 										val === page
-											? 'bg-primary  text-white'
-											: 'bg-white hover:bg-gray-100'
-									} flex items-center  rounded-3xl justify-center px-4 h-10 leading-tight text-gray-500 cursor-pointer  border border-gray-300 `}>
+											? '!bg-primary  text-white'
+											: 'bg-white hover:bg-gray-100 hover:text-black'
+									} flex items-center  dark:glass dark:border-none dark:text-white  rounded-3xl justify-center px-4 h-10 leading-tight text-gray-500 cursor-pointer  border border-gray-300 `}>
 									{val}
 								</a>
 							</li>
@@ -587,7 +603,7 @@ function Paginator() {
 							}}
 							className={`${
 								maxNumPage <= page ? 'cursor-not-allowed ' : ''
-							} flex items-center  justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}>
+							} flex items-center  justify-center px-4 h-10 leading-tight text-gray-500 bg-white dark:glass border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700  dark:border-none dark:text-white dark:hover:bg-gray-700 dark:hover:text-white`}>
 							<span className="sr-only">Next</span>
 							<svg
 								className="w-3 h-3"

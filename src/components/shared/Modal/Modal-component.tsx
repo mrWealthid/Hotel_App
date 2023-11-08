@@ -6,7 +6,7 @@ import { useOutsideClick } from '@/components/shared/Hooks/useOutSideClick';
 
 const ModalContext = createContext({});
 
-function Modal({ children, size = 'w-1/2' }: any) {
+function Modal({ children, size = 'w-full lg:w-1/2' }: any) {
 	const [openName, setOpenName] = useState('');
 
 	const close = () => setOpenName('');

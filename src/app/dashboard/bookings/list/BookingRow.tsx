@@ -26,7 +26,7 @@ function BookingRow({ data }: any) {
 				return (
 					<tr
 						key={i}
-						className="bg-white relative border-b hover:bg-gray-50 ">
+						className=" dark:border-none dark:text-white text-secondary relative border-b hover:glass ">
 						{/* <td className="p-2 font-medium md:px-2 md:py-4 whitespace-nowrap">
 							<input
 								title="check"
@@ -43,25 +43,40 @@ function BookingRow({ data }: any) {
 						<td className="p-2 font-medium md:px-2 md:py-4 whitespace-nowrap">
 							<span>{i + 1}.</span>
 						</td>
-						<td>{row.cabin.name}</td>
 						<td>
 							<span
+								title={row.cabin.name}
+								className="block  ellipsis-overflow">
+								{row.cabin.name}
+							</span>
+						</td>
+						<td>
+							<span
+								title={row.guests.name}
 								className={
-									'text-sm font-semibold block  mb-1  rounded-3xl'
+									'text-sm font-semibold block ellipsis-overflow  mb-1  rounded-3xl'
 								}>
 								{row.guests.name}
 							</span>
-							<span className={' text-xs block'}>
+							<span
+								title={row.guests.email}
+								className={' ellipsis-overflow text-xs block'}>
 								{row.guests.email}
 							</span>
 						</td>
 
-						<td>{formatCurrency(row.totalPrice)}</td>
+						<td>
+							<span
+								className=" block ellipsis-overflow"
+								title={row.totalPrice}>
+								{formatCurrency(row.totalPrice)}
+							</span>
+						</td>
 						<td>
 							<span
 								className={` ${getStatusColor(
 									row.checkStatus
-								)} text-xs text-white py-2 px-3 rounded-3xl inline-flex`}>
+								)} text-[8px] md:text-xs text-white py-2 px-3 rounded-3xl inline-flex`}>
 								{row.checkStatus}
 							</span>
 						</td>
@@ -71,7 +86,9 @@ function BookingRow({ data }: any) {
 									{row.numNights} Night(s)
 								</span>
 
-								<span className="flex  text-xs gap-2">
+								<span
+									title={new Date(row.endDate).toDateString()}
+									className="flex  text-[8px]  md:text-[10px] gap-1">
 									<span>
 										{new Date(row.startDate).toDateString()}{' '}
 										➡️

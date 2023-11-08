@@ -9,7 +9,7 @@ import {
 	YAxis,
 	Tooltip
 } from 'recharts';
-import { useDarkMode } from '../context/darkModeContext';
+import { useDarkMode } from '@/components/shared/Context/darkModeContext';
 import { subDays } from 'date-fns/esm';
 
 const AreaCharts = ({ bookings, numDays }: any) => {
@@ -50,7 +50,7 @@ const AreaCharts = ({ bookings, numDays }: any) => {
 		? {
 				totalSales: { stroke: '#4f46e5', fill: '#4f46e5' },
 				extrasSales: { stroke: '#22c55e', fill: '#22c55e' },
-				text: '#e5e7eb',
+				text: 'white',
 				background: '#18212f'
 		  }
 		: {
@@ -84,7 +84,7 @@ const AreaCharts = ({ bookings, numDays }: any) => {
 
 	console.log(data);
 	return (
-		<section className="bg-white text-sm p-4 flex flex-col gap-5">
+		<section className="card text-sm p-4 flex flex-col gap-5">
 			<span className="font-medium text-sm">
 				Sales from {format(allDates.at(0)!, 'MMM dd yyyy')} &mdash;{' '}
 				{format(allDates.at(-1)!, 'MMM dd yyyy')}{' '}

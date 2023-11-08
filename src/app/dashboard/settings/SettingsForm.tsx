@@ -41,7 +41,7 @@ const SettingsForm = ({ settings }: any) => {
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit, onError)}
-			className=" flex flex-1  p-6 bg-white w-2/3   items-center">
+			className=" flex flex-1  p-6 bg-white lg:w-2/3   items-center">
 			<section className="flex-col flex gap-2 w-full">
 				<TextInput
 					name={'minBookingLength'}

@@ -19,8 +19,8 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 					onClick={() => handleClick(null)}
 					type="button"
 					className={`${
-						query ?? 'bg-primary text-white'
-					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+						query ?? '!bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl   dark:glass dark:border-none bg-gray-50 font-light text-black border btn`}>
 					All
 				</button>
 			</div>
@@ -31,8 +31,8 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 					type="button"
 					className={`${
 						query?.checkStatus === 'CHECKED_IN' &&
-						'bg-primary text-white'
-					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+						'!bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50  dark:glass dark:border-none font-light text-black border btn`}>
 					Checked In
 				</button>
 			</div>
@@ -46,8 +46,8 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 					type="button"
 					className={`${
 						query?.checkStatus === 'CHECKED_OUT' &&
-						'bg-primary text-white'
-					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+						'!bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  dark:glass dark:border-none bg-gray-50 font-light text-black border btn`}>
 					{' '}
 					Checked-Out
 				</button>
@@ -63,8 +63,8 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 					type="button"
 					className={`${
 						query?.checkStatus === 'UNCONFIRMED' &&
-						'bg-primary text-white'
-					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+						'!bg-primary text-white'
+					} w-full  text-xs px-6 py-2 rounded-3xl  dark:glass dark:border-none  bg-gray-50 font-light text-black border btn`}>
 					Un-Confirmed
 				</button>
 			</div>

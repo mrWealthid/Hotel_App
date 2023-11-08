@@ -45,8 +45,8 @@ const Page = () => {
 							onClick={() => handleClick(7)}
 							type="button"
 							className={`${
-								days === 7 && 'bg-primary text-white'
-							} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+								days === 7 && '!bg-primary text-white'
+							} w-full  text-xs px-6 py-2 rounded-3xl  dark:border-none  bg-gray-50 dark:glass font-light text-black border btn`}>
 							Last 7 days
 						</button>
 					</div>
@@ -56,8 +56,8 @@ const Page = () => {
 							onClick={() => handleClick(30)}
 							type="button"
 							className={`${
-								days === 30 && 'bg-primary text-white'
-							} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+								days === 30 && '!bg-primary text-white'
+							} w-full  text-xs px-6 py-2 rounded-3xl  dark:border-none  bg-gray-50 dark:glass font-light text-black border btn`}>
 							Last 30 days
 						</button>
 					</div>
@@ -66,8 +66,8 @@ const Page = () => {
 							onClick={() => handleClick(90)}
 							type="button"
 							className={`${
-								days === 90 && 'bg-primary text-white'
-							} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn`}>
+								days === 90 && '!bg-primary text-white'
+							} w-full  text-xs px-6 py-2 rounded-3xl dark:glass dark:border-none  bg-gray-50 font-light text-black border btn`}>
 							{' '}
 							Last 90 days
 						</button>
@@ -84,8 +84,8 @@ const Page = () => {
 				/>
 			</section>
 
-			<section className="w-full flex-1 gap-3 flex ">
-				<section className=" card w-1/2">
+			<section className="w-full flex-1 flex-col md:flex-row  gap-3 flex ">
+				<section className=" card  w-full md:w-1/2">
 					<p className="font-medium mb-3 text-sm">
 						Today&apos;s Activities
 					</p>
@@ -93,7 +93,7 @@ const Page = () => {
 					<TodayActivity daily={daily} />
 				</section>
 
-				<section className="w-1/2 card">
+				<section className="w-full md:w-1/2 card">
 					<p className="font-medium mb-3  text-sm">
 						Stay duration summary
 					</p>
