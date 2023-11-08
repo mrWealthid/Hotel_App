@@ -6,7 +6,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/utils/Providers';
 import { HeaderComponent } from '@/components/ui/HeaderComponent';
-import { DarkModeProvider } from '@/components/shared/Context/darkModeContext';
+import { DarkModeProvider } from '@/components/shared/Context/DarkModeContext';
 
 const raleway = Raleway({ subsets: ['latin'] });
 
