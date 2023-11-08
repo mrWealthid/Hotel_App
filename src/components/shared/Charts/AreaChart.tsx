@@ -9,7 +9,7 @@ import {
 	YAxis,
 	Tooltip
 } from 'recharts';
-import { useDarkMode } from '@/components/shared/Context/DarkModeContext';
+import { useDarkMode } from '../Context/DarkModeContext';
 import { subDays } from 'date-fns/esm';
 
 const AreaCharts = ({ bookings, numDays }: any) => {
