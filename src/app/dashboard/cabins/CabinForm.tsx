@@ -13,14 +13,17 @@ const CabinForm = ({ cabin, onCloseModal }: any) => {
 		mode: 'onChange',
 		defaultValues: isEditing ? { ...cabin } : {}
 	});
-	const { isCreating, createCabin } = useCreateCabin(cabin?.id, isEditing);
+	const { isCreating, createCabin } = useCreateCabin(
+		cabin?.id,
+		isEditing,
+		onCloseModal
+	);
 
 	const { errors, isSubmitting } = formState;
 
 	async function onSubmit(data: any) {
 		createCabin(data);
 
-		onCloseModal();
 		// try {
 		// 	const res = await fetch(
 		// 		`${

@@ -38,7 +38,8 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 	const { errors, isSubmitting } = formState;
 	const { isCreating, createBooking } = useCreateBooking(
 		booking?.id,
-		isEditing
+		isEditing,
+		onCloseModal
 	);
 
 	function handleAutoCompleteValues(values: any) {
@@ -81,7 +82,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 		}
 
 		createBooking(payload);
-		onCloseModal();
+		// onCloseModal();
 	}
 
 	function onError(err: any) {
