@@ -9,6 +9,7 @@ import { fetchCabins, fetchGuests } from './service/bookings.service';
 import { DateRangePicker } from '@/components/shared/DatePicker/DatePicker';
 import { addDays, differenceInDays, formatISO } from 'date-fns';
 import { formatCurrency } from '@/utils/helpers';
+import { useCreateBooking } from './hooks/useBookings';
 
 const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 	const isEditing = !!booking?.id;
@@ -35,6 +36,10 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 	const [hasBreakfast, setHasBreakFast] = useState(false);
 
 	const { errors, isSubmitting } = formState;
+	const { isCreating, createBooking } = useCreateBooking(
+		booking?.id,
+		isEditing
+	);
 
 	function handleAutoCompleteValues(values: any) {
 		setAutoCompleteValue({ ...autoCompleteValue, ...values });
@@ -52,7 +57,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 	}, [formState.isValid]);
 
 	async function onSubmit(data: any) {
-		const { guests, cabin }: any = autoCompleteValue;
+		const { cabin }: any = autoCompleteValue;
 		const diffInDays = differenceInDays(
 			new Date(endDate),
 			new Date(startDate)
@@ -67,38 +72,16 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 			numNights: diffInDays
 		};
 
-		console.log(data);
-
-		console.log('PAYLOAD==>', payload);
-
-		if (hasBreakfast) payload.hasBreakfast = hasBreakfast;
-		payload.extraPrice =
-			settings.breakfastPrice *
-			diffInDays *
-			parseInt(getValues().numGuests);
-
-		try {
-			const res = await fetch(
-				`${
-					isEditing
-						? `http://localhost:3000/api/bookings/${booking.id}`
-						: `http://localhost:3000/api/bookings`
-				}`,
-				{
-					method: `${isEditing ? 'PATCH' : 'POST'}`, // *GET, POST, PUT, DELETE, etc.
-					body: JSON.stringify(payload) // body data type must match "Content-Type" header
-				}
-			);
-
-			if (!res.ok) {
-				throw new Error(
-					`Cabin could not be created Status: ${res.status}`
-				);
-			}
-			return res.json(); // parses JSON response into native JavaScript objects
-		} catch (err) {
-			console.log(err);
+		if (hasBreakfast) {
+			payload.hasBreakfast = hasBreakfast;
+			payload.extraPrice =
+				settings.breakfastPrice *
+				diffInDays *
+				parseInt(getValues().numGuests);
 		}
+
+		createBooking(payload);
+		onCloseModal();
 	}
 
 	function onError(err: any) {
@@ -115,15 +98,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 			new Date(startDate)
 		);
 
-		console.log(diffInDays);
-		console.log(getValues().numGuests);
-		console.log(settings.breakfastPrice);
-
-		// console.log(
-		// 	parseInt(settings.breakfastPrice) *
-		// 		diffInDays *
-		// 		parseInt(getValues().numGuests)
-		// );
 		return (
 			parseInt(settings.breakfastPrice) *
 			diffInDays *
@@ -380,7 +354,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 							style="rounded-3xl"
 							disabled={!formState.isValid}
 							btnText={` ${
-								isEditing ? 'Update Cabin' : ' Add  Cabin'
+								isEditing ? 'Update Booking' : ' Make Booking'
 							}`}></ButtonComponent>
 					</section>
 				</section>

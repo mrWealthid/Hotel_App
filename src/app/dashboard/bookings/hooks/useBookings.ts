@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import {
 	fetchBookings,
 	handleCheckout,
+	handleCreateBooking,
 	handleDeleteBookings
 } from '../service/bookings.service';
 
@@ -15,6 +16,22 @@ export interface IListResponse {
 	results: number;
 }
 
+export function useCreateBooking(bookingId: any, isEditing: any) {
+	const queryClient = useQueryClient();
+	const { isLoading: isCreating, mutate: createBooking } = useMutation({
+		mutationFn: (payload) =>
+			handleCreateBooking(payload, bookingId, isEditing),
+		onSuccess: () => {
+			toast.success('Bookings successfully created...');
+			queryClient.invalidateQueries({
+				queryKey: ['bookings']
+			});
+		},
+		onError: (err: any) => toast.error(err.message)
+	});
+
+	return { isCreating, createBooking };
+}
 // export function useBookings(page: number, limit: number): IListResponse {
 // 	const { isLoading, data, error } = useQuery({
 // 		queryKey: ['bookings'],

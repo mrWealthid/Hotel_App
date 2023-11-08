@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
 	fetchCabins,
+	handleCreateCabin,
 	handleDelete,
 	handleDuplicateCabin
 } from '../service/cabins.service';
@@ -45,6 +46,30 @@ export function useDuplicateCabin() {
 
 	return { isDuplicating, duplicateCabin };
 }
+
+// export function invalidateQuery(key: any) {
+// 	const queryClient = useQueryClient();
+
+// 	queryClient.invalidateQueries({
+// 		queryKey: [key]
+// 	});
+// }
+
+export function useCreateCabin(cabinId: any, isEditing: any) {
+	const queryClient = useQueryClient();
+	const { isLoading: isCreating, mutate: createCabin } = useMutation({
+		mutationFn: (payload) => handleCreateCabin(payload, cabinId, isEditing),
+		onSuccess: () => {
+			toast.success('Cabin successfully created...');
+			queryClient.invalidateQueries({
+				queryKey: ['cabins']
+			});
+		},
+		onError: (err: any) => toast.error(err.message)
+	});
+
+	return { isCreating, createCabin };
+}
 export function useDeleteCabin() {
 	const queryClient = useQueryClient();
 	const { isLoading: isDeleting, mutate: deleteCabin } = useMutation({
@@ -52,7 +77,7 @@ export function useDeleteCabin() {
 		onSuccess: () => {
 			toast.success('Cabin successfully deleted');
 			queryClient.invalidateQueries({
-				queryKey: ['cabins']
+				queryKey: ['cabins', 5, 1, null]
 			});
 		},
 		onError: (err: any) => toast.error(err.message)

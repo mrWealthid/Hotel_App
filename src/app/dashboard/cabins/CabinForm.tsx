@@ -4,6 +4,7 @@ import TextInput from '@/components/shared/Form-inputs/Text-Input';
 import ButtonComponent from '@/components/shared/Form-inputs/Button';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useCreateCabin } from './hooks/useCabins';
 
 const CabinForm = ({ cabin, onCloseModal }: any) => {
 	const isEditing = !!cabin?.id;
@@ -12,32 +13,41 @@ const CabinForm = ({ cabin, onCloseModal }: any) => {
 		mode: 'onChange',
 		defaultValues: isEditing ? { ...cabin } : {}
 	});
+	const { isCreating, createCabin } = useCreateCabin(cabin?.id, isEditing);
 
 	const { errors, isSubmitting } = formState;
 
 	async function onSubmit(data: any) {
-		try {
-			const res = await fetch(
-				`${
-					isEditing
-						? `http://localhost:3000/api/cabins/${cabin.id}`
-						: `http://localhost:3000/api/cabins`
-				}`,
-				{
-					method: `${isEditing ? 'PATCH' : 'POST'}`, // *GET, POST, PUT, DELETE, etc.
-					body: JSON.stringify(data) // body data type must match "Content-Type" header
-				}
-			);
+		createCabin(data);
 
-			if (!res.ok) {
-				throw new Error(
-					`Cabin could not be created Status: ${res.status}`
-				);
-			}
-			return res.json(); // parses JSON response into native JavaScript objects
-		} catch (err) {
-			console.log(err);
-		}
+		onCloseModal();
+		// try {
+		// 	const res = await fetch(
+		// 		`${
+		// 			isEditing
+		// 				? `http://localhost:3000/api/cabins/${cabin.id}`
+		// 				: `http://localhost:3000/api/cabins`
+		// 		}`,
+		// 		{
+		// 			method: `${isEditing ? 'PATCH' : 'POST'}`, // *GET, POST, PUT, DELETE, etc.
+		// 			body: JSON.stringify(data) // body data type must match "Content-Type" header
+		// 		}
+		// 	);
+
+		// 	if (!res.ok) {
+		// 		throw new Error(
+		// 			`Cabin could not be created Status: ${res.status}`
+		// 		);
+		// 	}
+		// 	toast.success(
+		// 		`Cabin ${isEditing ? 'Updated' : 'Created'} Successfully... `
+		// 	);
+		// 	onCloseModal();
+		// 	invalidateQuery(['cabins', 5, 1, null]);
+		// 	router.refresh();
+		// } catch (err) {
+		// 	console.log(err);
+		// }
 	}
 
 	function onError(err: any) {
