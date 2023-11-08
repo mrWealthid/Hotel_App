@@ -1,27 +1,12 @@
 'use client';
 
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const BookingsHeaderActions = ({ handleFilter }: any) => {
-	const router = useRouter();
-
-	const [asc, setAsc] = useState(false);
-	const searchParams = useSearchParams()!;
-
-	const params = new URLSearchParams(searchParams);
-
-	// params.set('name', 'wealth');
-
-	console.log(params);
-
 	const [query, setQuery] = useState<{
 		checkStatus: string;
 	} | null>(null);
 
-	console.log(query);
 	async function handleClick(query: any) {
 		setQuery(query);
 		query ? handleFilter(query) : handleFilter(null);
