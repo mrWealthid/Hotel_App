@@ -1,6 +1,16 @@
 'use client';
-import React, { cloneElement, use, useContext, useState } from 'react';
+import React, {
+	cloneElement,
+	Fragment,
+	useEffect,
+	useRef,
+	useContext,
+	useState
+} from 'react';
 import { Dropdown } from 'flowbite-react';
+import { Menu, Transition } from '@headlessui/react';
+
+import { ChevronDownIcon } from '@heroicons/react/solid';
 
 import Link from 'next/link';
 import Modal from '@/components/shared/Modal/Modal-component';
@@ -21,108 +31,94 @@ import {
 const BookingsRowActions = ({ rowData }: any) => {
 	const { isDeleting, deleteBooking } = useDeleteBooking();
 	const { isCheckingOut, checkOutBooking } = useCheckOutBooking(rowData.id);
-	// const { isDeleting, deleteBooking } = useDeleteBooking();
-	// const { isDuplicating, duplicateCabin } = useDuplicateCabin();
-	// async function handleDelete(id: any, close: any) {
-	// 	try {
-	// 		const res = await fetch(
-	// 			`http://localhost:3000/api/cabins/${id}`,
 
-	// 			{
-	// 				method: 'DELETE' // *GET, POST, PUT, DELETE, etc.
-	// 				// body data type must match "Content-Type" header
-	// 			}
-	// 		);
-
-	// 		if (!res.ok) {
-	// 			throw new Error(
-	// 				`Cabin could not be created Status: ${res.status}`
-	// 			);
-	// 		}
-
-	// 		close();
-	// 		toast.success('Cabin Deleted Successfully');
-
-	// 		router.refresh();
-	// 		return res.json(); // parses JSON response into native JavaScript objects
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// }
-
-	// async function handleCheckout(payload: any, close: any) {
-	// 	try {
-	// 		const res = await fetch(
-	// 			`http://localhost:3000/api/bookings/${rowData.id}`,
-	// 			{
-	// 				method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
-	// 				body: JSON.stringify(payload) // body data type must match "Content-Type" header
-	// 			}
-	// 		);
-
-	// 		if (!res.ok) {
-	// 			throw new Error(
-	// 				`Guest could not be checked out Status: ${res.status}`
-	// 			);
-	// 		}
-
-	// 		close();
-	// 		toast.success('Checkout  Successful');
-
-	// 		revalidateTag('bookings');
-	// 		router.push('/dashboard/bookings');
-	// 		return res.json(); // parses JSON response into native JavaScript objects
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// }
 	return (
 		<td className="py-2 px-4  md:px-2 md:py-4 space-x-3">
 			<Modal>
-				<Dropdown
-					arrowIcon={false}
-					className="z-50 translate-x-6  !text-black"
-					style={{ color: 'black' }}
-					label={<span>...</span>}>
-					{rowData.checkStatus === 'CHECKED_IN' && (
-						<Dropdown.Item as="div">
-							<Modal.Open opens="check-out">
-								<button
-									className="flex gap-1 items-center"
-									type="button">
-									<HiArrowUpOnSquare /> Check-Out
-								</button>
-							</Modal.Open>
-						</Dropdown.Item>
-					)}
+				<Menu as="div" className="relative inline-block text-left">
+					<div>
+						<Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+							<span>...</span>
+							{/* <ChevronDownIcon
+								className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
+								aria-hidden="true"
+							/> */}
+						</Menu.Button>
+					</div>
+					<Transition
+						as={Fragment}
+						enter="transition ease-out duration-100"
+						enterFrom="transform opacity-0 scale-95"
+						enterTo="transform opacity-100 scale-100"
+						leave="transition ease-in duration-75"
+						leaveFrom="transform opacity-100 scale-100"
+						leaveTo="transform opacity-0 scale-95">
+						<Menu.Items className="absolute text-black z-50 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+							<div className="px-1 py-1 ">
+								{rowData.checkStatus === 'CHECKED_IN' && (
+									<Menu.Item>
+										{({ active }) => (
+											<Modal.Open opens="check-out">
+												<button className="group gap-1 flex w-full hover:glass  items-center rounded-md px-2 py-2 text-sm">
+													{active ? (
+														<HiArrowUpOnSquare />
+													) : (
+														<HiArrowUpOnSquare />
+													)}
+													Check-Out
+												</button>
+											</Modal.Open>
+										)}
+									</Menu.Item>
+								)}
+								<Menu.Item>
+									{({ active }) => (
+										<Link
+											href={`bookings/${rowData.id}`}
+											className="
+											 group flex gap-1 w-full hover:glass items-center rounded-md px-2 py-2 text-sm">
+											{active ? <HiEye /> : <HiEye />}
+											View Details
+										</Link>
+									)}
+								</Menu.Item>
+							</div>
+							<div className="px-1 py-1">
+								{rowData.checkStatus === 'UNCONFIRMED' && (
+									<Menu.Item>
+										{({ active }) => (
+											<Link
+												href={`checkin/${rowData.id}`}
+												className="group flex gap-1 w-full hover:glass items-center rounded-md px-2 py-2 text-sm">
+												{active ? (
+													<HiArrowDownOnSquare />
+												) : (
+													<HiArrowDownOnSquare />
+												)}
+												Check-In
+											</Link>
+										)}
+									</Menu.Item>
+								)}
 
-					<Dropdown.Item as="div">
-						<Link
-							className="flex gap-1 items-center"
-							href={`bookings/${rowData.id}`}>
-							<HiEye /> View details
-						</Link>
-					</Dropdown.Item>
-					{rowData.checkStatus === 'UNCONFIRMED' && (
-						<Dropdown.Item as="div">
-							<Link
-								className="flex gap-1 items-center"
-								href={`checkin/${rowData.id}`}>
-								<HiArrowDownOnSquare /> {''} Check-In
-							</Link>
-						</Dropdown.Item>
-					)}
-
-					<Dropdown.Item as="div">
-						<Modal.Open opens="delete-booking">
-							<button
-								className="flex gap-1 items-center"
-								type="button">
-								<HiArrowUpOnSquare /> Delete
-							</button>
-						</Modal.Open>
-					</Dropdown.Item>
-				</Dropdown>
+								<Menu.Item>
+									{({ active }) => (
+										<Modal.Open opens="delete-booking">
+											<button className="group gap-1 flex w-full hover:glass  items-center rounded-md px-2 py-2 text-sm">
+												{active ? (
+													<HiArrowUpOnSquare />
+												) : (
+													<HiArrowUpOnSquare />
+												)}
+												Delete
+											</button>
+										</Modal.Open>
+									)}
+								</Menu.Item>
+							</div>
+						</Menu.Items>
+					</Transition>
+				</Menu>
 
 				<Modal.Window name="delete-booking">
 					<ConfirmationPage
@@ -144,55 +140,7 @@ const BookingsRowActions = ({ rowData }: any) => {
 							 ${rowData.guests.name}`}
 					/>
 				</Modal.Window>
-				{/* <Modal.Window name="confirm-duplicate">
-					<ConfirmationPage
-						handler={(onCloseModal: any) =>
-							handleDuplicateCabin(rowData, onCloseModal)
-						}
-						modalText={'Are you sure you want to duplicate cabin'}
-					/>
-				</Modal.Window> */}
 			</Modal>
-			{/* <Modal>
-				<Modal.Open opens="edit-cabin-form">
-					<button type="button" className="btn-primary rounded-3xl">
-						Edit
-					</button>
-				</Modal.Open>
-				<Modal.Window name="edit-cabin-form">
-					<CabinForm cabin={rowData} />
-				</Modal.Window>
-			</Modal> */}
-
-			{/* <Modal>
-				<Modal.Open opens="confirm-modal">
-					<div>
-						<button
-							type="button"
-							className="btn-primary rounded-3xl">
-							Delete
-						</button>
-					</div>
-				</Modal.Open>
-				<Modal.Window name="confirm-modal">
-					<ConfirmationPage
-						handler={() => handleDelete(rowData.id)}
-						modalText={'Are you sure you want to delete cabin'}
-					/>
-				</Modal.Window>
-			</Modal> */}
-
-			{/* <button
-				onClick={() => handleDelete(rowData.id)}
-				className="text-xs popup">
-				Delete
-			</button>
-
-			<button
-				onClick={() => handleDuplicateCabin(rowData)}
-				className="text-xs popup">
-				Duplicate
-			</button> */}
 		</td>
 	);
 };
