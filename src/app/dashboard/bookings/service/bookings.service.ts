@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export async function fetchBookings(
 	page: number,
 	limit: number,
@@ -7,15 +9,15 @@ export async function fetchBookings(
 		? `/api/bookings?limit=${limit}&page=${page}&${query}`
 		: `/api/bookings?limit=${limit}&page=${page}`;
 	try {
-		const response = await fetch(url);
+		const response = await axios(url);
 
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-
-		return await response.json();
-	} catch (err) {
+		const data = await response.data;
+		return data;
+	} catch (err: any) {
 		console.log(err);
+		throw new Error(
+			`Booking could not be loaded Status: ${err.response.status}`
+		);
 	}
 }
 export async function fetchGuests(query: string | null) {
@@ -23,15 +25,15 @@ export async function fetchGuests(query: string | null) {
 		? `/api/guests/searchterm?name=${query}`
 		: `/api/guests/searchterm`;
 	try {
-		const response = await fetch(url);
+		const response = await axios(url);
 
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-
-		return await response.json();
-	} catch (err) {
+		const data = await response.data;
+		return data;
+	} catch (err: any) {
 		console.log(err);
+		throw new Error(
+			`Guest could not be loaded Status: ${err.response.status}`
+		);
 	}
 }
 export async function fetchCabins(query: string | null) {
@@ -39,15 +41,13 @@ export async function fetchCabins(query: string | null) {
 		? `/api/cabins/searchterm?name=${query}`
 		: `/api/cabins/searchterm`;
 	try {
-		const response = await fetch(url);
+		const response = await axios(url);
 
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-
-		return await response.json();
-	} catch (err) {
+		const data = await response.data;
+		return data;
+	} catch (err: any) {
 		console.log(err);
+		throw new Error(`Cabins could not loaded: ${err.response.status}`);
 	}
 }
 
@@ -57,79 +57,44 @@ export async function handleCreateBooking(
 	isEditing: any
 ) {
 	try {
-		const res = await fetch(
-			`${
-				isEditing
-					? `http://localhost:3000/api/bookings/${booking.id}`
-					: `http://localhost:3000/api/bookings`
-			}`,
-			{
-				method: `${isEditing ? 'PATCH' : 'POST'}`, // *GET, POST, PUT, DELETE, etc.
-				body: JSON.stringify(data) // body data type must match "Content-Type" header
-			}
-		);
+		const res = isEditing
+			? await axios.patch(`/api/bookings/${booking.id}`, data)
+			: await axios.post(`api/bookings`, data);
 
-		if (!res.ok) {
-			throw new Error(`Cabin could not be created Status: ${res.status}`);
-		}
-		// toast.success(
-		// 	`Cabin ${isEditing ? 'Updated' : 'Created'} Successfully... `
-		// );
-		// onCloseModal();
-		// invalidateQuery(['cabins', 5, 1, null]);
-		// router.refresh();
-	} catch (err) {
+		const resData = await res.data;
+		return resData;
+	} catch (err: any) {
 		console.log(err);
+		throw new Error(
+			`Booking could not be created Status: ${err.response.status}`
+		);
 	}
 }
 
 export async function handleDeleteBookings(id: any) {
 	try {
-		const res = await fetch(
-			`/api/bookings/${id}`,
+		const res = await axios.delete(`/api/bookings/${id}`);
 
-			{
-				method: 'DELETE' // *GET, POST, PUT, DELETE, etc.
-				// body data type must match "Content-Type" header
-			}
-		);
-
-		if (!res.ok) {
-			throw new Error(`Cabin could not be created Status: ${res.status}`);
-		}
-
-		return res.json(); // parses JSON response into native JavaScript objects
-	} catch (err) {
+		const data = await res.data;
+		return data;
+	} catch (err: any) {
 		console.log(err);
+		throw new Error(
+			`Booking could not be deleted Status: ${err.response.status}`
+		);
 	}
 }
 
 export async function handleCheckout(payload: any, id: any) {
 	try {
-		const res = await fetch(`/api/bookings/${id}`, {
-			method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
-			body: JSON.stringify(payload) // body data type must match "Content-Type" header
-		});
+		const res = await axios.patch(`/api/bookings/${id}`, payload);
 
-		if (!res.ok) {
-			throw new Error(
-				`Guest could not be checked out Status: ${res.status}`
-			);
-		}
-
-		return await res.json(); // parses JSON response into native JavaScript objects
-	} catch (err) {
+		const data = await res.data;
+		return data;
+	} catch (err: any) {
 		console.log(err);
+		throw new Error(
+			`Guest could not be checked out Status: ${err.response.status}`
+		);
 	}
 }
-
-// export async function getCabins() {
-// 	const { data, error } = await supabase.from('cabins').select('*');
-
-// 	if (error) {
-// 		console.error(error);
-// 		throw new Error('Cabins could not be loaded');
-// 	}
-
-// 	return data;
-// }
