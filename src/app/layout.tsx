@@ -6,7 +6,6 @@ import { QueryClient } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/utils/Providers';
 import { HeaderComponent } from '@/components/ui/HeaderComponent';
-import { DarkModeProvider } from '../components/shared/Context/DarkModeContext';
 
 const raleway = Raleway({ subsets: ['latin'] });
 
@@ -41,9 +40,7 @@ export default function RootLayout({
 				</section> */}
 
 				{/* <HeaderComponent /> */}
-				<Providers>
-					<DarkModeProvider>{children}</DarkModeProvider>
-				</Providers>
+				<Providers>{children}</Providers>
 
 				<Toaster
 					position="top-center"
