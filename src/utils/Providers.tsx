@@ -12,7 +12,7 @@ function Providers({ children }: React.PropsWithChildren) {
 	return (
 		<QueryClientProvider client={client}>
 			<ReactQueryStreamedHydration>
-				<DarkModeProvider> {children}</DarkModeProvider>
+				{children}
 			</ReactQueryStreamedHydration>
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
