@@ -97,8 +97,6 @@ function PieCharts({ confirmedStays }: any) {
 	];
 
 	function prepareData(startData: any, stays: any) {
-		// A bit ugly code, but sometimes this is what it takes when working with real data 😅
-
 		function incArrayValue(arr: any, field: string) {
 			return arr.map((obj: any) =>
 				obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
