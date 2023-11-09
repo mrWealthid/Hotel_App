@@ -46,7 +46,7 @@ const Page = () => {
 							type="button"
 							className={`${
 								days === 7 && '!bg-primary text-white'
-							} w-full  text-xs px-6 py-2 rounded-3xl  dark:border-none  bg-gray-50 dark:glass font-light text-black border btn`}>
+							} w-full  text-xs px-6 py-2 rounded-3xl  dark:border-none  bg-gray-50 dark:glass font-light text-black  dark:text-white border btn`}>
 							Last 7 days
 						</button>
 					</div>
@@ -57,7 +57,7 @@ const Page = () => {
 							type="button"
 							className={`${
 								days === 30 && '!bg-primary text-white'
-							} w-full  text-xs px-6 py-2 rounded-3xl  dark:border-none  bg-gray-50 dark:glass font-light text-black border btn`}>
+							} w-full  text-xs px-6 py-2 rounded-3xl  dark:border-none  bg-gray-50 dark:glass font-light text-black dark:text-white border btn`}>
 							Last 30 days
 						</button>
 					</div>
@@ -67,8 +67,7 @@ const Page = () => {
 							type="button"
 							className={`${
 								days === 90 && '!bg-primary text-white'
-							} w-full  text-xs px-6 py-2 rounded-3xl dark:glass dark:border-none  bg-gray-50 font-light text-black border btn`}>
-							{' '}
+							} w-full  text-xs px-6 py-2 rounded-3xl dark:glass dark:border-none  bg-gray-50 font-light text-black dark:text-white border btn`}>
 							Last 90 days
 						</button>
 					</div>
