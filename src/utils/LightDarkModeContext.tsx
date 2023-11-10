@@ -3,8 +3,12 @@ import { createContext, useContext, useEffect } from 'react';
 import { useLocalStorageState } from '@/components/shared/Hooks/useLocalStorage';
 
 const DarkModeContext = createContext({});
-let windoww = window;
+let windoww: Window;
 function DarkModeProvider({ children }: any) {
+	useEffect(function () {
+		windoww = window;
+	}, []);
+
 	const [isDarkMode, setIsDarkMode] = useLocalStorageState(
 		windoww.matchMedia('(prefers-color-scheme: dark)').matches,
 		'isDarkMode'
