@@ -7,7 +7,13 @@ import { useForm } from 'react-hook-form';
 import AutoComplete from '@/components/shared/AutoComplete/AutoComplete';
 import { fetchCabins, fetchGuests } from './service/bookings.service';
 import { DateRangePicker } from '@/components/shared/DatePicker/DatePicker';
-import { addDays, differenceInDays, formatISO } from 'date-fns';
+import {
+	addDays,
+	differenceInDays,
+	formatISO,
+	startOfDay,
+	endOfDay
+} from 'date-fns';
 import { formatCurrency } from '@/utils/helpers';
 import { useCreateBooking } from './hooks/useBookings';
 
@@ -28,8 +34,8 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 		values: {
 			cabin: autoCompleteValue?.cabin?.id,
 			guests: autoCompleteValue?.guests?.id,
-			startDate: startDate,
-			endDate: endDate
+			startDate: startOfDay(new Date(startDate)),
+			endDate: endOfDay(new Date(endDate))
 		}
 	});
 
