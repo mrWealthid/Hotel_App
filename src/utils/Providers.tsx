@@ -10,12 +10,14 @@ function Providers({ children }: React.PropsWithChildren) {
 	const [client] = React.useState(new QueryClient());
 
 	return (
-		<QueryClientProvider client={client}>
-			<ReactQueryStreamedHydration>
-				{children}
-			</ReactQueryStreamedHydration>
-			<ReactQueryDevtools initialIsOpen={false} />
-		</QueryClientProvider>
+		<DarkModeProvider>
+			<QueryClientProvider client={client}>
+				<ReactQueryStreamedHydration>
+					{children}
+				</ReactQueryStreamedHydration>
+				<ReactQueryDevtools initialIsOpen={false} />
+			</QueryClientProvider>
+		</DarkModeProvider>
 	);
 }
 
