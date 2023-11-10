@@ -12,9 +12,11 @@ import { useCabins } from './cabins/hooks/useCabins';
 import AreaCharts from '@/components/shared/Charts/AreaChart';
 import PieCharts from '@/components/shared/Charts/PieChart';
 import TodayActivity from './checkin/[bookingId]/TodayActivity';
+import TabComponent from '@/components/shared/Tabs/Tabs';
 
 const Page = () => {
 	const [days, setDays] = useState<number>(7);
+	const [activeTab, setActiveTab] = useState<number>(0);
 
 	// console.log(query);
 	async function handleClick(query: any) {
@@ -33,6 +35,18 @@ const Page = () => {
 	// 	// setSearch(null);
 	// 	return;
 	// }
+
+	function updateOrder(values: number) {
+		setActiveTab(values);
+	}
+
+	const tabData = [
+		{
+			title: 'Arriving',
+			order: 0
+		},
+		{ title: 'Departing', order: 1 }
+	];
 
 	return (
 		<div className=" flex flex-col gap-5">
@@ -89,7 +103,14 @@ const Page = () => {
 						Today&apos;s Activities
 					</p>
 
-					<TodayActivity daily={daily} />
+					<TabComponent updateOrder={updateOrder} tabData={tabData} />
+					<TodayActivity
+						daily={daily?.filter((data: any) =>
+							activeTab === 0
+								? data.checkStatus === 'UNCONFIRMED'
+								: data.checkStatus === 'CHECKED_IN'
+						)}
+					/>
 				</section>
 
 				<section className="w-full md:w-1/2 card">
