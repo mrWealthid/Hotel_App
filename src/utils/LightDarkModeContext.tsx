@@ -10,7 +10,7 @@ function DarkModeProvider({ children }: any) {
 	}, []);
 
 	const [isDarkMode, setIsDarkMode] = useLocalStorageState(
-		windoww.matchMedia('(prefers-color-scheme: dark)').matches,
+		windoww?.matchMedia('(prefers-color-scheme: dark)').matches,
 		'isDarkMode'
 	);
 
