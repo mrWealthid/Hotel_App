@@ -56,7 +56,7 @@ export async function handleCreateBooking(
 	try {
 		const res = isEditing
 			? await axios.patch(`/api/bookings/${booking.id}`, data)
-			: await axios.post(`api/bookings`, data);
+			: await axios.post(`/api/bookings`, data);
 
 		const resData = await res.data;
 		return resData;
