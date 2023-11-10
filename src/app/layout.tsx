@@ -20,7 +20,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${raleway.className} min-h-screen`}>
-				<Providers>{children}</Providers>
+				<Providers>
+					<DarkModeProvider>{children}</DarkModeProvider>
+				</Providers>
 
 				<Toaster
 					position="top-center"
