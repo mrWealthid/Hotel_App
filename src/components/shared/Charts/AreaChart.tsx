@@ -67,7 +67,6 @@ const AreaCharts = ({ bookings, numDays }: any) => {
 		end: new Date()
 	});
 
-	console.log('Bookings ==>', bookings);
 	const data = allDates.map((date) => {
 		return {
 			label: format(date, 'MMM dd'),
@@ -84,7 +83,6 @@ const AreaCharts = ({ bookings, numDays }: any) => {
 		};
 	});
 
-	console.log(data);
 	return (
 		<section className="card text-sm p-4 flex flex-col gap-5">
 			<span className="font-medium text-sm">

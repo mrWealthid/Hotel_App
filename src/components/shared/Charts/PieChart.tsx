@@ -128,8 +128,6 @@ function PieCharts({ confirmedStays }: any) {
 	const startData = isDarkMode ? startDataDark : startDataLight;
 	const data = prepareData(startData, confirmedStays);
 
-	console.log(data);
-
 	return (
 		<section className="text-sm  ">
 			<ResponsiveContainer width="100%" height={240}>
