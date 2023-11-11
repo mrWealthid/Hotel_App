@@ -5,23 +5,6 @@ import Link from 'next/link';
 import SwitchToggle from '@/components/shared/Switch/SwitchToggle';
 
 const Header = async () => {
-	// async function fetchData() {
-	// 	const url = `http://localhost:3000/api/users/me`;
-
-	// 	try {
-	// 		const response = await fetch(url);
-
-	// 		if (!response.ok) {
-	// 			throw new Error(`HTTP error! Status: ${response.status}`);
-	// 		}
-
-	// 		return await response.json();
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// }
-	// const data = await fetchData();
-
 	return (
 		<div className="py-4 px-2  text-sm glass items-center   w-full flex justify-end gap-3 text-black dark:text-white">
 			<Profile />

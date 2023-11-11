@@ -88,7 +88,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 		}
 
 		createBooking(payload);
-		// onCloseModal();
 	}
 
 	function onError(err: any) {

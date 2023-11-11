@@ -30,18 +30,6 @@ const Window = ({ name, children }: any) => {
 	const { openName, close, open, size }: any = useContext(ModalContext);
 
 	useOutsideClick(close);
-	// useEffect(() => {
-	// 	function handleClick(e: any) {
-	// 		if (e.target.classList.contains('backdrop')) {
-	// 			close();
-
-	// 			console.log('click out');
-	// 		}
-	// 	}
-
-	// 	document.addEventListener('click', handleClick);
-	// 	return () => document.removeEventListener('click', handleClick);
-	// }, [close]);
 
 	if (name !== openName) return null;
 	return createPortal(
