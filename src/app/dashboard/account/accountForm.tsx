@@ -56,7 +56,7 @@ const AccountForm = ({ stage, updateStage, data }: any) => {
 	return (
 		<>
 			<section className="flex flex-col w-full lg:w-2/3 gap-7">
-				<section className="bg-white dark:glass p-6 flex flex-col gap-4  w-full rounded-2xl ">
+				<section className="card p-6 flex flex-col gap-4  w-full rounded-2xl ">
 					<section className="flex justify-end">
 						{/* <app-stepper [step]="profileService.step"
                      className="w-1/2"></app-stepper> */}

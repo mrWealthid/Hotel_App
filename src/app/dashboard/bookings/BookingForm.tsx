@@ -114,7 +114,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 		<div className="w-full">
 			<form
 				onSubmit={handleSubmit(onSubmit, onError)}
-				className=" flex flex-1  p-6 bg-white   items-center">
+				className=" flex flex-1  p-6   items-center">
 				<section className="flex-col flex gap-2 w-full">
 					<AutoComplete
 						queryKey="guests"

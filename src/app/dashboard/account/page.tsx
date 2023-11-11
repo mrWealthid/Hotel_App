@@ -17,7 +17,7 @@ const Page = () => {
 		<section className="">
 			<h1 className="title">Account </h1>
 			<section className="flex dark:text-secondary text-primary lg:flex-row flex-col w-full animate-slideIn container-text  gap-3 ">
-				<section className=" skin  dark:glass h-fit p-6  flex gap-6 border dark:border-none  w-full  lg:w-1/2 2xl:w-1/3 rounded-2xl">
+				<section className=" card h-fit p-6  flex gap-6 border dark:border-none  w-full  lg:w-1/2 2xl:w-1/3 rounded-2xl">
 					<div className="py-3">
 						<Image
 							className="border dark:border-primary-light rounded-full mx-0 w-32 object-cover h-32"

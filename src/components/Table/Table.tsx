@@ -137,8 +137,6 @@ function TableFilterForm({ column, onCloseModal }: any) {
 	const { columns }: any = useContext(TableContext);
 
 	async function onSubmit(data: any, onCloseModal: any) {
-		console.log(data);
-
 		handleFilter(data);
 
 		onCloseModal();
@@ -148,7 +146,7 @@ function TableFilterForm({ column, onCloseModal }: any) {
 	return (
 		<form
 			onSubmit={handleSubmit((data) => onSubmit(data, onCloseModal))}
-			className=' flex flex-col gap-3 p-6 bg-white items-center"'>
+			className=' flex flex-col gap-3 p-6  items-center"'>
 			<section className=" grid gap-3 grid-cols-2 ">
 				{columns.map((column: any) => {
 					if (column.searchType === 'TEXT') {
@@ -588,8 +586,8 @@ function Paginator() {
 									className={`${
 										val === page
 											? '!bg-primary  text-white'
-											: 'bg-white hover:bg-gray-100 hover:text-black'
-									} flex items-center  dark:glass dark:border-none dark:text-white  rounded-3xl justify-center px-4 h-10 leading-tight text-gray-500 cursor-pointer  border border-gray-300 `}>
+											: 'bg-white hover:bg-gray-100 dark:hover:text-primary'
+									} flex items-center  dark:glass dark:border-none   rounded-3xl justify-center px-4 h-10 leading-tight text-primary cursor-pointer  border border-gray-300 `}>
 									{val}
 								</a>
 							</li>

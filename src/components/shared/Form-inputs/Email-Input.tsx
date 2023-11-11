@@ -1,12 +1,13 @@
 import React from 'react';
+import Label from './Label';
 
 const EmailInput = ({ label, name, style, children, error }: IEmailInput) => {
 	return (
 		<div className="w-full">
 			{label && (
-				<label className="block text-xs">
-					<span className="text-gray-700">{label}</span>
-				</label>
+
+				<Label name={name} text={label}/>
+			
 			)}
 
 			{children || (

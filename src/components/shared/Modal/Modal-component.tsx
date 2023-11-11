@@ -39,12 +39,12 @@ const Window = ({ name, children }: any) => {
 					open
 						? 'visible scale-100 opacity-100'
 						: 'invisible scale-50  opacity-0'
-				} overflow-y-auto backdrop overflow-x-hidden fixed top-0 right-0 bg-gray-800 bg-opacity-80 left-0 z-50 md:inset-0 h-modal h-full justify-center items-center flex transition-all ease-in-out duration-1500`}
+				} overflow-y-auto backdrop overflow-x-hidden fixed top-0 right-0 card bg-opacity-80 left-0 z-50 md:inset-0 h-modal h-full justify-center items-center flex transition-all ease-in-out duration-1500`}
 				id="popup-modal">
 				<div className={`${size} relative p-6  h-auto`}>
-					<div className="relative  bg-white  skin rounded-lg shadow  p-4">
+					<div className="relative  card  skin rounded-lg shadow  p-4">
 						<button
-							className="absolute top-3 right-2.5 text-white bg-primary z-50 hover:bg-primary hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-primary dark:hover:text-white"
+							className="absolute top-3 right-2.5 text-white z-50 hover:bg-primary hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-primary dark:hover:text-white"
 							data-modal-toggle="popup-modal"
 							type="button">
 							<svg

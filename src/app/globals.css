@@ -70,7 +70,7 @@ body {
 }
 
 .input-style {
-	@apply border text-sm rounded border-blue-100 dark:glass-input dark:border flex justify-between focus-within:border-blue-100 items-center my-1 px-2 py-3 focus-within:ring-0 w-full;
+	@apply border text-sm rounded border-blue-100 dark:glass-input dark:border-none flex justify-between focus-within:border-blue-100 items-center my-1 px-2 py-3 focus-within:ring-0 w-full;
 }
 
 input::placeholder {
