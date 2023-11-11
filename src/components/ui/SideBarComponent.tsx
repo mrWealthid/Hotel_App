@@ -53,11 +53,11 @@ const SideBar = () => {
 				className={`fixed top-0 left-0 z-50 w-64 h-screen transition-transform ${
 					!isOpen ? '-translate-x-full' : ''
 				} sm:translate-x-0`}>
-				<div className="flex flex-col  min-h-screen  bg-primary text-white py-4">
+				<div className="flex flex-col  min-h-screen  bg-primary dark:glass text-white py-4">
 					<p className="flex justify-center space-x-4 text-white">
 						Logo
 					</p>
-					<section className="flex flex-col bg-inherit gap-3  mt-10 px-4">
+					<section className="flex flex-col  gap-3  mt-10 px-4">
 						{routes.map((link) => {
 							const isActive = pathname === link.path;
 
