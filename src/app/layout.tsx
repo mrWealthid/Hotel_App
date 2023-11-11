@@ -18,7 +18,8 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={`${raleway.className} min-h-screen`}>
+			<body
+				className={`${raleway.className} dark:bg-[#192734] bg-[#eceef1] min-h-screen`}>
 				<Providers>{children}</Providers>
 
 				<Toaster

@@ -17,21 +17,21 @@
 	--text-color: #0000004d
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
 	:root {
 		--background-color: #192734;
-		--text-color: #0000004d
-			/* --background-color: rgba(0, 0, 0, 0.3) */
 	}
-}
+} */
+
+/* @media (prefers-color-scheme: light) {
+	body {
+		background-color: var(--background-color)
+	}
+} */
 
 body {
-	background-color: var(--background-color)
-		/* color: rgb(var(--foreground-rgb));
-	background: linear-gradient(to bottom,
-			transparent,
-			rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-	background-repeat: no-repeat; */
+
+	transition: color 0.3s, background-color 0.3s;
 }
 
 @layer components {
