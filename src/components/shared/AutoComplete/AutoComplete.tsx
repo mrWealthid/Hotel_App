@@ -5,6 +5,7 @@ import { useAutoComplete } from './AutoCompleteHook';
 import Label from '../Form-inputs/Label';
 
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import { useDebounce } from '@uidotdev/usehooks';
 
 export default function AutoComplete({
 	service,
@@ -17,11 +18,13 @@ export default function AutoComplete({
 	const [selected, setSelected] = useState<any>({});
 	const [query, setQuery] = useState('');
 
+	const debouncedSearchTerm = useDebounce(query, 500);
+
 	const {
 		autoCompleteLoading,
 		autoCompleteError,
 		autoCompleteResult: data
-	} = useAutoComplete(query, service, queryKey);
+	} = useAutoComplete(debouncedSearchTerm, service, queryKey);
 
 	function handleChangeEvent(val: any) {
 		setSelected(val);
