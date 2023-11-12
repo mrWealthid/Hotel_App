@@ -34,7 +34,7 @@ const SideBar = () => {
 			<button
 				type="button"
 				onClick={() => setIsOpen(!isOpen)}
-				className="inline-flex top-2  absolute z-40 bg-white items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+				className=" top-2  absolute z-40 bg-white dark:glass items-center p-2 w-8 h-8 flex mt-1   ml-3 text-sm text-gray-500 justify-center  rounded-full sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
 				<span className="sr-only">Open sidebar</span>
 				<svg
 					className="w-4 h-6"
@@ -50,7 +50,7 @@ const SideBar = () => {
 			</button>
 
 			<aside
-				className={`fixed top-0 left-0 z-50 w-64 h-screen transition-transform ${
+				className={`fixed top-0 left-0 z-30 w-64 h-screen transition-transform ${
 					!isOpen ? '-translate-x-full' : ''
 				} sm:translate-x-0`}>
 				<div className="flex flex-col  min-h-screen  bg-primary dark:glass text-white py-4">
