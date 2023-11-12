@@ -17,10 +17,10 @@ const LoginComponent = () => {
 	});
 
 	const router = useRouter();
-	const { isLoading, login } = useLogin(router);
+	const { isLoading, login } = useLogin();
 
 	async function onSubmit(payload: any) {
-		login(payload);
+		login(payload, { onSuccess: () => router.push('/dashboard') });
 		// try {
 		// 	const res = await fetch(`/api/auth/login`, {
 		// 		method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -104,8 +104,11 @@ const LoginComponent = () => {
 								<ButtonComponent
 									style="rounded-3xl 2xl:w-1/5"
 									btnText="Submit"
+									loading={isLoading}
 									type="submit"
-									disabled={!formState.isValid}
+									disabled={
+										!formState.isValid || isSubmitting
+									}
 								/>
 							</section>
 							<p className="flex gap-3 text-sm text-primary dark:text-label-color">

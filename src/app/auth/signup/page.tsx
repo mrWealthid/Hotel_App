@@ -16,7 +16,7 @@ const SignupComponent = () => {
 
 	const router = useRouter();
 
-	const { isLoading, registering } = useRegister(router);
+	const { isLoading, registering } = useRegister();
 	const { errors, isSubmitting } = formState;
 
 	async function onSubmit(data: any) {
@@ -24,7 +24,7 @@ const SignupComponent = () => {
 
 		const payload = { name: firstName + ' ' + lastName, ...rest };
 
-		registering(payload);
+		registering(payload, { onSuccess: () => router.push('/dashboard') });
 	}
 
 	function onError(err: any) {
@@ -110,7 +110,9 @@ const SignupComponent = () => {
 								style="rounded-3xl 2xl:w-1/5"
 								btnText="Submit"
 								type="submit"
-								afterIcon="/assets/send.svg"
+								loading={isLoading}
+								disabled={!formState.isValid || isSubmitting}
+								// afterIcon="/assets/send.svg"
 							/>
 						</section>
 						<p className="text-sm text-primary dark:text-label-color flex gap-2">

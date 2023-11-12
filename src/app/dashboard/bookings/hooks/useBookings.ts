@@ -18,7 +18,7 @@ export interface IListResponse {
 
 export function useCreateBooking(bookingId: any, isEditing: any, close: any) {
 	const queryClient = useQueryClient();
-	const { isLoading: isCreating, mutate: createBooking } = useMutation({
+	const { isLoading: isCreating, mutate: createBooking,  } = useMutation({
 		mutationFn: (payload) =>
 			handleCreateBooking(payload, bookingId, isEditing),
 		onSuccess: () => {

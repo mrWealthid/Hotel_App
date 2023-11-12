@@ -8,13 +8,10 @@ import {
 
 import toast from 'react-hot-toast';
 
-export function useLogin(router: any) {
+export function useLogin() {
 	const { isLoading, mutate: login } = useMutation({
 		mutationFn: (payload: ILogin) => handleLogin(payload),
 
-		onSuccess: () => {
-			router.push('/dashboard');
-		},
 		onError: (err: any) => toast.error(err.message)
 	});
 
@@ -23,13 +20,10 @@ export function useLogin(router: any) {
 		login
 	};
 }
-export function useRegister(router: any) {
+export function useRegister() {
 	const { isLoading, mutate: registering } = useMutation({
 		mutationFn: (payload: IRegister) => handleRegister(payload),
 
-		onSuccess: () => {
-			router.push('/dashboard');
-		},
 		onError: (err: any) => toast.error(err.message)
 	});
 
