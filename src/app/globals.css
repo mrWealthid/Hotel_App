@@ -53,7 +53,7 @@ body {
 
 
 	.title {
-		@apply dark:text-white text-secondary text-xl mb-2 font-semibold;
+		@apply dark:text-white text-secondary md:text-xl mb-2 font-semibold;
 	}
 
 	.glass {
