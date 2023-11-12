@@ -320,7 +320,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 					</div>
 
 					{formState.isValid && (
-						<section className="bg-white text-xs  items-center flex gap-2  mt-1">
+						<section className=" text-xs dark:text-white  items-center flex gap-2  mt-1">
 							<input
 								title="check"
 								id="checkbox-all-search"

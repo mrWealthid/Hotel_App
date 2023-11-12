@@ -79,7 +79,7 @@ input::placeholder {
 
 
 .btn-primary {
-	@apply py-3 px-5 w-full transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none hover:bg-primary-light dark:hover:bg-primary focus:z-10 focus:ring-1 focus:ring-secondary dark:focus:ring-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-gradient-to-r from-primary to-gray-50 hover:bg-gradient-to-l my-1;
+	@apply py-3 px-5 w-full transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none outline-none hover:bg-primary-light dark:hover:bg-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-gradient-to-r from-primary to-gray-50 hover:bg-gradient-to-l my-1;
 }
 
 .btn-primary:disabled {
