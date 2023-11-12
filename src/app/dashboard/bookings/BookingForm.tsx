@@ -34,8 +34,8 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 		values: {
 			cabin: autoCompleteValue?.cabin?.id,
 			guests: autoCompleteValue?.guests?.id,
-			startDate: startOfDay(new Date(startDate)),
-			endDate: endOfDay(new Date(endDate))
+			startDate: startDate,
+			endDate: endDate
 		}
 	});
 
@@ -74,8 +74,8 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 			...data,
 			discount: cabin.discount,
 			cabinPrice: cabin.regularPrice,
-			startDate: formatISO(startDate),
-			endDate: formatISO(endDate),
+			startDate: startOfDay(new Date(startDate)),
+			endDate: endOfDay(new Date(endDate)),
 			numNights: diffInDays
 		};
 
@@ -358,7 +358,8 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 						<ButtonComponent
 							type="submit"
 							style="rounded-3xl"
-							disabled={!formState.isValid}
+							disabled={!formState.isValid || isSubmitting}
+							loading={isCreating}
 							btnText={` ${
 								isEditing ? 'Update Booking' : ' Make Booking'
 							}`}></ButtonComponent>

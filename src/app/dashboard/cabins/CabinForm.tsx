@@ -140,7 +140,8 @@ const CabinForm = ({ cabin, onCloseModal }: any) => {
 						<ButtonComponent
 							type="submit"
 							style="rounded-3xl"
-							disabled={!formState.isValid}
+							disabled={!formState.isValid || isSubmitting}
+							loading={isCreating}
 							btnText={` ${
 								isEditing ? 'Update Cabin' : ' Add  Cabin'
 							}`}></ButtonComponent>
