@@ -7,7 +7,7 @@ import {
 	ResponsiveContainer,
 	Tooltip
 } from 'recharts';
-import { useDarkMode } from '@/utils/LightDarkModeContext';
+import useDarkMode from '../Hooks/useDarkMode';
 
 function PieCharts({ confirmedStays }: any) {
 	const startDataLight = [
@@ -124,8 +124,8 @@ function PieCharts({ confirmedStays }: any) {
 
 		return data;
 	}
-	const { isDarkMode }: any = useDarkMode();
-	const startData = isDarkMode ? startDataDark : startDataLight;
+	const { isDark }: any = useDarkMode();
+	const startData = isDark ? startDataDark : startDataLight;
 	const data = prepareData(startData, confirmedStays);
 
 	return (
