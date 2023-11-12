@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useRegister } from '../hooks/useAuth';
 
 const SignupComponent = () => {
 	const { register, handleSubmit, getValues, formState } = useForm({
@@ -14,30 +15,16 @@ const SignupComponent = () => {
 	});
 
 	const router = useRouter();
+
+	const { isLoading, registering } = useRegister(router);
 	const { errors, isSubmitting } = formState;
 
 	async function onSubmit(data: any) {
 		const { firstName, lastName, ...rest } = data;
 
 		const payload = { name: firstName + ' ' + lastName, ...rest };
-		try {
-			const res = await fetch(`http://localhost:3000/api/auth/register`, {
-				method: 'POST', // *GET, POST, PUT, DELETE, etc.
-				body: JSON.stringify(payload) // body data type must match "Content-Type" header
-			});
 
-			if (!res.ok) {
-				throw new Error(
-					`Cabin could not be created Status: ${res.status}`
-				);
-			}
-
-			router.push('/dashboard');
-
-			return res.json(); // parses JSON response into native JavaScript objects
-		} catch (err) {
-			console.log(err);
-		}
+		registering(payload);
 	}
 
 	function onError(err: any) {

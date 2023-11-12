@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useLogin } from '../hooks/useAuth';
 // import axiosInstance from '@/app/utils/intercerptor';
 
 const LoginComponent = () => {
@@ -16,32 +17,34 @@ const LoginComponent = () => {
 	});
 
 	const router = useRouter();
+	const { isLoading, login } = useLogin(router);
 
 	async function onSubmit(payload: any) {
-		try {
-			const res = await fetch(`/api/auth/login`, {
-				method: 'POST', // *GET, POST, PUT, DELETE, etc.
-				body: JSON.stringify(payload) // body data type must match "Content-Type" header
-			});
+		login(payload);
+		// try {
+		// 	const res = await fetch(`/api/auth/login`, {
+		// 		method: 'POST', // *GET, POST, PUT, DELETE, etc.
+		// 		body: JSON.stringify(payload) // body data type must match "Content-Type" header
+		// 	});
 
-			if (!res.ok) {
-				throw new Error(
-					`Cabin could not be created Status: ${res.status}`
-				);
-			}
+		// 	if (!res.ok) {
+		// 		throw new Error(
+		// 			`Cabin could not be created Status: ${res.status}`
+		// 		);
+		// 	}
 
-			router.push('/dashboard');
+		// 	router.push('/dashboard');
 
-			const data = await res.json(); // parses JSON response into native JavaScript objects
+		// 	const data = await res.json(); // parses JSON response into native JavaScript objects
 
-			localStorage.setItem('token', data.token);
+		// 	localStorage.setItem('token', data.token);
 
-			console.log(data.token);
+		// 	console.log(data.token);
 
-			return data;
-		} catch (err) {
-			console.log(err);
-		}
+		// 	return data;
+		// } catch (err) {
+		// 	console.log(err);
+		// }
 	}
 
 	const { errors, isSubmitting } = formState;
@@ -103,7 +106,6 @@ const LoginComponent = () => {
 									btnText="Submit"
 									type="submit"
 									disabled={!formState.isValid}
-									afterIcon="/assets/send.svg"
 								/>
 							</section>
 							<p className="flex gap-3 text-sm text-primary dark:text-label-color">
