@@ -78,7 +78,7 @@ export function useRecentStays(days: number) {
 }
 export function useDailyActivites() {
 	const { isLoading, data, error } = useQuery({
-		queryKey: ['daily_activities'],
+		queryKey: ['dailyActivities'],
 		queryFn: () => fetchDailyStats(),
 		keepPreviousData: true
 	});
@@ -112,7 +112,7 @@ export function useCheckOutBooking(id: any) {
 		onSuccess: () => {
 			toast.success('Bookings checked-out successfully');
 			queryClient.invalidateQueries({
-				queryKey: ['daily_activities']
+				queryKey: ['dailyActivities']
 			});
 		},
 		onError: (err: any) => toast.error(err.message)

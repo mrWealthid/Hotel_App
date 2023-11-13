@@ -79,6 +79,8 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 			numNights: diffInDays
 		};
 
+		console.log(payload);
+
 		if (hasBreakfast) {
 			payload.hasBreakfast = hasBreakfast;
 			payload.extraPrice =
@@ -283,11 +285,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 								? addDays(startDate, settings.maxBookingLength)
 								: null
 						}
-						minDate={
-							startDate
-								? addDays(startDate, settings.minBookingLength)
-								: null
-						}
+						minDate={startDate ? addDays(startDate, 0) : null}
 					/>
 
 					<div className="hidden">

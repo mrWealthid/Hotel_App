@@ -46,7 +46,7 @@ export async function GET(request: NextRequest, { params }: any) {
 						{
 							startDate: {
 								$gte: todayStartUtc,
-								$lt: todayEndUtc
+								$lte: todayEndUtc
 							},
 
 							checkStatus: {
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest, { params }: any) {
 						{
 							endDate: {
 								$gte: todayStartUtc,
-								$lt: todayEndUtc
+								$lte: todayEndUtc
 							},
 							checkStatus: {
 								$eq: 'CHECKED_IN'
