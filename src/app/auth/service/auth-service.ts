@@ -1,3 +1,4 @@
+import { handleClientErrorMessage } from '@/utils/helpers';
 import axios from 'axios';
 
 export interface ILogin {
@@ -29,8 +30,8 @@ export async function handleLogin(payload: ILogin) {
 		// console.log(data.token);
 
 		return data;
-	} catch (err) {
-		console.log(err);
+	} catch (err: any) {
+		throw Error(handleClientErrorMessage(err));
 	}
 }
 export async function handleRegister(payload: IRegister) {
@@ -51,6 +52,13 @@ export async function handleRegister(payload: IRegister) {
 
 		return data;
 	} catch (err) {
-		console.log(err);
+		throw Error(handleClientErrorMessage(err));
+	}
+}
+export async function handleLogout() {
+	try {
+		const res = await axios(`/api/auth/logout`);
+	} catch (err) {
+		throw Error(handleClientErrorMessage(err));
 	}
 }
