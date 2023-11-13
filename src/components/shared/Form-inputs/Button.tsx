@@ -38,7 +38,7 @@ const ButtonComponent = ({
 				{loading && (
 					<svg
 						aria-hidden="true"
-						className="inline w-5 h-5 ml-3 text-white animate-spin dark:text-gray-200"
+						className="inline w-4 h-4 ml-3 text-white animate-spin dark:text-gray-200"
 						fill="gainsboro"
 						role="status"
 						viewBox="0 0 100 101"

@@ -38,7 +38,7 @@ const SignupComponent = () => {
 						Sign Up
 					</p>
 
-					<section className="flex flex-col gap-3 items-center justify-center w-full">
+					{/* <section className="flex flex-col gap-3 items-center justify-center w-full">
 						<button className="btn flex gap-3 btn-primary">
 							Google
 						</button>
@@ -46,7 +46,7 @@ const SignupComponent = () => {
 						<section className="text-primary dark:text-secondary">
 							Or
 						</section>
-					</section>
+					</section> */}
 					<form
 						onSubmit={handleSubmit(onSubmit, onError)}
 						className="w-full flex flex-col gap-2 items-center">

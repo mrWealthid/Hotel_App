@@ -21,30 +21,6 @@ const LoginComponent = () => {
 
 	async function onSubmit(payload: any) {
 		login(payload, { onSuccess: () => router.push('/dashboard') });
-		// try {
-		// 	const res = await fetch(`/api/auth/login`, {
-		// 		method: 'POST', // *GET, POST, PUT, DELETE, etc.
-		// 		body: JSON.stringify(payload) // body data type must match "Content-Type" header
-		// 	});
-
-		// 	if (!res.ok) {
-		// 		throw new Error(
-		// 			`Cabin could not be created Status: ${res.status}`
-		// 		);
-		// 	}
-
-		// 	router.push('/dashboard');
-
-		// 	const data = await res.json(); // parses JSON response into native JavaScript objects
-
-		// 	localStorage.setItem('token', data.token);
-
-		// 	console.log(data.token);
-
-		// 	return data;
-		// } catch (err) {
-		// 	console.log(err);
-		// }
 	}
 
 	const { errors, isSubmitting } = formState;
@@ -59,7 +35,7 @@ const LoginComponent = () => {
 					<p className="text-center text-primary dark:text-label-color font-bold text-2xl">
 						Sign In to Get Started
 					</p>
-
+					{/*
 					<section className="flex flex-col gap-3 items-center justify-center w-full">
 						<button className="btn flex gap-3 btn-primary !w-5/6">
 							Google
@@ -68,7 +44,7 @@ const LoginComponent = () => {
 						<section className="text-primary dark:text-secondary">
 							Or
 						</section>
-					</section>
+					</section> */}
 
 					<section className="w-full">
 						<form
