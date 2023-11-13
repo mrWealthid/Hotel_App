@@ -12,7 +12,8 @@ import {
 	differenceInDays,
 	formatISO,
 	startOfDay,
-	endOfDay
+	endOfDay,
+	parseISO
 } from 'date-fns';
 import { formatCurrency } from '@/utils/helpers';
 import { useCreateBooking } from './hooks/useBookings';
@@ -70,12 +71,18 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 			new Date(startDate)
 		);
 
+		const dateObject_Start = parseISO(startDate);
+		const dateObject_End = parseISO(endDate);
+
+		const start_date = startOfDay(dateObject_Start).toISOString();
+		const end_date = endOfDay(dateObject_End).toISOString();
+
 		const payload = {
 			...data,
 			discount: cabin.discount,
 			cabinPrice: cabin.regularPrice,
-			startDate: startOfDay(new Date(startDate)),
-			endDate: endOfDay(new Date(endDate)),
+			startDate: start_date,
+			endDate: end_date,
 			numNights: diffInDays
 		};
 
