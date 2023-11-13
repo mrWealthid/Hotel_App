@@ -71,18 +71,18 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 			new Date(startDate)
 		);
 
-		const dateObject_Start = parseISO(startDate);
-		const dateObject_End = parseISO(endDate);
+		const dateObject_Start = new Date(startDate);
+		const dateObject_End = new Date(endDate);
 
-		const start_date = startOfDay(dateObject_Start).toISOString();
-		const end_date = endOfDay(dateObject_End).toISOString();
+		const start_date = startOfDay(dateObject_Start);
+		const end_date = endOfDay(dateObject_End);
 
 		const payload = {
 			...data,
 			discount: cabin.discount,
 			cabinPrice: cabin.regularPrice,
-			startDate: start_date,
-			endDate: end_date,
+			startDate: formatISO(start_date),
+			endDate: formatISO(end_date),
 			numNights: diffInDays
 		};
 
@@ -294,7 +294,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 						}
 						minDate={
 							startDate
-								? addDays(startDate, 0)
+								? addDays(startDate, settings.minBookingLength)
 								: // ? addDays(startDate, settings.minBookingLength)
 								  null
 						}
