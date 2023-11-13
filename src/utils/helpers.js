@@ -63,3 +63,7 @@ export const formatCurrency = (value, currency = 'USD', locale = 'en') => {
 
 	return new Intl.NumberFormat(locale, options).format(Math.abs(value));
 };
+
+export function handleClientErrorMessage(err) {
+	return err.response.data.error;
+}
