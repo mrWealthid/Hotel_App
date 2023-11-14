@@ -40,6 +40,7 @@ function Table({
 		transformedSearchQuery = objectToQueryParams(val);
 
 		setSearch(transformedSearchQuery);
+		setPage(1);
 
 		setfilterIsActive(true);
 	}

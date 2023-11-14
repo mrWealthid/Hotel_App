@@ -41,7 +41,7 @@ export default function AutoComplete({
 				<div className="relative mt-1">
 					<div className="">
 						<Combobox.Input
-							className="w-full border-none input-style  py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+							className="w-full dark:border-none input-style  py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
 							displayValue={(result: any) => result[displayValue]}
 							onChange={(event) => setQuery(event.target.value)}
 						/>
