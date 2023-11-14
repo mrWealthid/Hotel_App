@@ -1,9 +1,11 @@
 'use client';
 import { formatCurrency, getStatusColor } from '@/utils/helpers';
+import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useCheckInBooking } from '../../hooks/useDashboard';
 
 const Page = ({ params }: any) => {
 	const bookingId = params.bookingId;
@@ -28,20 +30,24 @@ const Page = ({ params }: any) => {
 		fetchSettings();
 	}, []);
 
+	const { isCheckingIn, checkInBooking } = useCheckInBooking(bookingId);
+
 	async function fetchData() {
-		const response = await fetch(`/api/bookings/${bookingId}`);
+		const response = await axios(`/api/bookings/${bookingId}`);
 
-		const data = await response.json();
-
+		const data = await response.data;
 		setData(data.data);
 	}
 
 	async function fetchSettings() {
-		const response = await fetch(`/api/settings`);
+		try {
+			const response = await axios(`/api/settings`);
+			const data = await response.data;
 
-		const data = await response.json();
-
-		setSettings(data.data);
+			setSettings(data.data);
+		} catch (err: any) {
+			console.log(err);
+		}
 	}
 
 	function verifyPayment() {
@@ -65,26 +71,7 @@ const Page = ({ params }: any) => {
 		if (!hasPaid) return;
 		let payload = verifyPayment();
 
-		try {
-			const res = await fetch(`/api/bookings/${bookingId}`, {
-				method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
-				body: JSON.stringify(payload) // body data type must match "Content-Type" header
-			});
-
-			if (!res.ok) {
-				throw new Error(`HTTP error! Status: ${res.status}`);
-			}
-
-			toast.success('Checking-In successful');
-
-			await res.json();
-
-			router.push('/dashboard/bookings');
-
-			// parses JSON response into native JavaScript objects
-		} catch (err) {
-			console.log(err);
-		}
+		checkInBooking(payload, { onSuccess: () => router.push('/dashboard') });
 	}
 
 	function addBreakfast(e: any) {

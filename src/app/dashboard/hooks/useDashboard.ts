@@ -5,6 +5,7 @@ import {
 	fetchBookingsAfterDate,
 	fetchDailyStats,
 	fetchStaysAfterDate,
+	handleCheckIn,
 	handleCheckout,
 	handleDeleteBookings
 } from '../service/dashboard.service';
@@ -119,6 +120,21 @@ export function useCheckOutBooking(id: any) {
 	});
 
 	return { isCheckingOut, checkOutBooking };
+}
+export function useCheckInBooking(id: any) {
+	const queryClient = useQueryClient();
+	const { isLoading: isCheckingIn, mutate: checkInBooking } = useMutation({
+		mutationFn: (payload: any) => handleCheckIn(payload, id),
+		onSuccess: () => {
+			toast.success('Booking checked-in successfully');
+			queryClient.invalidateQueries({
+				queryKey: ['dailyActivities']
+			});
+		},
+		onError: (err: any) => toast.error(err.message)
+	});
+
+	return { isCheckingIn, checkInBooking };
 }
 
 // export function useDeleteCabin(id: number) {

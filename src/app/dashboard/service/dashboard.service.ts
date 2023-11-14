@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export async function fetchBookingsAfterDate(days: number) {
 	const url = `/api/bookings/stats?days=${days}`;
 
@@ -84,14 +86,10 @@ export async function handleCheckout(payload: any, id: any) {
 		console.log(err);
 	}
 }
-
-// export async function getCabins() {
-// 	const { data, error } = await supabase.from('cabins').select('*');
-
-// 	if (error) {
-// 		console.error(error);
-// 		throw new Error('Cabins could not be loaded');
-// 	}
-
-// 	return data;
-// }
+export async function handleCheckIn(payload: any, id: any) {
+	try {
+		const res = await axios.patch(`/api/bookings/${id}`, payload);
+	} catch (err: any) {
+		throw new Error(`Guest could not be checked out Status: ${err.status}`);
+	}
+}
