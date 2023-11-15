@@ -23,13 +23,13 @@ export async function fetchStaysAfterDate(days: number) {
 }
 
 export async function fetchDailyStats() {
-	const url = `/api/bookings/daily`;
+	const url = '/api/bookings/daily';
 
 	try {
 		const response = await axios(url);
 		return await response.data;
 	} catch (err: any) {
-		throw new Error(`HTTP error! Status: ${err.status}`);
+		throw new Error(`Failed to fetch! Status: ${err.status}`);
 	}
 }
 
@@ -44,7 +44,7 @@ export async function handleDeleteBookings(id: any) {
 
 export async function handleCheckout(payload: any, id: any) {
 	try {
-		const res = await axios.patch(`/api/bookings/${id}`, payload);
+		const res = await axios.put(`/api/bookings/${id}`, payload);
 		return await res.data;
 	} catch (err: any) {
 		throw new Error(`Guest could not be checked out Status: ${err.status}`);
@@ -52,9 +52,9 @@ export async function handleCheckout(payload: any, id: any) {
 }
 export async function handleCheckIn(payload: any, id: any) {
 	try {
-		const res = await axios.patch(`/api/bookings/${id}`, payload);
+		const res = await axios.put(`/api/bookings/${id}`, payload);
 		return await res.data;
 	} catch (err: any) {
-		throw new Error(`Guest could not be checked out Status: ${err.status}`);
+		throw new Error(`Guest could not be checked in Status: ${err.status}`);
 	}
 }
