@@ -2,7 +2,7 @@ import { connect } from '@/dbConfig/dbConfig';
 import Booking from '@/model/bookingsModel';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { startOfDay, endOfDay } from 'date-fns';
+import { startOfDay, formatISO, endOfDay, isEqual, isToday } from 'date-fns';
 
 connect();
 
@@ -13,8 +13,19 @@ export async function GET(request: NextRequest, { params }: any) {
 		let cookie = request.cookies.get('token')?.value || '';
 		// console.log(jwtVerifyPromisified('cookie'));
 
-		const todayStartUtc = startOfDay(new Date());
-		const todayEndUtc = endOfDay(new Date());
+		const todayStartUtc = formatISO(startOfDay(new Date()));
+		const todayEndUtc = formatISO(endOfDay(new Date()));
+
+		// console.log(todayEndUtc, todayEndUtc);
+		// const body = await request.json();
+
+		// const { startDate, endDate } = body;
+
+		const TodaysDate = isToday(new Date());
+		const EndOfTodaysDate = isToday(new Date());
+
+		console.log({ TodaysDate });
+		console.log({ EndOfTodaysDate });
 
 		const stats = await Booking.aggregate([
 			{
@@ -42,27 +53,22 @@ export async function GET(request: NextRequest, { params }: any) {
 
 			{
 				$match: {
-					$or: [
-						{
-							startDate: {
-								$gte: todayStartUtc,
-								$lte: todayEndUtc
+					$expr: {
+						$eq: [
+							{
+								$dateToString: {
+									format: '%Y-%m-%d',
+									date: '$startDate'
+								}
 							},
-
-							checkStatus: {
-								$eq: 'UNCONFIRMED'
+							{
+								$dateToString: {
+									format: '%Y-%m-%d',
+									date: new Date()
+								}
 							}
-						},
-						{
-							endDate: {
-								$gte: todayStartUtc,
-								$lte: todayEndUtc
-							},
-							checkStatus: {
-								$eq: 'CHECKED_IN'
-							}
-						}
-					]
+						]
+					}
 				}
 			},
 
