@@ -10,8 +10,10 @@ export const DateRangePicker = ({
 	handleStartDate,
 	handleEndDate,
 	labelText,
-	maxDate = null,
-	minDate = startDate
+	maxEndDate = null,
+	minEndDate = startDate,
+	minStartDate = null,
+	maxStartDate = null
 }: any) => {
 	// const [startDate, setStartDate] = useState(null);
 	// const [endDate, setEndDate] = useState(null);
@@ -29,10 +31,11 @@ export const DateRangePicker = ({
 					selectsStart
 					startDate={startDate}
 					endDate={endDate}
+					minDate={minStartDate}
 					isClearable={true}
 					placeholderText="Start Date"
 					className="input-style"
-                    required
+					required
 				/>
 				<DatePicker
 					selected={endDate}
@@ -40,12 +43,12 @@ export const DateRangePicker = ({
 					selectsEnd
 					startDate={startDate}
 					endDate={endDate}
-					minDate={minDate}
+					minDate={minEndDate}
 					isClearable={true}
-					maxDate={maxDate}
+					maxDate={maxEndDate}
 					className="input-style"
 					placeholderText="End Date"
-                    required
+					required
 				/>
 			</section>
 		</>

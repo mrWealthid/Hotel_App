@@ -287,12 +287,13 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 						endDate={endDate}
 						handleStartDate={handleStartDate}
 						handleEndDate={handleEndDate}
-						maxDate={
+						minStartDate={addDays(new Date(), 1)}
+						maxEndDate={
 							startDate
 								? addDays(startDate, settings.maxBookingLength)
 								: null
 						}
-						minDate={
+						minEndDate={
 							startDate
 								? addDays(startDate, settings.minBookingLength)
 								: // ? addDays(startDate, settings.minBookingLength)
