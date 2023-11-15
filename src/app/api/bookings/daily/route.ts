@@ -2,7 +2,7 @@ import { connect } from '@/dbConfig/dbConfig';
 import Booking from '@/model/bookingsModel';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { startOfDay, formatISO, endOfDay, isEqual, isToday } from 'date-fns';
+import { startOfDay, formatISO, endOfDay } from 'date-fns';
 
 connect();
 
@@ -13,19 +13,10 @@ export async function GET(request: NextRequest, { params }: any) {
 		let cookie = request.cookies.get('token')?.value || '';
 		// console.log(jwtVerifyPromisified('cookie'));
 
-		const todayStartUtc = formatISO(startOfDay(new Date()));
+		const todayStartUtc = new Date();
 		const todayEndUtc = formatISO(endOfDay(new Date()));
 
-		// console.log(todayEndUtc, todayEndUtc);
-		// const body = await request.json();
-
-		// const { startDate, endDate } = body;
-
-		const TodaysDate = isToday(new Date());
-		const EndOfTodaysDate = isToday(new Date());
-
-		console.log({ TodaysDate });
-		console.log({ EndOfTodaysDate });
+		console.log(todayEndUtc, todayEndUtc);
 
 		const stats = await Booking.aggregate([
 			{
@@ -53,22 +44,54 @@ export async function GET(request: NextRequest, { params }: any) {
 
 			{
 				$match: {
-					$expr: {
-						$eq: [
-							{
-								$dateToString: {
-									format: '%Y-%m-%d',
-									date: '$startDate'
-								}
-							},
-							{
-								$dateToString: {
-									format: '%Y-%m-%d',
-									date: new Date()
-								}
-							}
-						]
-					}
+					$or: [
+						{
+							$and: [
+								{
+									$expr: {
+										$eq: [
+											{
+												$dateToString: {
+													format: '%Y-%m-%d',
+													date: '$startDate'
+												}
+											},
+											{
+												$dateToString: {
+													format: '%Y-%m-%d',
+													date: new Date()
+												}
+											}
+										]
+									}
+								},
+								{ checkStatus: 'UNCONFIRMED' }
+							]
+						},
+						{
+							$and: [
+								{
+									$expr: {
+										$eq: [
+											{
+												$dateToString: {
+													format: '%Y-%m-%d',
+													date: '$endDate'
+												}
+											},
+											{
+												$dateToString: {
+													format: '%Y-%m-%d',
+													date: new Date()
+												}
+											}
+										]
+									}
+								},
+								{ checkStatus: 'CHECKED_IN' }
+							]
+						}
+					]
 				}
 			},
 
