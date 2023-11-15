@@ -106,11 +106,6 @@ export async function GET(request: NextRequest, { params }: any) {
 					'cabin.createdAt': 0,
 					'cabin.__v': 0
 				}
-			},
-			{
-				$sort: {
-					'time.monthNum': 1
-				}
 			}
 		]);
 
