@@ -17,9 +17,11 @@ function Table({
 	queryKey,
 	children,
 	columns,
+
 	headerActions,
 	service,
-	limit: limitVal
+	limit: limitVal,
+	actionable = true
 }: ITable) {
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(limitVal || 5);
@@ -105,7 +107,8 @@ function Table({
 				handleFilter,
 				objectToQueryParams,
 				cancelFilter,
-				filterIsActive
+				filterIsActive,
+				actionable
 			}}>
 			<div className=" overflow-x-auto   card p-2">
 				<TableHeaderAction handleFilter={handleFilter}>
@@ -277,7 +280,7 @@ function TableFilter() {
 }
 
 function TableHeader() {
-	const { columns }: any = useContext(TableContext);
+	const { columns, actionable }: any = useContext(TableContext);
 	return (
 		<thead className="text-xs text-left wheat-light bg-primary   text-white w-full uppercase">
 			<tr>
@@ -306,7 +309,7 @@ function TableHeader() {
 						{col.header}
 					</th>
 				))}
-				<th className="px-2 py-4 uppercase">Actions</th>
+				{actionable && <th className="px-2 py-4 uppercase">Actions</th>}
 			</tr>
 		</thead>
 	);
@@ -344,7 +347,7 @@ export function TableHeaderAction({ children }: any) {
 	);
 }
 function TableRow({ children, customRow }: any) {
-	const { columns, data }: any = useContext(TableContext);
+	const { columns, data, actionable }: any = useContext(TableContext);
 
 	if (data?.length < 1) {
 		return (
@@ -477,7 +480,8 @@ function TableRow({ children, customRow }: any) {
 									);
 								})}
 
-								{cloneElement(children, { rowData: row })}
+								{actionable &&
+									cloneElement(children, { rowData: row })}
 							</tr>
 						);
 				  })

@@ -22,6 +22,7 @@ const UserList = () => {
 		<Table
 			headerActions={<UserHeaderActions />}
 			service={fetchUsers}
+			actionable={false}
 			queryKey="users"
 			columns={columns}>
 			<Table.TableHeader />

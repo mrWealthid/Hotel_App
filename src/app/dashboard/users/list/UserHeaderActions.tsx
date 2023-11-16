@@ -1,7 +1,7 @@
 import React from 'react';
 
 const UserHeaderActions = () => {
-	return <div>UserHeaderAction</div>;
+	return <div></div>;
 };
 
 export default UserHeaderActions;
