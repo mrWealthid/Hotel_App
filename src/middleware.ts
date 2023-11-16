@@ -13,16 +13,14 @@ export async function middleware(request: NextRequest) {
 
 	const token = request.cookies.get('token')?.value || '';
 
-	console.log('Hi from Middleware', path);
-	// console.log(request);
-
-	console.log('Client', isClient);
-
 	if (isClient) {
-		const isPublic = path === '/auth/login' || path === '/auth/signup';
+		const isPublic =
+			path === '/auth/login' || path === '/auth/signup' || path === '/';
 
 		if (isPublic && token) {
-			return NextResponse.redirect(new URL('/', request.nextUrl));
+			return NextResponse.redirect(
+				new URL('/dashboard', request.nextUrl)
+			);
 		}
 		if (!isPublic && !token) {
 			return NextResponse.redirect(
