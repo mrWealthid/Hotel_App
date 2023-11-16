@@ -5,9 +5,10 @@ import TextInput from '@/components/shared/Form-inputs/Text-Input';
 import ButtonComponent from '@/components/shared/Form-inputs/Button';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRegister } from '../hooks/useAuth';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const SignupComponent = () => {
 	const { register, handleSubmit, getValues, formState } = useForm({
@@ -30,6 +31,13 @@ const SignupComponent = () => {
 	function onError(err: any) {
 		console.log(err);
 	}
+
+	const [showPassword, setShowPassword] = useState(false);
+
+	const togglePassword = () => {
+		setShowPassword(!showPassword);
+	};
+
 	return (
 		<>
 			<section className="flex flex-col min-h-screen items-center justify-center">
@@ -92,16 +100,31 @@ const SignupComponent = () => {
 							<TextInput
 								name={'password'}
 								placeholder="Enter Password"
-								label="Password"
-								type="password">
-								<input
-									{...register('password', {
-										required: 'This field is required'
-									})}
-									className="input-style"
-									type="password"
-									id="name"
-								/>
+								label="Password">
+								<div className="input-style !p-0 !pr-2 !overflow-hidden">
+									<input
+										className="w-full   border-none outline-none focus:ring-0 ring-0 "
+										type={
+											showPassword ? 'text' : 'password'
+										}
+										{...register('password', {
+											required: 'This field is required'
+										})}
+										id="psw"
+									/>
+
+									{!showPassword ? (
+										<FaEyeSlash
+											className="text-primary cursor-pointer"
+											onClick={togglePassword}
+										/>
+									) : (
+										<FaEye
+											className="text-primary cursor-pointer"
+											onClick={togglePassword}
+										/>
+									)}
+								</div>
 							</TextInput>
 						</div>
 
