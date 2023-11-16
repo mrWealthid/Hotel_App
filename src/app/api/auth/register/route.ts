@@ -70,6 +70,7 @@ export async function POST(request: NextRequest) {
 
 	try {
 		const req = await request.json();
+
 		const checkIfUserExist = await User.findOne({ email: req.email });
 		if (checkIfUserExist)
 			return NextResponse.json(
@@ -80,7 +81,8 @@ export async function POST(request: NextRequest) {
 		const newUser = await User.create({
 			name: req.name,
 			email: req.email,
-			password: req.password
+			password: req.password,
+			role: req.role
 		});
 		console.log(newUser);
 
