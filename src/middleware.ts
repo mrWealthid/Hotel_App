@@ -16,24 +16,25 @@ export async function middleware(request: NextRequest) {
 	if (isClient) {
 		const isPublic = path === '/auth/login' || path === '/auth/signup';
 
-		const isBase = '/';
+		const isBase = path === '/';
 
-		if (isPublic && token && isBase) {
+		if (isPublic && token) {
 			return NextResponse.redirect(
 				new URL('/dashboard', request.nextUrl)
 			);
 		}
-		if (!isPublic && !token) {
+		if (isBase && token) {
+			return NextResponse.redirect(
+				new URL('/dashboard', request.nextUrl)
+			);
+		}
+
+		if (isBase && !token) {
 			return NextResponse.redirect(
 				new URL('/auth/login', request.nextUrl)
 			);
 		}
-		if (isBase && !token) {
-			new URL('/auth/login', request.nextUrl);
-		}
 	} else {
-		// console.log(request);
-
 		if (!token) {
 			return NextResponse.json(
 				{ error: 'Unauthorized to access resource' },
