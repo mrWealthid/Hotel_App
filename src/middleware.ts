@@ -14,10 +14,11 @@ export async function middleware(request: NextRequest) {
 	const token = request.cookies.get('token')?.value || '';
 
 	if (isClient) {
-		const isPublic =
-			path === '/auth/login' || path === '/auth/signup' || path === '/';
+		const isPublic = path === '/auth/login' || path === '/auth/signup';
 
-		if (isPublic && token) {
+		const isBase = '/';
+
+		if (isPublic && token && isBase) {
 			return NextResponse.redirect(
 				new URL('/dashboard', request.nextUrl)
 			);
@@ -26,6 +27,9 @@ export async function middleware(request: NextRequest) {
 			return NextResponse.redirect(
 				new URL('/auth/login', request.nextUrl)
 			);
+		}
+		if (isBase && !token) {
+			new URL('/auth/login', request.nextUrl);
 		}
 	} else {
 		// console.log(request);
