@@ -103,7 +103,7 @@ const SignupComponent = () => {
 								label="Password">
 								<div className="input-style !p-0 !pr-2 !overflow-hidden">
 									<input
-										className="w-full   border-none outline-none focus:ring-0 ring-0 "
+										className="w-full  dark:bg-transparent  border-none outline-none focus:ring-0 ring-0 "
 										type={
 											showPassword ? 'text' : 'password'
 										}
