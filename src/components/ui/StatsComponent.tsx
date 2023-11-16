@@ -23,7 +23,7 @@ const StatsComponent = ({ bookings, stays, numDays, cabinCount }: any) => {
 	// 4.
 	const occupation =
 		stays?.reduce((acc: any, cur: any) => acc + cur.numNights, 0) /
-		(numDays * cabinCount);
+			(numDays * cabinCount) || 0;
 	// num checked in nights / all available nights (num days * num cabins)
 	return (
 		<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-col-1 sm:grid-cols-2  gap-4">

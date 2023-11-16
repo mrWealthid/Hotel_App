@@ -24,11 +24,19 @@ const Page = () => {
 		// handleFilter(query);
 	}
 
-	const { bookingsError, bookingsLoading, bookings } =
-		useRecentBookings(days);
-	const { staysLoading, staysError, stays, numDays } = useRecentStays(days);
-	const { dailyLoading, dailyError, daily } = useDailyActivites();
-	const { totalRecords } = useCabins();
+	const {
+		bookingsError,
+		bookingsLoading,
+		bookings = []
+	} = useRecentBookings(days);
+	const {
+		staysLoading,
+		staysError,
+		stays = [],
+		numDays
+	} = useRecentStays(days);
+	const { dailyLoading, dailyError, daily = [] } = useDailyActivites();
+	const { totalRecords = 0 } = useCabins();
 
 	// function handleFilter() {
 	// 	// setfilterIsActive(false);
