@@ -59,7 +59,7 @@ const Page = () => {
 	return (
 		<div className=" flex flex-col gap-5">
 			<section className="flex mt justify-between items-center">
-				<h1 className="title">My Dashboard Page</h1>
+				<h1 className="title">Overview</h1>
 
 				<section className=" flex gap-2 justify-end">
 					<div className="">
