@@ -7,6 +7,7 @@ export interface ITable {
 
 	limit?: number;
 	service: any;
+	actionable?:boolean
 }
 
 interface TableConfig {
