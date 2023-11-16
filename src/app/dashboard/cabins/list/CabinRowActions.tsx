@@ -60,7 +60,7 @@ const CabinRowActions = ({ rowData }: any) => {
 
 				<Menu as="div" className="relative inline-block text-left">
 					<div>
-						<Menu.Button className="inline-flex  w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+						<Menu.Button className="inline-flex w-full justify-center rounded-md border dark:glass  focus:border-primary focus:border-2  px-4 py-2 text-sm font-medium text-primary dark:text-white  ">
 							<span className="">...</span>
 						</Menu.Button>
 					</div>
