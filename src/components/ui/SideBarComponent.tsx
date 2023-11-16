@@ -57,6 +57,9 @@ const SideBar = () => {
 					<p className="flex justify-center space-x-4 text-white">
 						BookStays
 					</p>
+					<small className="italic text-center text-xs">
+						...Stays that really counts...
+					</small>
 					<section className="flex flex-col  gap-3  mt-10 px-4">
 						{routes.map((link) => {
 							const isActive = pathname === link.path;
