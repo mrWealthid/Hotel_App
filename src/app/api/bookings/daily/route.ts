@@ -13,10 +13,6 @@ export async function GET(request: NextRequest, { params }: any) {
 		let cookie = request.cookies.get('token')?.value || '';
 		// console.log(jwtVerifyPromisified('cookie'));
 
-		const todayStartUtc = new Date();
-		const todayEndUtc = formatISO(endOfDay(new Date()));
-
-		console.log(todayEndUtc, todayEndUtc);
 
 		const stats = await Booking.aggregate([
 			{
