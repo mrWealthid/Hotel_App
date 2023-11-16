@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { Switch } from '@headlessui/react';
 
+import { MdNightlightRound, MdLightMode } from 'react-icons/md';
+
 export default function SwitchToggle() {
 	const [enabled, setEnabled] = useState(false);
 	let isDarkMode = false;
@@ -41,7 +43,8 @@ export default function SwitchToggle() {
 	}
 
 	return (
-		<div className="p-0">
+		<div className=" flex items-center gap-1 p-0">
+			<MdLightMode />
 			<Switch
 				checked={enabled}
 				onChange={(enabled) => handleChange(enabled)}
@@ -54,6 +57,7 @@ export default function SwitchToggle() {
             pointer-events-none inline-block h-[16px] w-[16px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
 				/>
 			</Switch>
+			<MdNightlightRound />
 		</div>
 	);
 }
