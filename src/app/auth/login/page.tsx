@@ -14,7 +14,7 @@ import { useLogin } from '../hooks/useAuth';
 const LoginComponent = () => {
 	const { register, handleSubmit, getValues, formState } = useForm({
 		mode: 'onChange',
-		defaultValues:{email: 'admin@gmail.com', password: '12345678'}
+		defaultValues: { email: 'admin@gmail.com', password: '12345678' }
 	});
 
 	const router = useRouter();
