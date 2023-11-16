@@ -25,7 +25,11 @@ const page = async ({ params }: any) => {
 					</span>
 				</section>
 
-				<Link href={'./'}>Back</Link>
+				<Link
+					className="bg-primary text-sm dark:glass disabled:bg-primary-light disabled:cursor-not-allowed text-white px-4 py-2 rounded-3xl"
+					href={'../'}>
+					Back
+				</Link>
 			</section>
 
 			<div className="text-sm bg-white flex pb-3 flex-col gap-2">
