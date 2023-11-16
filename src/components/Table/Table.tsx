@@ -529,103 +529,109 @@ function Paginator() {
 					Total: {totalRecords} | Size: {limit} | Page: {page}
 				</div>
 			</section>
-			<nav className="flex gap-3" aria-label="Page navigation example">
-				<section className="flex items-center gap-1">
-					<span>Rows Per Page</span>
-					<select
-						onChange={(e) => {
-							updateLimit(e.target.value);
-							// service(limit, page);
-							// setLimit(e.target.value);
+			{data?.length > 0 && (
+				<nav
+					className="flex gap-3"
+					aria-label="Page navigation example">
+					<section className="flex items-center gap-1">
+						<span>Rows Per Page</span>
+						<select
+							onChange={(e) => {
+								updateLimit(e.target.value);
+								// service(limit, page);
+								// setLimit(e.target.value);
 
-							// paginate(e.target.value)
-							// handlePaginate(page, e.target.value);
-						}}
-						value={limit}
-						id="sort"
-						name="sort"
-						title="sortdropdown"
-						className="text-xs font-light text-gray-900 focus-within:ring-0 focus-within:border-none border border-gray-300 bg-gray-50 rounded">
-						<option value={5}>5</option>
-						<option value={10}>10</option>
-						<option value={15}>15</option>
-						<option value={20}>20</option>
-					</select>
-				</section>
-
-				<ul className="flex items-center gap-2 h-10 text-base">
-					<li
-						onClick={() => {
-							page > 1 && handlePaginate(page - 1, limit);
-						}}>
-						<a
-							className={`${
-								page === 1 && 'cursor-not-allowed'
-							} flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:glass dark:border-none dark:text-white dark:hover:bg-gray-700 dark:hover:text-white`}>
-							<span className="sr-only">Previous</span>
-							<svg
-								className="w-3 h-3"
-								aria-hidden="true"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 6 10">
-								<path
-									stroke="currentColor"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									d="M5 1 1 5l4 4"
-								/>
-							</svg>
-						</a>
-					</li>
-					{displayButtons()
-						.slice(page - 1, page + 2)
-						.map((val, index) => (
-							<li
-								onClick={() => {
-									handlePaginate(val, limit);
-								}}
-								key={val}>
-								<a
-									className={`${
-										val === page
-											? '!bg-primary  text-white'
-											: 'bg-white hover:bg-gray-100 dark:hover:text-primary'
-									} flex items-center  dark:glass dark:border-none   rounded-3xl justify-center px-4 h-10 leading-tight text-primary cursor-pointer  border border-gray-300 `}>
-									{val}
-								</a>
-							</li>
-						))}
-
-					<li>
-						<a
-							onClick={() => {
-								maxNumPage > page &&
-									handlePaginate(page + 1, limit);
+								// paginate(e.target.value)
+								// handlePaginate(page, e.target.value);
 							}}
-							className={`${
-								maxNumPage <= page ? 'cursor-not-allowed ' : ''
-							} flex items-center  justify-center px-4 h-10 leading-tight text-gray-500 bg-white dark:glass border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700  dark:border-none dark:text-white dark:hover:bg-gray-700 dark:hover:text-white`}>
-							<span className="sr-only">Next</span>
-							<svg
-								className="w-3 h-3"
-								aria-hidden="true"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 6 10">
-								<path
-									stroke="currentColor"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									d="m1 9 4-4-4-4"
-								/>
-							</svg>
-						</a>
-					</li>
-				</ul>
-			</nav>
+							value={limit}
+							id="sort"
+							name="sort"
+							title="sortdropdown"
+							className="text-xs font-light text-gray-900 focus-within:ring-0 focus-within:border-none border border-gray-300 bg-gray-50 rounded">
+							<option value={5}>5</option>
+							<option value={10}>10</option>
+							<option value={15}>15</option>
+							<option value={20}>20</option>
+						</select>
+					</section>
+
+					<ul className="flex items-center gap-2 h-10 text-base">
+						<li
+							onClick={() => {
+								page > 1 && handlePaginate(page - 1, limit);
+							}}>
+							<a
+								className={`${
+									page === 1 && 'cursor-not-allowed'
+								} flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:glass dark:border-none dark:text-white dark:hover:bg-gray-700 dark:hover:text-white`}>
+								<span className="sr-only">Previous</span>
+								<svg
+									className="w-3 h-3"
+									aria-hidden="true"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 6 10">
+									<path
+										stroke="currentColor"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										d="M5 1 1 5l4 4"
+									/>
+								</svg>
+							</a>
+						</li>
+						{displayButtons()
+							.slice(page - 1, page + 2)
+							.map((val, index) => (
+								<li
+									onClick={() => {
+										handlePaginate(val, limit);
+									}}
+									key={val}>
+									<a
+										className={`${
+											val === page
+												? '!bg-primary  text-white'
+												: 'bg-white hover:bg-gray-100 dark:hover:text-primary'
+										} flex items-center  dark:glass dark:border-none   rounded-3xl justify-center px-4 h-10 leading-tight text-primary cursor-pointer  border border-gray-300 `}>
+										{val}
+									</a>
+								</li>
+							))}
+
+						<li>
+							<a
+								onClick={() => {
+									maxNumPage > page &&
+										handlePaginate(page + 1, limit);
+								}}
+								className={`${
+									maxNumPage <= page
+										? 'cursor-not-allowed '
+										: ''
+								} flex items-center  justify-center px-4 h-10 leading-tight text-gray-500 bg-white dark:glass border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700  dark:border-none dark:text-white dark:hover:bg-gray-700 dark:hover:text-white`}>
+								<span className="sr-only">Next</span>
+								<svg
+									className="w-3 h-3"
+									aria-hidden="true"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 6 10">
+									<path
+										stroke="currentColor"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										d="m1 9 4-4-4-4"
+									/>
+								</svg>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			)}
 		</section>
 	);
 }
