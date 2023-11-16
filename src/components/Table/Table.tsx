@@ -151,7 +151,7 @@ function TableFilterForm({ column, onCloseModal }: any) {
 		<form
 			onSubmit={handleSubmit((data) => onSubmit(data, onCloseModal))}
 			className=' flex flex-col gap-3 p-6  items-center"'>
-			<section className=" grid gap-3 grid-cols-2 ">
+			<section className=" grid  gap-3   grid-cols-1 ">
 				{columns.map((column: any) => {
 					if (column.searchType === 'TEXT') {
 						return (
