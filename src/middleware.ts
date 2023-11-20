@@ -23,9 +23,16 @@ export async function middleware(request: NextRequest) {
 				new URL('/dashboard', request.nextUrl)
 			);
 		}
+
 		if (isBase && token) {
 			return NextResponse.redirect(
 				new URL('/dashboard', request.nextUrl)
+			);
+		}
+
+		if (!isPublic && !token) {
+			return NextResponse.redirect(
+				new URL('/auth/login', request.nextUrl)
 			);
 		}
 
