@@ -32,7 +32,13 @@ export async function GET(request: NextRequest, { params }: any) {
 					checkStatus: 'CHECKED_IN'
 				}
 			]
-		});
+		}).populate([
+			{
+				path: 'guests',
+				select: 'name email '
+			},
+			{ path: 'cabin', select: 'name ' }
+		]);
 
 		return NextResponse.json({
 			status: 'success',

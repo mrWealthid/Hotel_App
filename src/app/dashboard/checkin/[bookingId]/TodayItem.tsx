@@ -17,7 +17,10 @@ const TodayItem = ({ checkStatus, guests, _id, numNights }: any) => {
 				{checkStatus === 'CHECKED_IN' ? 'Departing' : 'Arriving'}
 			</p>
 
-			<p>{guests?.name}</p>
+			<div>
+				<p>{guests?.name}</p>
+				<small>{guests?.email}</small>
+			</div>
 
 			<p>{numNights} night(s)</p>
 
