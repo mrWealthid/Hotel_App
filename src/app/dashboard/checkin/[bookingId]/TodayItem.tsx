@@ -7,12 +7,12 @@ import ConfirmationPage from '@/components/ui/ConfirmationPage';
 const TodayItem = ({ checkStatus, guests, _id, numNights }: any) => {
 	const { isCheckingOut, checkOutBooking } = useCheckOutBooking(_id);
 	return (
-		<div className="flex  text-xs justify-between  border-b dark:border-none dark:glass dark:p-1 dark:rounded   items-center pb-2 border-gray-50 ">
+		<div className="flex  text-xs justify-between  border-b dark:border-none dark:glass dark:p-2 dark:rounded   items-center pb-2 border-gray-50 ">
 			<p
 				className={`${
 					checkStatus === 'CHECKED_IN'
 						? 'bg-green-300 text-green-800'
-						: 'bg-blue-400 text-blue-800'
+						: 'bg-blue-400 text-white'
 				}  rounded-3xl  py-1 px-2`}>
 				{checkStatus === 'CHECKED_IN' ? 'Departing' : 'Arriving'}
 			</p>

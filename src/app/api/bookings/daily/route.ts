@@ -14,9 +14,21 @@ export async function GET(request: NextRequest, { params }: any) {
 
 		let cookie = request.cookies.get('token')?.value || '';
 
-		const startDate = startOfDay(new Date()).toISOString();
+		const startDate = startOfDay(new Date());
 
-		const endDate = endOfDay(new Date()).toISOString();
+		const endDate = endOfDay(new Date());
+
+		// const currentDate = new Date();
+		// const startOfToday = new Date(
+		// 	currentDate.getFullYear(),
+		// 	currentDate.getMonth(),
+		// 	currentDate.getDate()
+		// );
+		// const endOfToday = new Date(
+		// 	currentDate.getFullYear(),
+		// 	currentDate.getMonth(),
+		// 	currentDate.getDate() + 1
+		// );
 
 		const stats = await Booking.find({
 			$or: [
