@@ -81,8 +81,8 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 			...data,
 			discount: cabin.discount,
 			cabinPrice: cabin.regularPrice,
-			startDate: formatISO(start_date),
-			endDate: formatISO(end_date),
+			startDate: new Date(dateObject_Start),
+			endDate: new Date(dateObject_End),
 			numNights: diffInDays
 		};
 
