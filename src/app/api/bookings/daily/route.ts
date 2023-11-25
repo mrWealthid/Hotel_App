@@ -36,6 +36,7 @@ export async function GET(request: NextRequest, { params }: any) {
 
 		return NextResponse.json({
 			status: 'success',
+			date: new Date(),
 
 			total: stats.length,
 
