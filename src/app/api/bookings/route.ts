@@ -44,15 +44,15 @@ export async function POST(request: NextRequest) {
 
 		const { startDate, endDate } = body;
 
-		console.log({ startDate });
-		console.log({ endDate });
+		console.log({ startDate: startDate.split('T')[0] });
+		console.log({ endDate: endDate.split('T')[0] });
 
 		// const numNights = calculateDaysBetweenDates(startDate, endDate);
 
 		const payload = {
 			...body,
-			startDate: startDate,
-			endDate: endDate,
+			startDate: startDate.split('T')[0],
+			endDate: endDate.split('T')[0],
 			totalPrice: body.cabinPrice + (body.extrasPrice || 0)
 		};
 
