@@ -80,7 +80,8 @@ export function useRecentStays(days: number) {
 export function useDailyActivites() {
 	const { isLoading, data, error } = useQuery({
 		queryKey: ['dailyActivities'],
-		queryFn: () => fetchDailyStats()
+		queryFn: () => fetchDailyStats(),
+		cacheTime: 0
 	});
 
 	return {
