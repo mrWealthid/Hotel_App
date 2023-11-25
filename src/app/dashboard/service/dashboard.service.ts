@@ -23,7 +23,7 @@ export async function fetchStaysAfterDate(days: number) {
 }
 
 export async function fetchDailyStats() {
-	const url = '/api/bookings/daily';
+	const url = '/api/daily';
 
 	try {
 		const response = await axios(url);
