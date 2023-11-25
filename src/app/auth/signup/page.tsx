@@ -134,7 +134,7 @@ const SignupComponent = () => {
 								btnText="Submit"
 								type="submit"
 								loading={isLoading}
-								disabled={!formState.isValid || isSubmitting}
+								disabled={!formState.isValid || isLoading}
 								// afterIcon="/assets/send.svg"
 							/>
 						</section>

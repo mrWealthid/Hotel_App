@@ -104,9 +104,7 @@ const LoginComponent = () => {
 									btnText="Submit"
 									loading={isLoading}
 									type="submit"
-									disabled={
-										!formState.isValid || isSubmitting
-									}
+									disabled={!formState.isValid || isLoading}
 								/>
 							</section>
 							<p className="flex gap-3 text-sm text-primary dark:text-label-color">
