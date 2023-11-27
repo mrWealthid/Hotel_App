@@ -44,8 +44,8 @@ export async function POST(request: NextRequest) {
 
 		const { startDate, endDate } = body;
 
-		console.log({ startDate: startDate.split('T')[0] });
-		console.log({ endDate: endDate.split('T')[0] });
+		// console.log({ startDate: startDate.split('T')[0] });
+		// console.log({ endDate: endDate.split('T')[0] });
 
 		// const numNights = calculateDaysBetweenDates(startDate, endDate);
 

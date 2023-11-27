@@ -15,6 +15,8 @@ export async function GET(request: NextRequest) {
 
 		const endDate = endOfDay(new Date()).toISOString();
 
+		console.log(startDate);
+
 		const stats = await Booking.find({
 			$or: [
 				{
