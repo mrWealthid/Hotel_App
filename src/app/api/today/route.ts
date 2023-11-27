@@ -1,13 +1,14 @@
+import { connect } from '@/dbConfig/dbConfig';
 import Booking from '@/model/bookingsModel';
 import { startOfDay, endOfDay } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
 
+connect();
 export async function GET(request: NextRequest) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
 
 		let cookie = request.cookies.get('token')?.value || '';
-        const query: any = request.nextUrl.searchParams;
 
 		const startDate = startOfDay(new Date()).toISOString();
 
