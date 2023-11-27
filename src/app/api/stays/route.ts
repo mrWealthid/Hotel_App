@@ -10,16 +10,24 @@ export async function GET(request: NextRequest, { params }: any) {
 		//2) Check if user exists & password is correct after it's hashed
 
 		let cookie = request.cookies.get('token')?.value || '';
+		// console.log(jwtVerifyPromisified('cookie'));
 
-		// const query: any = request.nextUrl.searchParams;
+		// const bookings = await Booking.find();
 
-		// let { days } = mapToObject(query);
+		const query: any = request.nextUrl.searchParams;
 
-		// days = days * 1;
+		let { days } = mapToObject(query);
 
-		// const calcDate = new Date(
-		// 	new Date().setDate(new Date().getDate() - days)
-		// );
+		days = days * 1;
+
+		console.log(days);
+		// const { type } = req.params;
+
+		// const isAdmin = req.user.role === 'admin';
+
+		const calcDate = new Date(
+			new Date().setDate(new Date().getDate() - days)
+		);
 
 		const stats = await Booking.aggregate([
 			{
@@ -32,11 +40,6 @@ export async function GET(request: NextRequest, { params }: any) {
 
 			{
 				$project: { __v: 0 }
-			},
-			{
-				// $sort: {
-				// 	'time.monthNum': 1
-				// }
 			}
 		]);
 
