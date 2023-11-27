@@ -51,8 +51,8 @@ export async function POST(request: NextRequest) {
 
 		const payload = {
 			...body,
-			startDate: startDate.split('T')[0],
-			endDate: endDate.split('T')[0],
+			startDate: startDate,
+			endDate: endDate,
 			totalPrice: body.cabinPrice + (body.extrasPrice || 0)
 		};
 

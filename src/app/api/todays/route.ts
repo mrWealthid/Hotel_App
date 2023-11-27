@@ -18,18 +18,24 @@ export async function GET(request: NextRequest) {
 		const stats = await Booking.find({
 			$or: [
 				{
-					startDate,
+					startDate: { $gte: startDate, $lte: endDate },
 
 					checkStatus: 'UNCONFIRMED'
 				},
 
 				{
-					endDate,
+					endDate: { $gte: startDate, $lte: endDate },
 
 					checkStatus: 'CHECKED_IN'
 				}
 			]
-		});
+		}).populate([
+			{
+				path: 'guests',
+				select: 'name email '
+			},
+			{ path: 'cabin', select: 'name ' }
+		]);
 
 		return NextResponse.json({
 			status: 'success',
