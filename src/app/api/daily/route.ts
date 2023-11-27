@@ -1,11 +1,8 @@
-'use server';
 import { connect } from '@/dbConfig/dbConfig';
 
 import Booking from '@/model/bookingsModel';
 
 import { NextRequest, NextResponse } from 'next/server';
-
-import { startOfDay, formatISO, endOfDay } from 'date-fns';
 
 connect();
 
@@ -15,9 +12,9 @@ export async function GET(request: NextRequest, { params }: any) {
 
 		let cookie = request.cookies.get('token')?.value || '';
 
-		const startDate = startOfDay(new Date());
+		const startDate = new Date();
 
-		const endDate = endOfDay(new Date());
+		const endDate = new Date();
 
 		// const currentDate = new Date();
 		// const startOfToday = new Date(
