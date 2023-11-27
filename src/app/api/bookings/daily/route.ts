@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 connect();
 
-export async function GET(request: NextRequest, { params }: any) {
+export async function GET(request: NextRequest) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
 
@@ -28,38 +28,38 @@ export async function GET(request: NextRequest, { params }: any) {
 		// 	currentDate.getDate() + 1
 		// );
 
-		const stats = await Booking.find({
-			$or: [
-				{
-					startDate,
+		// const stats = await Booking.find({
+		// 	$or: [
+		// 		{
+		// 			startDate,
 
-					checkStatus: 'UNCONFIRMED'
-				},
+		// 			checkStatus: 'UNCONFIRMED'
+		// 		},
 
-				{
-					endDate,
+		// 		{
+		// 			endDate,
 
-					checkStatus: 'CHECKED_IN'
-				}
-			]
-		}).populate([
-			{
-				path: 'guests',
-				select: 'name email '
-			},
-			{ path: 'cabin', select: 'name ' }
-		]);
-		const todaysDate = Date.now();
+		// 			checkStatus: 'CHECKED_IN'
+		// 		}
+		// 	]
+		// }).populate([
+		// 	{
+		// 		path: 'guests',
+		// 		select: 'name email '
+		// 	},
+		// 	{ path: 'cabin', select: 'name ' }
+		// ]);
+		// const todaysDate = Date.now();
 
-		console.log('Current Date', new Date(Date.now()));
+		// console.log('Current Date', new Date(Date.now()));
 
 		return NextResponse.json({
-			status: 'success',
-			date: new Date(todaysDate),
+			status: 'success'
+			// date: new Date(todaysDate),
 
-			total: stats.length,
+			// total: stats.length,
 
-			data: stats
+			// data: stats
 		});
 	} catch (error: any) {
 		return NextResponse.json({ error: error.message }, { status: 500 });
