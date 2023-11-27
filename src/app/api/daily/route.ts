@@ -1,3 +1,4 @@
+'use server';
 import { connect } from '@/dbConfig/dbConfig';
 
 import Booking from '@/model/bookingsModel';
