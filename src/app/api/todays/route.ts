@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { mapToObject } from '../utils/helpers';
-import Cabin from '@/model/cabinModel';
 import Booking from '@/model/bookingsModel';
+import { startOfDay, endOfDay } from 'date-fns';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
 	try {
@@ -12,9 +11,9 @@ export async function GET(request: NextRequest) {
 
 		const query: any = request.nextUrl.searchParams;
 
-		const startDate = new Date();
+		const startDate = startOfDay(new Date()).toISOString();
 
-		const endDate = new Date();
+		const endDate = endOfDay(new Date()).toISOString();
 
 		const stats = await Booking.find({
 			$or: [
@@ -30,22 +29,54 @@ export async function GET(request: NextRequest) {
 					checkStatus: 'CHECKED_IN'
 				}
 			]
-		}).populate([
-			{
-				path: 'guests',
-				select: 'name email '
-			},
-			{ path: 'cabin', select: 'name ' }
-		]);
-
-		const response = NextResponse.json({
-			status: 'success',
-			today: new Date(),
-			data: stats
 		});
 
-		return response;
+		return NextResponse.json({
+			status: 'success',
+			todayDate: new Date(Date.now()),
+			total: stats.length,
+
+			data: stats
+		});
 	} catch (error: any) {
 		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 }
+
+// const startDate = new Date();
+
+// const endDate = new Date();
+
+// const currentDate = new Date();
+// const startOfToday = new Date(
+// 	currentDate.getFullYear(),
+// 	currentDate.getMonth(),
+// 	currentDate.getDate()
+// );
+// const endOfToday = new Date(
+// 	currentDate.getFullYear(),
+// 	currentDate.getMonth(),
+// 	currentDate.getDate() + 1
+// );
+
+// const stats = await Booking.find({
+// 	$or: [
+// 		{
+// 			startDate,
+
+// 			checkStatus: 'UNCONFIRMED'
+// 		},
+
+// 		{
+// 			endDate,
+
+// 			checkStatus: 'CHECKED_IN'
+// 		}
+// 	]
+// }).populate([
+// 	{
+// 		path: 'guests',
+// 		select: 'name email '
+// 	},
+// 	{ path: 'cabin', select: 'name ' }
+// ]);
