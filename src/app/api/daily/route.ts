@@ -53,6 +53,8 @@ export async function GET(request: NextRequest, { params }: any) {
 		]);
 		const todaysDate = Date.now();
 
+		console.log('Current Date', new Date(Date.now()));
+
 		return NextResponse.json({
 			status: 'success',
 			date: new Date(todaysDate),
