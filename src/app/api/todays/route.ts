@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { mapToObject } from '../utils/helpers';
 import Cabin from '@/model/cabinModel';
+import Booking from '@/model/bookingsModel';
 
 export async function GET(request: NextRequest) {
 	try {
@@ -11,18 +12,36 @@ export async function GET(request: NextRequest) {
 
 		const query: any = request.nextUrl.searchParams;
 
-		const transformedQuery = mapToObject(query);
+		const startDate = new Date();
 
-		console.log('Search Params', transformedQuery);
+		const endDate = new Date();
 
-		// const guests = await Guest.find();
+		const stats = await Booking.find({
+			$or: [
+				{
+					startDate,
 
-		const regex = new RegExp(transformedQuery.name, 'i'); // 'i' for case-insensitive
-		const results = await Cabin.find({ name: { $regex: regex } });
+					checkStatus: 'UNCONFIRMED'
+				},
+
+				{
+					endDate,
+
+					checkStatus: 'CHECKED_IN'
+				}
+			]
+		}).populate([
+			{
+				path: 'guests',
+				select: 'name email '
+			},
+			{ path: 'cabin', select: 'name ' }
+		]);
 
 		const response = NextResponse.json({
 			status: 'success',
-			data: results
+			today: new Date(),
+			data: stats
 		});
 
 		return response;
