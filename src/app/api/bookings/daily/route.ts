@@ -12,9 +12,9 @@ export async function GET(request: NextRequest) {
 
 		let cookie = request.cookies.get('token')?.value || '';
 
-		const startDate = new Date();
+		// const startDate = new Date();
 
-		const endDate = new Date();
+		// const endDate = new Date();
 
 		// const currentDate = new Date();
 		// const startOfToday = new Date(
