@@ -29,11 +29,17 @@ export async function GET(request: NextRequest, { params }: any) {
 			new Date().setDate(new Date().getDate() - days)
 		);
 
+		console.log(calcDate);
+
 		const stats = await Booking.aggregate([
 			{
 				$match: {
 					checkStatus: {
 						$ne: 'UNCONFIRMED'
+					},
+					createdAt: {
+						$gte: new Date(calcDate),
+						$lte: new Date(Date.now())
 					}
 				}
 			},
