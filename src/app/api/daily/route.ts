@@ -51,10 +51,11 @@ export async function GET(request: NextRequest, { params }: any) {
 			},
 			{ path: 'cabin', select: 'name ' }
 		]);
+		const todaysDate = Date.now();
 
 		return NextResponse.json({
 			status: 'success',
-			date: new Date(),
+			date: new Date(todaysDate),
 
 			total: stats.length,
 
