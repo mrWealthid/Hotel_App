@@ -4,7 +4,7 @@ import { startOfDay, endOfDay } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
 
 connect();
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest, { params }: any) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
 
