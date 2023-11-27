@@ -23,7 +23,7 @@ export async function fetchStaysAfterDate(days: number) {
 }
 
 export async function fetchDailyStats() {
-	const url = '/api/todays';
+	const url = '/api/today';
 
 	try {
 		const response = await axios(url);
