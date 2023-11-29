@@ -4,8 +4,9 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+
 import { useCheckInBooking } from '../../hooks/useDashboard';
+import { createPaymentSession } from '../../service/dashboard.service';
 
 const Page = ({ params }: any) => {
 	const bookingId = params.bookingId;
@@ -13,6 +14,7 @@ const Page = ({ params }: any) => {
 	const [data, setData] = useState<any>({});
 
 	const [hasPaid, setHasPaid] = useState(false);
+	const [isCard, setIsCard] = useState(false);
 	const [withBreakfast, setWithBreakfast] = useState(false);
 	const [settings, setSettings] = useState<any>({});
 
@@ -67,7 +69,7 @@ const Page = ({ params }: any) => {
 		return payload;
 	}
 
-	async function handleCheckIn(data: any) {
+	async function handleCheckIn() {
 		if (!hasPaid) return;
 		let payload = verifyPayment();
 
@@ -180,15 +182,13 @@ const Page = ({ params }: any) => {
 					<section className="bg-white items-center flex gap-2 px-4 m-3">
 						<input
 							title="check"
-							id="checkbox-all-search"
+							id="breakfast"
 							type="checkbox"
 							checked={withBreakfast}
 							onChange={addBreakfast}
 							className="w-4 h-4 m-0 border-gray-300 rounded focus:ring-gray-500 "
 						/>
-						<label
-							htmlFor="checkbox-all-search text-sm"
-							className="sr-only">
+						<label htmlFor="breakfast" className="sr-only">
 							#
 						</label>
 						<span>
@@ -200,46 +200,74 @@ const Page = ({ params }: any) => {
 					</section>
 				)}
 
-				<section className="bg-white items-center flex gap-2 px-4 m-3">
-					<input
-						title="check"
-						id="checkbox-all-search"
-						type="checkbox"
-						checked={hasPaid}
-						onChange={(e) => setHasPaid(e.target.checked)}
-						className="w-4 h-4 m-0 border-gray-300 rounded focus:ring-gray-500 "
-					/>
-					<label
-						htmlFor="checkbox-all-search text-sm"
-						className="sr-only">
-						#
-					</label>
-					<span>
-						I can confirm{' '}
-						<span>
-							<strong>{data?.guests?.name}</strong> has paid the
-							total amount{' '}
-							{!withBreakfast && (
-								<span>
-									<strong>
-										{formatCurrency(data.totalPrice)}
-									</strong>
-								</span>
-							)}
-							{withBreakfast && (
-								<span>
-									{formatCurrency(
-										data.totalPrice +
-											calculateBreakfastPrice()
-									)}
-								</span>
-							)}
-						</span>
-					</span>
+				<section className="bg-yellow-50 flex flex-col gap-2 p-4 m-3">
+					<p>Payment Method</p>
+					<section className="flex gap-2">
+						<div className="flex gap-1 items-center">
+							<input
+								title="cash payment"
+								id="check"
+								type="radio"
+								checked={!isCard}
+								onChange={(e) => setIsCard(false)}
+								className="w-4 h-4 m-0 border-gray-300 rounded-full text-primary focus:ring-primary "
+							/>
+							<label htmlFor="check">Cash Payment</label>
+						</div>
+						<div className="flex gap-1 items-center">
+							<input
+								title="card payment"
+								id="card"
+								type="radio"
+								checked={isCard}
+								onChange={(e) => setIsCard(true)}
+								className="w-4 h-4 m-0 border-gray-300 rounded-full text-primary focus:ring-primary "
+							/>
+							<label htmlFor="card">Card Payment</label>
+						</div>
+					</section>
 				</section>
 
+				{!isCard && (
+					<section className="bg-white items-center flex gap-2 px-4 m-3">
+						<input
+							title="check"
+							id="payment"
+							type="checkbox"
+							checked={hasPaid}
+							onChange={(e) => setHasPaid(e.target.checked)}
+							className="w-4 h-4 m-0 text-primary border-gray-300 rounded focus:ring-primary "
+						/>
+						<label htmlFor="payment" className="sr-only">
+							#
+						</label>
+						<span>
+							I can confirm{' '}
+							<span>
+								<strong>{data?.guests?.name}</strong> has paid
+								the total amount{' '}
+								{!withBreakfast && (
+									<span>
+										<strong>
+											{formatCurrency(data.totalPrice)}
+										</strong>
+									</span>
+								)}
+								{withBreakfast && (
+									<span>
+										{formatCurrency(
+											data.totalPrice +
+												calculateBreakfastPrice()
+										)}
+									</span>
+								)}
+							</span>
+						</span>
+					</section>
+				)}
+
 				<section className="flex items-center gap-3 justify-end px-4">
-					{data.checkStatus === 'UNCONFIRMED' && (
+					{data.checkStatus === 'UNCONFIRMED' && !isCard && (
 						<div>
 							<button
 								disabled={!hasPaid}
@@ -250,11 +278,25 @@ const Page = ({ params }: any) => {
 							</button>
 						</div>
 					)}
+				</section>
+				<section className="flex items-center gap-3 justify-end px-4">
+					{data.checkStatus === 'UNCONFIRMED' && isCard && (
+						<div>
+							<button
+								type="button"
+								onClick={() => createPaymentSession(bookingId)}
+								className=" bg-primary disabled:bg-primary-light disabled:cursor-not-allowed text-white px-4 py-2 rounded-3xl">
+								Pay with Stripe
+							</button>
+						</div>
+					)}
+				</section>
 
+				<div className="flex justify-end text-xs  px-4">
 					<span>
 						Booked, {new Date(data.createdAt).toDateString()}
 					</span>
-				</section>
+				</div>
 			</div>
 		</section>
 	);

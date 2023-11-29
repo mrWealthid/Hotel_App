@@ -58,3 +58,12 @@ export async function handleCheckIn(payload: any, id: any) {
 		throw new Error(`Guest could not be checked in Status: ${err.status}`);
 	}
 }
+export async function createPaymentSession(bookingId: any) {
+	try {
+		const res = await axios(`/api/payment/${bookingId}`);
+		const data = await res.data;
+		window.open(data.session.url, 'blank');
+	} catch (err: any) {
+		throw new Error(`Guest could not be checked in Status: ${err.status}`);
+	}
+}
