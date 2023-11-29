@@ -8,6 +8,8 @@ connect();
 export async function GET(request: NextRequest, { params }: any) {
 	console.log(params);
 
+	console.log({ request });
+
 	const bookingId = params.query[0];
 
 	const bookings = await Booking.findOne({ _id: bookingId }).populate([
