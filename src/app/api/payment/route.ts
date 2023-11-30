@@ -1,26 +1,29 @@
 import BookingForm from '@/app/dashboard/bookings/BookingForm';
 import { connect } from '@/dbConfig/dbConfig';
 import Booking from '@/model/bookingsModel';
+import { NextApiRequest } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 connect();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-export async function POST(request: NextRequest, { params }: any) {
-	const sig = request.headers.get('stripe-signature')!;
+export async function POST(
+	request: NextRequest,
+	req: NextApiRequest,
+	{ params }: any
+) {
+	const sig = req.headers['stripe-signature']!;
 
 	let event: Stripe.Event;
 
-	const body = await request.json();
-
-	const stringBody = JSON.stringify(body);
+	const body = await buffer(req);
 
 	console.log('Signature==>', sig);
-	console.log('Request Body==>', stringBody);
+	console.log('Request Body==>', body);
 
 	try {
 		event = stripe.webhooks.constructEvent(
-			stringBody,
+			body,
 			sig,
 			process.env.STRIPE_WEBHOOK_SECRET!
 		);
@@ -123,3 +126,18 @@ async function handlePaymentSessionCompleted(session: any) {
 	//settlement
 	// await Transaction.create({...payload, amount: (session.amount_total/100) * -1, transactionType:'Debit',  user: userDetails[0].id});
 }
+const buffer = (req: NextApiRequest) => {
+	return new Promise<Buffer>((resolve, reject) => {
+		const chunks: Buffer[] = [];
+
+		req.on('data', (chunk: Buffer) => {
+			chunks.push(chunk);
+		});
+
+		req.on('end', () => {
+			resolve(Buffer.concat(chunks));
+		});
+
+		req.on('error', reject);
+	});
+};
