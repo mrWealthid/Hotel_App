@@ -91,6 +91,11 @@ const Page = ({ params }: any) => {
 		);
 	}
 
+	async function handleCreateSession() {
+		const url = await createPaymentSession(bookingId);
+		router.push(url);
+	}
+
 	return (
 		<section className="flex  flex-col gap-3">
 			<section className="flex justify-between items-center">
@@ -284,7 +289,7 @@ const Page = ({ params }: any) => {
 						<div>
 							<button
 								type="button"
-								onClick={() => createPaymentSession(bookingId)}
+								onClick={handleCreateSession}
 								className=" bg-primary disabled:bg-primary-light disabled:cursor-not-allowed text-white px-4 py-2 rounded-3xl">
 								Pay with Stripe
 							</button>

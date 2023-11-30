@@ -62,8 +62,12 @@ export async function createPaymentSession(bookingId: any) {
 	try {
 		const res = await axios(`/api/payment/${bookingId}`);
 		const data = await res.data;
-		window.open(data.session.url, 'blank');
+
+		const { url } = data.session;
+
+		return url;
+		// window.open(data.session.url, 'blank');
 	} catch (err: any) {
-		throw new Error(`Guest could not be checked in Status: ${err.status}`);
+		throw new Error(`Payment session could not be created: ${err.status}`);
 	}
 }
