@@ -18,7 +18,7 @@ export async function POST(request: NextRequest, { params }: any) {
 
 	try {
 		event = stripe.webhooks.constructEvent(
-			body,
+			JSON.stringify(body),
 			sig,
 			process.env.STRIPE_WEBHOOK_SECRET
 		);
