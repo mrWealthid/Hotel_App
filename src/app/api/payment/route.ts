@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 connect();
 
-export async function GET(request: NextRequest, { params }: any) {
+export async function POST(request: NextRequest, { params }: any) {
 	const headers = new Headers(request.headers);
 	headers.get('stripe-signature');
 	const sig = headers.get('stripe-signature');
