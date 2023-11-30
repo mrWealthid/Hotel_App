@@ -11,7 +11,9 @@ export async function POST(request: NextRequest, { params }: any) {
 	headers.get('stripe-signature');
 	const sig = headers.get('stripe-signature');
 	const body = await request.json();
-	console.log(sig);
+	console.log('Signature==>', sig);
+	console.log('Request Body==>', body);
+
 	let event;
 
 	try {
@@ -91,8 +93,7 @@ export async function POST(request: NextRequest, { params }: any) {
 }
 
 async function handlePaymentSessionCompleted(session: any) {
-	const beneficiaryId = session.client_reference_id;
-	const email = session.customer_details.email;
+	const bookingId = session.client_reference_id;
 
 	// const beneficiary = await User.findById(beneficiaryId);
 	// const userDetails = await User.find({ email: email });
@@ -113,7 +114,7 @@ async function handlePaymentSessionCompleted(session: any) {
 	// 	createdAt: new Date(Date.now())
 	// };
 
-	await Booking.findByIdAndUpdate(session.client_reference_id, {
+	await Booking.findByIdAndUpdate(bookingId, {
 		isPaid: true
 	});
 
