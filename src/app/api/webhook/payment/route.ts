@@ -18,6 +18,8 @@ export async function POST(request: NextRequest) {
 
 		const event = stripe.webhooks.constructEvent(body, signature, secret);
 
+		console.log(event.type);
+
 		if (event.type === 'checkout.session.completed') {
 			handlePaymentSessionCompleted(event.data.object);
 		}
