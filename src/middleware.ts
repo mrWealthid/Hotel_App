@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
 // This function can be marked `async` if using `await` inside
-export async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest, response: NextResponse) {
 	//Differentiate between server and client page request
 
 	const path = request.nextUrl.pathname;
@@ -54,20 +54,20 @@ export async function middleware(request: NextRequest) {
 
 		console.log('signature==>', signature);
 
-		const requestHeaders = new Headers(request.headers);
+		// const requestHeaders = new Headers(request.headers);
 
 		// requestHeaders.set('Authorization', `Bearer ${token}`);
 
 		// You can also set request headers in NextResponse.rewrite
-		const response = NextResponse.next({
-			request: {
-				// New request headers
-				headers: requestHeaders
-			}
-		});
+		// const response = NextResponse.next({
+		// 	request: {
+		// 		// New request headers
+		// 		headers: requestHeaders
+		// 	}
+		// });
 
 		// Set a new response header `x-hello-from-middleware2`
-		response.headers.set('Authorization', `Bearer ${token}`);
+		// response.headers.set('Authorization', `Bearer ${token}`);
 
 		const twoMinutes = 30 * 60 * 1000; // 2 minutes in milliseconds
 		const expires = new Date(Date.now() + twoMinutes);
