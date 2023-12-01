@@ -2,30 +2,22 @@ import BookingForm from '@/app/dashboard/bookings/BookingForm';
 import { connect } from '@/dbConfig/dbConfig';
 import Booking from '@/model/bookingsModel';
 import { NextApiRequest } from 'next';
+import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 connect();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-export async function POST(
-	request: NextRequest,
-
-	{ params }: any
-) {
-	const sig = request.headers.get('stripe-signature')!;
-
+export async function POST(request: NextRequest) {
 	let event: Stripe.Event;
 
-	const body = await request.json();
-
-	console.log('Signature==>', sig);
-	console.log('Request Body==>', body);
-	console.log('Request String Body==>', JSON.stringify(body));
+	const body = await request.text();
+	const signature = headers().get('stripe-signature')!;
 
 	try {
 		event = stripe.webhooks.constructEvent(
-			JSON.stringify(body),
-			sig,
+			body,
+			signature,
 			process.env.STRIPE_WEBHOOK_SECRET!
 		);
 	} catch (err: any) {
