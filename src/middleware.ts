@@ -1,4 +1,5 @@
 import jwt, { VerifyErrors, verify } from 'jsonwebtoken';
+import { headers } from 'next/headers';
 import { usePathname } from 'next/navigation';
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
@@ -48,6 +49,10 @@ export async function middleware(request: NextRequest) {
 				{ status: 401 }
 			);
 		}
+
+		const signature = headers().get('stripe-signature')!;
+
+		console.log('signature==>', signature);
 
 		const requestHeaders = new Headers(request.headers);
 
