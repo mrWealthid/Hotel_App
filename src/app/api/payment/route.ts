@@ -9,21 +9,22 @@ connect();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function POST(
 	request: NextRequest,
-	req: NextApiRequest,
+
 	{ params }: any
 ) {
-	const sig = req.headers['stripe-signature']!;
+	const sig = request.headers.get('stripe-signature')!;
 
 	let event: Stripe.Event;
 
-	const body = await buffer(req);
+	const body = await request.json();
 
 	console.log('Signature==>', sig);
 	console.log('Request Body==>', body);
+	console.log('Request String Body==>', JSON.stringify(body));
 
 	try {
 		event = stripe.webhooks.constructEvent(
-			body,
+			JSON.stringify(body),
 			sig,
 			process.env.STRIPE_WEBHOOK_SECRET!
 		);
