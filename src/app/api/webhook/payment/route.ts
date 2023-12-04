@@ -12,7 +12,8 @@ const secret = process.env.STRIPE_WEBHOOK_SECRET || '';
 export async function POST(request: NextRequest) {
 	try {
 		const body = await request.text();
-		const signature = headers().get('stripe-signature')!;
+
+		const signature = headers().get('Stripe-Signature')!;
 
 		console.log('Signature==>', signature);
 
@@ -44,9 +45,3 @@ async function handlePaymentSessionCompleted(session: any) {
 		isPaid: true
 	});
 }
-
-export const config = {
-	api: {
-		bodyParser: false
-	}
-};
