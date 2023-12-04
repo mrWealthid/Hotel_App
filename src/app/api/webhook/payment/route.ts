@@ -42,6 +42,7 @@ async function handlePaymentSessionCompleted(session: any) {
 	console.log('Id===>', bookingId);
 
 	await Booking.findByIdAndUpdate(bookingId, {
-		isPaid: true
+		isPaid: true,
+		checkStatus: 'CHECKED_IN'
 	});
 }
