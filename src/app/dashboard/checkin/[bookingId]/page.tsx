@@ -171,12 +171,20 @@ const Page = ({ params }: any) => {
 				<section className="bg-primary-lighter py-6 flex justify-between px-4 m-3">
 					<section className="flex gap-2">
 						<span>Total price</span>
-						<span>
-							{formatCurrency(data.totalPrice)} (
-							{formatCurrency(data.cabinPrice)} cabin +{' '}
-							{formatCurrency(450)}
-							breakfast ){' '}
-						</span>
+						{withBreakfast && (
+							<span>
+								{formatCurrency(data.totalPrice)} (
+								{formatCurrency(data.cabinPrice)} for cabin +{' '}
+								{formatCurrency(data.breakfastPrice)} for
+								breakfast )
+							</span>
+						)}
+						{!withBreakfast && (
+							<span>
+								{formatCurrency(data.totalPrice)} (
+								{formatCurrency(data.cabinPrice)} for cabin )
+							</span>
+						)}
 					</section>
 					<section className="font-medium">
 						{data.isPaid ? 'PAID' : 'NOT PAID'}
