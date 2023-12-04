@@ -44,3 +44,9 @@ async function handlePaymentSessionCompleted(session: any) {
 		isPaid: true
 	});
 }
+
+export const config = {
+	api: {
+		bodyParser: false
+	}
+};
