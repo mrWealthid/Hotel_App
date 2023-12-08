@@ -136,6 +136,36 @@ export function useCheckInBooking(id: any) {
 
 	return { isCheckingIn, checkInBooking };
 }
+export function usePrintReciept(id: any) {
+	const queryClient = useQueryClient();
+	const { isLoading: isCheckingIn, mutate: checkInBooking } = useMutation({
+		mutationFn: (payload: any) => handleCheckIn(payload, id),
+		onSuccess: () => {
+			toast.success('Booking checked-in successfully');
+			queryClient.invalidateQueries({
+				queryKey: ['dailyActivities']
+			});
+		},
+		onError: (err: any) => toast.error(err.message)
+	});
+
+	return { isCheckingIn, checkInBooking };
+}
+export function useEmailReciept(id: any) {
+	const queryClient = useQueryClient();
+	const { isLoading: isCheckingIn, mutate: checkInBooking } = useMutation({
+		mutationFn: (payload: any) => handleCheckIn(payload, id),
+		onSuccess: () => {
+			toast.success('Booking checked-in successfully');
+			queryClient.invalidateQueries({
+				queryKey: ['dailyActivities']
+			});
+		},
+		onError: (err: any) => toast.error(err.message)
+	});
+
+	return { isCheckingIn, checkInBooking };
+}
 
 // export function useDeleteCabin(id: number) {
 // 	const queryClient = useQueryClient();
