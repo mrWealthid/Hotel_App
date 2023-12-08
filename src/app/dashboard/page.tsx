@@ -13,6 +13,7 @@ import AreaCharts from '@/components/shared/Charts/AreaChart';
 import PieCharts from '@/components/shared/Charts/PieChart';
 import TodayActivity from './checkin/[bookingId]/TodayActivity';
 import TabComponent from '@/components/shared/Tabs/Tabs';
+import Example from '@/components/shared/Modal/ReceiptPopup';
 
 const Page = () => {
 	const [days, setDays] = useState<number>(7);
@@ -37,12 +38,6 @@ const Page = () => {
 	} = useRecentStays(days);
 	const { dailyLoading, dailyError, daily = [] } = useDailyActivites();
 	const { totalRecords = 0 } = useCabins();
-
-	// function handleFilter() {
-	// 	// setfilterIsActive(false);
-	// 	// setSearch(null);
-	// 	return;
-	// }
 
 	function updateOrder(values: number) {
 		setActiveTab(values);
@@ -129,6 +124,8 @@ const Page = () => {
 				</section>
 			</section>
 			<AreaCharts bookings={bookings} numDays={numDays} />
+
+			{/* {show && <Example />} */}
 		</div>
 	);
 };
