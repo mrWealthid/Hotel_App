@@ -43,7 +43,7 @@ export async function GET(request: NextRequest, { params }: any) {
 	}
 }
 
-export async function PUT(request: NextRequest, { params }: any) {
+export async function PATCH(request: NextRequest, { params }: any) {
 	const body = await request.json();
 
 	try {
