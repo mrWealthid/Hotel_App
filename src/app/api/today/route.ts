@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 		}).populate([
 			{
 				path: 'guests',
-				select: 'name email '
+				select: 'name email nationality '
 			},
 			{ path: 'cabin', select: 'name ' }
 		]);
