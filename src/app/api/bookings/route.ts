@@ -113,7 +113,7 @@ export async function GET(request: NextRequest) {
 		const bookingQuery = Booking.find(filter).populate([
 			{
 				path: 'guests',
-				select: 'name email '
+				select: 'name email nationality '
 			},
 			{ path: 'cabin', select: 'name ' }
 		]);

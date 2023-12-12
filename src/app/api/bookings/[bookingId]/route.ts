@@ -23,7 +23,7 @@ export async function GET(request: NextRequest, { params }: any) {
 		const booking = await Booking.findOne({ _id: bookingId }).populate([
 			{
 				path: 'guests',
-				select: 'name email nationalId '
+				select: 'name email nationalId nationality '
 			},
 			{ path: 'cabin', select: 'name ' }
 		]);
@@ -68,6 +68,31 @@ export async function PATCH(request: NextRequest, { params }: any) {
 			message: 'Booking Updated Successfully',
 			success: true,
 			data: updatedBooking
+		});
+
+		return response;
+	} catch (error: any) {
+		return NextResponse.json({ error: error.message }, { status: 500 });
+	}
+}
+
+
+export async function DELETE(request: NextRequest, { params }: any) {
+	try {
+
+		const cabinId = params.bookingId;
+
+		const cabin = await Booking.findByIdAndDelete(cabinId);
+
+		if (!cabin) {
+			return NextResponse.json(
+				{ error: 'No Booking found with ID' },
+				{ status: 404 }
+			);
+		}
+		const response = NextResponse.json({
+			message: 'Booking Deleted  Successfully',
+			success: true
 		});
 
 		return response;
