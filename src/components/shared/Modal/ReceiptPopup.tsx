@@ -1,15 +1,16 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, MutableRefObject, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import ReceiptPage from '@/components/ui/ReceiptPage';
 import { useReactToPrint } from 'react-to-print';
+import { MdOutlineAttachEmail, MdOutlineLocalPrintshop } from 'react-icons/md';
 
-export default function ReceiptPopup({ activity }: any) {
-	const [open, setOpen] = useState(true);
+export default function ReceiptPopup({ activity, open = true, setOpen }: any) {
+	// const [open, setOpen] = useState(true);
 
-	const componentRef = useRef(null);
+	const componentRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 	const handlePrint = useReactToPrint({
-		content: () => componentRef.current
+		content: () => componentRef?.current
 	});
 
 	const cancelButtonRef = useRef(null);
@@ -71,22 +72,24 @@ export default function ReceiptPopup({ activity }: any) {
 								<div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
 									<button
 										type="button"
-										className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+										className="inline-flex w-full items-center gap-1 justify-center rounded-2xl bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm  sm:ml-3 sm:w-auto"
 										onClick={() => setOpen(false)}>
+										<MdOutlineAttachEmail />
 										Email Reciept
 									</button>
 									<button
 										type="button"
-										className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+										className="inline-flex w-full gap-1 items-center justify-center rounded-2xl bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm  sm:ml-3 sm:w-auto"
 										onClick={() => {
 											setOpen(false);
 											handlePrint();
 										}}>
+										<MdOutlineLocalPrintshop />
 										Print Receipt
 									</button>
 									<button
 										type="button"
-										className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+										className="mt-3 inline-flex gap-1 items-center w-full justify-center rounded-2xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
 										onClick={() => setOpen(false)}
 										ref={cancelButtonRef}>
 										Cancel
