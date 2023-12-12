@@ -9,7 +9,7 @@
 	--secondary-color: #2b2727;
 	--color-text-base: coral;
 	--success-color: green;
-	--input-label: green;
+	--input-label: white;
 	--error-color: rgb(220, 38, 38);
 	--pending-color: rgb(244, 130, 32);
 	--light-blue: blue;
@@ -102,3 +102,24 @@ input::placeholder {
 .react-datepicker-wrapper {
 	width: 100%;
 }
+
+
+/* @media print {
+	body * {
+		visibility: hidden;
+
+	}
+
+	.receipt-modal,
+	.receipt-content * {
+		visibility: visible;
+
+	}
+
+	.receipt-content {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+	}
+} */
