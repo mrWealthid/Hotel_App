@@ -3,11 +3,11 @@ import TodayItem from './TodayItem';
 import ReceiptPopup from '@/components/shared/Modal/ReceiptPopup';
 
 const TodayActivity = ({ daily }: any) => {
-	const [show, setShow] = useState(false);
+	const [open, setOpen] = useState(false);
 	const [activity, setActivity] = useState(null);
 
 	function handlePopup() {
-		setShow(true);
+		setOpen(true);
 	}
 
 	function renderBookings() {
@@ -35,7 +35,13 @@ const TodayActivity = ({ daily }: any) => {
 		<div className=" flex flex-col gap-2">
 			{renderBookings()}
 
-			{show && <ReceiptPopup activity={activity} />}
+			{open && (
+				<ReceiptPopup
+					activity={activity}
+					open={open}
+					setOpen={setOpen}
+				/>
+			)}
 		</div>
 	);
 };

@@ -24,7 +24,7 @@ import {
 	HiEye,
 	HiTrash
 } from 'react-icons/hi2';
-import { MdOutlineLocalPrintshop } from 'react-icons/md';
+import { MdOutlineLocalPrintshop, MdOutlinePrint } from 'react-icons/md';
 import ReceiptPage from '@/components/ui/ReceiptPage';
 import ReceiptPopup from '@/components/shared/Modal/ReceiptPopup';
 
@@ -32,7 +32,7 @@ const BookingsRowActions = ({ rowData }: any) => {
 	const { isDeleting, deleteBooking } = useDeleteBooking();
 	const { isCheckingOut, checkOutBooking } = useCheckOutBooking(rowData.id);
 
-	const [show, setShow] = useState(false);
+	const [open, setOpen] = useState(false);
 
 	return (
 		<td className="py-2 px-4  md:px-2 md:py-4 space-x-3">
@@ -77,12 +77,12 @@ const BookingsRowActions = ({ rowData }: any) => {
 									<Menu.Item>
 										{({ active }) => (
 											<button
-												onClick={() => setShow(true)}
+												onClick={() => setOpen(true)}
 												className="group gap-1 flex w-full hover:glass  items-center rounded-md px-2 py-2 text-sm">
 												{active ? (
-													<MdOutlineLocalPrintshop />
+													<MdOutlinePrint />
 												) : (
-													<HiArrowUpOnSquare />
+													<MdOutlineLocalPrintshop />
 												)}
 												Print Receipt
 											</button>
@@ -171,7 +171,13 @@ const BookingsRowActions = ({ rowData }: any) => {
 				</Modal.Window> */}
 			</Modal>
 
-			{show && <ReceiptPopup activity={rowData} />}
+			{open && (
+				<ReceiptPopup
+					activity={rowData}
+					open={open}
+					setOpen={setOpen}
+				/>
+			)}
 		</td>
 	);
 };

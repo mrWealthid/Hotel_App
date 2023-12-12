@@ -595,7 +595,7 @@ function Paginator() {
 											val === page
 												? '!bg-primary  text-white'
 												: 'bg-white hover:bg-gray-100 dark:hover:text-primary'
-										} flex items-center  dark:glass dark:border-none   rounded-3xl justify-center px-4 h-10 leading-tight text-primary cursor-pointer  border border-gray-300 `}>
+										} flex items-center  dark:glass dark:border-none   rounded-3xl justify-center px-4 h-10 leading-tight text-white cursor-pointer  border border-gray-300 `}>
 										{val}
 									</a>
 								</li>
