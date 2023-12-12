@@ -1,7 +1,8 @@
+import ReceiptPage from '@/components/ui/ReceiptPage';
 import React from 'react';
 
 const forgotPasswordComponent = () => {
-	return <div>Reset Password </div>;
+	return <ReceiptPage />;
 };
 
 export default forgotPasswordComponent;
