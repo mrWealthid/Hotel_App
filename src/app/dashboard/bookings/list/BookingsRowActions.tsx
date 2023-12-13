@@ -34,6 +34,20 @@ const BookingsRowActions = ({ rowData }: any) => {
 
 	const [open, setOpen] = useState(false);
 
+	function handleDelete(onCloseModal: any) {
+		deleteBooking(rowData.id, {
+			onSuccess: () => onCloseModal()
+		});
+	}
+	function handleCheckout(onCloseModal: any) {
+		checkOutBooking(
+			{ checkStatus: 'CHECKED_OUT' },
+			{
+				onSuccess: () => onCloseModal()
+			}
+		);
+	}
+
 	return (
 		<td className="py-2 px-4  md:px-2 md:py-4 space-x-3">
 			<Modal>
@@ -118,21 +132,23 @@ const BookingsRowActions = ({ rowData }: any) => {
 										)}
 									</Menu.Item>
 								)}
-
-								<Menu.Item>
-									{({ active }) => (
-										<Modal.Open opens="delete-booking">
-											<button className="group gap-1 flex w-full hover:glass  items-center rounded-md px-2 py-2 text-sm">
-												{active ? (
-													<HiArrowUpOnSquare />
-												) : (
-													<HiArrowUpOnSquare />
-												)}
-												Delete
-											</button>
-										</Modal.Open>
-									)}
-								</Menu.Item>
+								{rowData.checkStatus === 'UNCONFIRMED' ||
+									(rowData.checkStatus === 'CHECKED_OUT' && (
+										<Menu.Item>
+											{({ active }) => (
+												<Modal.Open opens="delete-booking">
+													<button className="group gap-1 flex w-full hover:glass  items-center rounded-md px-2 py-2 text-sm">
+														{active ? (
+															<HiArrowUpOnSquare />
+														) : (
+															<HiArrowUpOnSquare />
+														)}
+														Delete
+													</button>
+												</Modal.Open>
+											)}
+										</Menu.Item>
+									))}
 							</div>
 						</Menu.Items>
 					</Transition>
@@ -141,8 +157,7 @@ const BookingsRowActions = ({ rowData }: any) => {
 				<Modal.Window name="delete-booking">
 					<ConfirmationPage
 						handler={(onCloseModal: any) => {
-							deleteBooking(rowData.id);
-							onCloseModal();
+							handleDelete(onCloseModal);
 						}}
 						modalText={'Are you sure you want to delete cabin'}
 					/>
@@ -150,25 +165,13 @@ const BookingsRowActions = ({ rowData }: any) => {
 
 				<Modal.Window name="check-out">
 					<ConfirmationPage
-						handler={(onCloseModal: any) => {
-							checkOutBooking({ checkStatus: 'CHECKED_OUT' });
-							onCloseModal();
-						}}
+						handler={(onCloseModal: any) =>
+							handleCheckout(onCloseModal)
+						}
 						modalText={`Are you sure you want to checkout
 							 ${rowData.guests.name}`}
 					/>
 				</Modal.Window>
-				{/* <Modal.Window name="receipt">
-					<ReceiptPage
-						{...rowData}
-						// handler={(onCloseModal: any) => {
-						// 	checkOutBooking({ checkStatus: 'CHECKED_OUT' });
-						// 	onCloseModal();
-						// }}
-						// modalText={`Are you sure you want to checkout
-						// 	 ${rowData.guests.name}`}
-					/>
-				</Modal.Window> */}
 			</Modal>
 
 			{open && (
