@@ -129,6 +129,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 						queryKey="guests"
 						service={fetchGuests}
 						label={'Guest'}
+						custom={'nationality'}
 						displayValue={'name'}
 						handler={handleAutoCompleteValues}
 					/>
@@ -179,6 +180,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 						queryKey="cabin"
 						service={fetchCabins}
 						label={'Cabin'}
+						custom={'regularPrice'}
 						displayValue={'name'}
 						handler={handleAutoCompleteValues}
 					/>
@@ -287,7 +289,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 						endDate={endDate}
 						handleStartDate={handleStartDate}
 						handleEndDate={handleEndDate}
-						// minStartDate={addDays(new Date(), 1)}
+						minStartDate={addDays(new Date(), 1)}
 						// maxEndDate={
 						// 	startDate
 						// 		? addDays(startDate, settings.maxBookingLength)
