@@ -123,23 +123,23 @@ const BookingsRowActions = ({ rowData }: any) => {
 										)}
 									</Menu.Item>
 								)}
-								{rowData.checkStatus === 'UNCONFIRMED' ||
-									(rowData.checkStatus === 'CHECKED_OUT' && (
-										<Menu.Item>
-											{({ active }) => (
-												<Modal.Open opens="delete-booking">
-													<button className="group gap-1 flex w-full hover:glass  items-center rounded-md px-2 py-2 text-sm">
-														{active ? (
-															<HiTrash />
-														) : (
-															<HiTrash />
-														)}
-														Delete
-													</button>
-												</Modal.Open>
-											)}
-										</Menu.Item>
-									))}
+								{(rowData.checkStatus === 'UNCONFIRMED' ||
+									rowData.checkStatus === 'CHECKED_OUT') && (
+									<Menu.Item>
+										{({ active }) => (
+											<Modal.Open opens="delete-booking">
+												<button className="group gap-1 flex w-full hover:glass  items-center rounded-md px-2 py-2 text-sm">
+													{active ? (
+														<HiTrash />
+													) : (
+														<HiTrash />
+													)}
+													Delete
+												</button>
+											</Modal.Open>
+										)}
+									</Menu.Item>
+								)}
 							</div>
 						</Menu.Items>
 					</Transition>
