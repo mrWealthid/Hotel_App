@@ -175,7 +175,7 @@ const Page = ({ params }: any) => {
 							<span>
 								{formatCurrency(data.totalPrice)} (
 								{formatCurrency(data.cabinPrice)} for cabin +{' '}
-								{formatCurrency(data.breakfastPrice)} for
+								{formatCurrency(calculateBreakfastPrice())} for
 								breakfast )
 							</span>
 						)}

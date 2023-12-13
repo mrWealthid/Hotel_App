@@ -6,6 +6,7 @@ import Label from '../Form-inputs/Label';
 
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { useDebounce } from '@uidotdev/usehooks';
+import { formatCurrency } from '@/utils/helpers';
 
 export default function AutoComplete({
 	service,
@@ -13,7 +14,8 @@ export default function AutoComplete({
 	label,
 	key = 'id',
 	displayValue,
-	handler
+	handler,
+	custom
 }: any) {
 	const [selected, setSelected] = useState<any>({});
 	const [query, setQuery] = useState('');
@@ -78,13 +80,32 @@ export default function AutoComplete({
 										{({ selected, active }) => (
 											<>
 												<span
-													className={`block truncate ${
+													className={`flex justify-between truncate ${
 														selected
 															? 'font-medium'
 															: 'font-normal'
 													}`}>
 													{result[displayValue]}
+													
+													{/* I did this to customize
+													the list options! This is
+													not neccessary */}
+													{custom && (
+														<span>
+															{custom ===
+															'regularPrice'
+																? formatCurrency(
+																		result[
+																			custom
+																		]
+																  )
+																: result[
+																		custom
+																  ]}
+														</span>
+													)}
 												</span>
+
 												{selected ? (
 													<span
 														className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
