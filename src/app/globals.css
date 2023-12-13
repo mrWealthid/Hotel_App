@@ -74,7 +74,7 @@ body {
 }
 
 input::placeholder {
-	@apply text-xs capitalize;
+	@apply text-xs;
 }
 
 
