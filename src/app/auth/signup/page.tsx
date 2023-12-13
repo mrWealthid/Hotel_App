@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRegister } from '../hooks/useAuth';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import Link from 'next/link';
 
 const SignupComponent = () => {
 	const { register, handleSubmit, getValues, formState } = useForm({
@@ -61,9 +62,11 @@ const SignupComponent = () => {
 						<div className="w-full flex gap-4">
 							<TextInput
 								name={'firstName'}
-								placeholder="Enter Password"
 								label="First Name"
-								type="password">
+								type="password"
+								error={errors?.[
+									'firstName'
+								]?.message?.toString()}>
 								<input
 									{...register('firstName', {
 										required: 'This field is required'
@@ -71,38 +74,56 @@ const SignupComponent = () => {
 									className="input-style"
 									type="text"
 									id="firstName"
+									placeholder="Enter First Name"
 								/>
 							</TextInput>
-							<TextInput name={'lastName'} label="Last Name">
+							<TextInput
+								name={'lastName'}
+								label="Last Name"
+								error={errors?.[
+									'lastName'
+								]?.message?.toString()}>
 								<input
 									{...register('lastName', {
 										required: 'This field is required'
 									})}
 									className="input-style"
 									type="text"
-									id="firstName"
+									id="lastName"
 									placeholder="Enter Last Name"
 								/>
 							</TextInput>
 						</div>
 						<div className="w-full flex gap-4">
-							<EmailInput name={'email'} label="Email">
+							<EmailInput
+								name={'email'}
+								label="Email"
+								error={errors?.['email']?.message?.toString()}>
 								<input
 									{...register('email', {
-										required: 'This field is required'
+										required: 'This field is required',
+										pattern: {
+											value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+											message: 'Invalid email address'
+										}
 									})}
-									className="input-style"
+									className="input-style  "
 									type="email"
 									id="email"
+									placeholder="johndoe@gmail.com"
 								/>
 							</EmailInput>
 
 							<TextInput
 								name={'password'}
 								placeholder="Enter Password"
-								label="Password">
+								label="Password"
+								error={errors?.[
+									'password'
+								]?.message?.toString()}>
 								<div className="input-style !p-0 !pr-2 !overflow-hidden">
 									<input
+										placeholder="Enter Password"
 										className="w-full  dark:bg-transparent  border-none outline-none focus:ring-0 ring-0 "
 										type={
 											showPassword ? 'text' : 'password'
@@ -140,7 +161,11 @@ const SignupComponent = () => {
 						</section>
 						<p className="text-sm text-primary dark:text-label-color flex gap-2">
 							Already Have An Account ?
-							<a className="text-blue-700 text-sm">Login</a>
+							<Link
+								href={'/auth/login'}
+								className="text-blue-600 text-sm">
+								Login
+							</Link>
 						</p>
 					</form>
 				</section>

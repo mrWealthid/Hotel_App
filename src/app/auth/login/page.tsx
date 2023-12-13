@@ -58,10 +58,17 @@ const LoginComponent = () => {
 							onSubmit={handleSubmit(onSubmit, onError)}
 							action=""
 							className="w-full flex flex-col justify-center gap-2 items-center">
-							<EmailInput name={'email'} label="Email">
+							<EmailInput
+								name={'email'}
+								label="Email"
+								error={errors?.['email']?.message?.toString()}>
 								<input
 									{...register('email', {
-										required: 'This field is required'
+										required: 'This field is required',
+										pattern: {
+											value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+											message: 'Invalid email address'
+										}
 									})}
 									className="input-style"
 									type="email"
@@ -71,7 +78,10 @@ const LoginComponent = () => {
 							<TextInput
 								name={'password'}
 								placeholder="Enter Password"
-								label="Password">
+								label="Password"
+								error={errors?.[
+									'password'
+								]?.message?.toString()}>
 								<div className="input-style !p-0 !pr-2 !overflow-hidden">
 									<input
 										className="w-full  dark:bg-transparent   border-none outline-none focus:ring-0 ring-0 "
