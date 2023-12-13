@@ -6,58 +6,26 @@ import CabinForm from '../CabinForm';
 import ConfirmationPage from '../../../../components/ui/ConfirmationPage';
 import { Menu, Transition } from '@headlessui/react';
 import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
-
-import { useRouter } from 'next/navigation';
-
 import { useDeleteCabin, useDuplicateCabin } from '../hooks/useCabins';
 
 const CabinRowActions = ({ rowData }: any) => {
-	const router = useRouter();
-
 	const { isDeleting, deleteCabin } = useDeleteCabin();
 	const { isDuplicating, duplicateCabin } = useDuplicateCabin();
+
+	function handleDelete(onCloseModal: any) {
+		deleteCabin(rowData.id, {
+			onSuccess: () => onCloseModal()
+		});
+	}
+	function handleDuplicate(onCloseModal: any) {
+		duplicateCabin(rowData, {
+			onSuccess: () => onCloseModal()
+		});
+	}
 
 	return (
 		<td className="p-2 md:px-2 md:py-2 space-x-3">
 			<Modal>
-				{/* <Dropdown
-					arrowIcon={false}
-					className="z-50 w-1/6 !text-black"
-					style={{ color: 'black' }}
-					label={<span>...</span>}>
-					<Dropdown.Item as="div">
-						<Modal.Open opens="edit-cabin-form">
-							<button
-								className="flex gap-1 items-center"
-								type="button">
-
-								<HiPencil /> Edit
-							</button>
-						</Modal.Open>
-					</Dropdown.Item>
-					<Dropdown.Item as="div">
-						<Modal.Open opens="confirm-modal">
-							<button
-								className="flex gap-1 items-center"
-								type="button">
-
-								<HiTrash />
-								Delete
-							</button>
-						</Modal.Open>
-					</Dropdown.Item>
-					<Dropdown.Item as="div">
-						<Modal.Open opens="confirm-duplicate">
-							<button
-								className="flex gap-1 items-center"
-								type="button">
-								<HiSquare2Stack />
-								Duplicate
-							</button>
-						</Modal.Open>
-					</Dropdown.Item>
-				</Dropdown> */}
-
 				<Menu as="div" className="relative inline-block text-left">
 					<div>
 						<Menu.Button className="inline-flex w-full justify-center rounded-md border dark:glass  focus:border-primary focus:border-2  px-4 py-2 text-sm font-medium text-primary dark:text-white  ">
@@ -129,19 +97,18 @@ const CabinRowActions = ({ rowData }: any) => {
 
 				<Modal.Window name="confirm-modal">
 					<ConfirmationPage
+						isLoading={isDeleting}
 						handler={(onCloseModal: any) => {
-							// handleDelete(rowData.id, onCloseModal)
-							deleteCabin(rowData.id);
-							onCloseModal();
+							handleDelete(onCloseModal);
 						}}
 						modalText={'Are you sure you want to delete cabin'}
 					/>
 				</Modal.Window>
 				<Modal.Window name="confirm-duplicate">
 					<ConfirmationPage
+						isLoading={isDuplicating}
 						handler={(onCloseModal: any) => {
-							duplicateCabin(rowData);
-							onCloseModal();
+							handleDuplicate(onCloseModal);
 						}}
 						modalText={'Are you sure you want to duplicate cabin'}
 					/>

@@ -1,16 +1,7 @@
 'use client';
-import React, {
-	cloneElement,
-	Fragment,
-	useEffect,
-	useRef,
-	useContext,
-	useState
-} from 'react';
-import { Dropdown } from 'flowbite-react';
-import { Menu, Transition } from '@headlessui/react';
+import React, { Fragment, useState } from 'react';
 
-import { ChevronDownIcon } from '@heroicons/react/solid';
+import { Menu, Transition } from '@headlessui/react';
 
 import Link from 'next/link';
 import Modal from '@/components/shared/Modal/Modal-component';
@@ -25,7 +16,7 @@ import {
 	HiTrash
 } from 'react-icons/hi2';
 import { MdOutlineLocalPrintshop, MdOutlinePrint } from 'react-icons/md';
-import ReceiptPage from '@/components/ui/ReceiptPage';
+
 import ReceiptPopup from '@/components/shared/Modal/ReceiptPopup';
 
 const BookingsRowActions = ({ rowData }: any) => {
@@ -139,9 +130,9 @@ const BookingsRowActions = ({ rowData }: any) => {
 												<Modal.Open opens="delete-booking">
 													<button className="group gap-1 flex w-full hover:glass  items-center rounded-md px-2 py-2 text-sm">
 														{active ? (
-															<HiArrowUpOnSquare />
+															<HiTrash />
 														) : (
-															<HiArrowUpOnSquare />
+															<HiTrash />
 														)}
 														Delete
 													</button>
@@ -159,6 +150,7 @@ const BookingsRowActions = ({ rowData }: any) => {
 						handler={(onCloseModal: any) => {
 							handleDelete(onCloseModal);
 						}}
+						isLoading={isDeleting}
 						modalText={'Are you sure you want to delete cabin'}
 					/>
 				</Modal.Window>
@@ -168,6 +160,7 @@ const BookingsRowActions = ({ rowData }: any) => {
 						handler={(onCloseModal: any) =>
 							handleCheckout(onCloseModal)
 						}
+						isLoading={isCheckingOut}
 						modalText={`Are you sure you want to checkout
 							 ${rowData.guests.name}`}
 					/>
