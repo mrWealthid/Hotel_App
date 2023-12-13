@@ -14,6 +14,7 @@ const SideBar = () => {
 		{ name: 'Bookings', path: '/dashboard/bookings' },
 		{ name: 'Cabins', path: '/dashboard/cabins' },
 		{ name: 'Users', path: '/dashboard/users' },
+		{ name: 'Guests', path: '/dashboard/guests' },
 		{ name: 'Settings', path: '/dashboard/settings' }
 	];
 	const pathname = usePathname();
