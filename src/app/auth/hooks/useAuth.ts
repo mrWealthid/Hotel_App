@@ -46,6 +46,18 @@ export function useLogout(router: any) {
 		loggingOut
 	};
 }
+export function useResetPassword() {
+	const { isLoading, mutate: resetPassword } = useMutation({
+		mutationFn: () => handleLogout(),
+		// onSuccess: () => (),
+		onError: (err: any) => toast.error(handleClientErrorMessage(err))
+	});
+
+	return {
+		isLoading,
+		resetPassword
+	};
+}
 
 // const { isLoading, data, error } = useMutation({
 // 	queryKey: ['auth'],
