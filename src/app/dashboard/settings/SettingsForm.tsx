@@ -1,8 +1,10 @@
 'use client';
 import TextInput from '@/components/shared/Form-inputs/Text-Input';
 import ButtonComponent from '@/components/shared/Form-inputs/Button';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const SettingsForm = ({ settings }: any) => {
 	const { register, handleSubmit, getValues, formState } = useForm({
@@ -11,36 +13,24 @@ const SettingsForm = ({ settings }: any) => {
 	});
 	const { errors, isSubmitting } = formState;
 
-	console.log(settings);
+	const [isLoading, setIsLoading] = useState(false);
 
 	async function onSubmit(data: any) {
+		setIsLoading(true);
 		try {
-			const res = await fetch(
-				`http://localhost:3000/api/settings/${settings.id}`,
+			const res = await axios.patch(`/api/settings/${settings.id}`, data);
 
-				{
-					method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
-					body: JSON.stringify(data) // body data type must match "Content-Type" header
-				}
-			);
-
-			if (!res.ok) {
-				throw new Error(
-					`Cabin could not be created Status: ${res.status}`
-				);
-			}
-			return res.json(); // parses JSON response into native JavaScript objects
+			setIsLoading(false);
+			toast.success('Settings Successfully Updated!');
 		} catch (err) {
-			console.log(err);
+			setIsLoading(false);
+			toast.error(`Settings could not be updated`);
 		}
 	}
 
-	function onError(err: any) {
-		console.log(err);
-	}
 	return (
 		<form
-			onSubmit={handleSubmit(onSubmit, onError)}
+			onSubmit={handleSubmit(onSubmit)}
 			className=" flex flex-1  p-6 card lg:w-2/3   items-center">
 			<section className="flex-col flex gap-2 w-full">
 				<TextInput
@@ -139,13 +129,14 @@ const SettingsForm = ({ settings }: any) => {
 					<p>Image Upload</p> */}
 
 				<section className="flex justify-end gap-4">
-					<ButtonComponent
+					{/* <ButtonComponent
 						type="reset"
 						style="rounded-3xl"
-						btnText={'Cancel'}></ButtonComponent>
+						btnText={'Cancel'}></ButtonComponent> */}
 
 					<ButtonComponent
 						type="submit"
+						loading={isLoading}
 						style="rounded-3xl"
 						disabled={!formState.isValid}
 						btnText={'Update Setting'}></ButtonComponent>
