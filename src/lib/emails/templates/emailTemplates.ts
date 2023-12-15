@@ -1,5 +1,4 @@
-export function resetPassword(name: string, url: string) {
-	`<!DOCTYPE html>
+export const resetPassword = `<!DOCTYPE html>
 <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
 <title></title>
@@ -200,7 +199,7 @@ export function resetPassword(name: string, url: string) {
 <tr>
 <td class="pad" style="padding-bottom:10px;padding-left:40px;padding-right:40px;padding-top:10px;">
 <div style="color:#191919;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:38px;line-height:150%;text-align:center;mso-line-height-alt:57px;">
-<p style="margin: 0; word-break: break-word;"><strong><span>Hi ${name}, </span></strong></p>
+<p style="margin: 0; word-break: break-word;"><strong><span>Hi {{name}}, </span></strong></p>
 </div>
 </td>
 </tr>
@@ -218,11 +217,11 @@ export function resetPassword(name: string, url: string) {
 <tr>
 <td class="pad">
 <div align="center" class="alignment"><!--[if mso]>
-<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href=${url} style="height:38px;width:272px;v-text-anchor:middle;" arcsize="11%" stroke="false" fillcolor="#1f295a">
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href={{url}} style="height:38px;width:272px;v-text-anchor:middle;" arcsize="11%" stroke="false" fillcolor="#1f295a">
 <w:anchorlock/>
 <v:textbox inset="0px,0px,0px,0px">
 <center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:14px">
-<![endif]--><a href=${url} style="text-decoration:none;display:block;color:#ffffff;background-color:#1f295a;border-radius:4px;width:40.00%;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank"><span style="padding-left:20px;padding-right:20px;font-size:14px;display:inline-block;letter-spacing:normal;"><span style="word-break: break-word; line-height: 28px;">Here</span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
+<![endif]--><a href={{url}} style="text-decoration:none;display:block;color:#ffffff;background-color:#1f295a;border-radius:4px;width:40.00%;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:14px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank"><span style="padding-left:20px;padding-right:20px;font-size:14px;display:inline-block;letter-spacing:normal;"><span style="word-break: break-word; line-height: 28px;">Here</span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
 </td>
 </tr>
 </table>
@@ -428,4 +427,3 @@ export function resetPassword(name: string, url: string) {
 </table><!-- End -->
 </body>
 </html>`;
-}

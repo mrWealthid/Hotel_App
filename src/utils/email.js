@@ -53,15 +53,12 @@ export class Email {
 	}
 
 	async send(template, subject) {
-		//Send the actual emails
-		//1) Render HTML, based on a pug template
-		const html = emails.resetPassword(this.firstName, this.url);
 		//2)- Define emails options
 		const mailOptions = {
 			from: this.from,
 			to: this.to,
 			subject,
-			html
+			html: template
 			// text: htmlToText.htmlToText(html)
 			// html:
 		};
@@ -77,8 +74,11 @@ export class Email {
 	}
 
 	async sendPasswordReset() {
+		const html = emails.resetPassword
+			.replace('{{name}}', this.firstName)
+			.replace('{{url}}', this.url);
 		await this.send(
-			'passwordReset',
+			html,
 			'Your password reset token (valid for only 10 minutes)'
 		);
 	}
@@ -88,8 +88,10 @@ export class Email {
 			to: 'mygee@mailsac.com', // Change to your recipient
 			from: 'support@em4491.wealthtech.website', // Change to your verified sender
 			subject: 'Sending with SendGrid is Fun',
-			text: 'and easy to do anywhere, even with Node.js',
-			html: '<strong>and easy to do anywhere, even with Node.js</strong>'
+			// text: 'and easy to do anywhere, even with Node.js',
+			html: emails.resetPassword
+				.replace('{{name}}', this.firstName)
+				.replace('{{url}}', this.url)
 		};
 		sgMail
 			.send(msg)
