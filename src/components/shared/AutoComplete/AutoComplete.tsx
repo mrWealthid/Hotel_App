@@ -84,9 +84,9 @@ export default function AutoComplete({
 														selected
 															? 'font-medium'
 															: 'font-normal'
-													}`}>
+													} text-xs sm:text-sm`}>
 													{result[displayValue]}
-													
+
 													{/* I did this to customize
 													the list options! This is
 													not neccessary */}

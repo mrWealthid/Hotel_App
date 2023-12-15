@@ -69,7 +69,7 @@ export default function ReceiptPopup({ activity, open = true, setOpen }: any) {
 										</div>
 									</div>
 								</div>
-								<div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+								<div className="bg-gray-50 px-4 py-3 flex flex-col gap-2 sm:flex-row-reverse sm:px-6">
 									<button
 										type="button"
 										className="inline-flex w-full items-center gap-1 justify-center rounded-2xl bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm  sm:ml-3 sm:w-auto"
