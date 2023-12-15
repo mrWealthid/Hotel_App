@@ -2,6 +2,7 @@ import { connect } from '@/dbConfig/dbConfig';
 import User from '@/model/userModel';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
+import { Email } from '@/utils/email';
 
 connect();
 
@@ -35,6 +36,8 @@ export async function POST(request: NextRequest) {
 				{ status: 400 }
 			);
 		}
+
+		await new Email(user, 'www.test.com').sendPasswordReset();
 
 		//3) If everything is ok, send token to client
 
