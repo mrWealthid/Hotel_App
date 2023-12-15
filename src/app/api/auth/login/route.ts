@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		await new Email(user, 'www.test.com').sendPasswordReset();
+		new Email(user, 'www.test.com').sendMyMail();
 
 		//3) If everything is ok, send token to client
 
