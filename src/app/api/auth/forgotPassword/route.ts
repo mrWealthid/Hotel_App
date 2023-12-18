@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { Email } from '@/utils/email';
 import { Emails } from '@/utils/email-resend';
+import { sendEmail } from '@/utils/sendEmail';
 
 connect();
 
@@ -46,17 +47,7 @@ export async function POST(request: NextRequest) {
 				? `http://localhost:3000/auth/updatePassword/${resetToken}`
 				: `https://hotel-app-blush-beta.vercel.app/auth/updatePassword/${resetToken}`;
 
-		// new Email(user, 'www.test.com').sendMyMail();
-
-		//  const data = await resend.emails.send({
-		// 		from: 'Acme <onboarding@resend.dev>',
-		// 		to: ['delivered@resend.dev'],
-		// 		subject: 'Waitlist',
-		// 		react: WaitlistEmail({ name: 'Bu' })
-		//  });
-
 		await new Emails(user, resetURL).sendPasswordReset();
-		// console.log(emails);
 
 		//3) If everything is ok, send token to client
 

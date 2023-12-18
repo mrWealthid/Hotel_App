@@ -1,16 +1,7 @@
-import { Emails } from '@/utils/email-resend';
 import { connect } from '@/dbConfig/dbConfig';
 import User from '@/model/userModel';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-
-import { Resend } from 'resend';
-import { ResetPassword } from '@/components/ui/emails/ResetPassword';
-import WaitlistEmail from '@/components/ui/emails/WaitList';
-import { render } from '@react-email/components';
-import { Email } from '@/utils/email';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 connect();
 

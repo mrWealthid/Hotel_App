@@ -31,6 +31,10 @@ const ResetPasswordComponent = () => {
 		console.log(err);
 	}
 
+	// async function send() {
+	// 	'use server';
+	// }
+
 	return (
 		<>
 			<section className="flex flex-col min-h-screen h-fit items-center justify-center">
