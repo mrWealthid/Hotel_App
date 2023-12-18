@@ -1,9 +1,6 @@
 import * as emails from '@/lib/emails/templates/emailTemplates';
-// const htmlToText = require('html-to-text');
 
 import sgMail from '@sendgrid/mail';
-
-// import ReceiptPopup from '@/components/shared/Modal/ReceiptPopup';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -59,12 +56,7 @@ export class Email {
 			to: this.to,
 			subject,
 			html: template
-			// text: htmlToText.htmlToText(html)
-			// html:
 		};
-
-		//3 Create a transport and send emails
-		// await this.handleCreateTransport().sendMail(mailOptions);
 
 		await this.handleWebAPI(mailOptions);
 	}
@@ -83,23 +75,23 @@ export class Email {
 		);
 	}
 
-	sendMyMail() {
-		const msg = {
-			to: 'mygee@mailsac.com', // Change to your recipient
-			from: 'support@em4491.wealthtech.website', // Change to your verified sender
-			subject: 'Sending with SendGrid is Fun',
-			// text: 'and easy to do anywhere, even with Node.js',
-			html: emails.resetPassword
-				.replace('{{name}}', this.firstName)
-				.replace('{{url}}', this.url)
-		};
-		sgMail
-			.send(msg)
-			.then(() => {
-				console.log('Email sent');
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}
+	// sendMyMail() {
+	// 	const msg = {
+	// 		to: 'mygee@mailsac.com', // Change to your recipient
+	// 		from: 'support@em4491.wealthtech.website', // Change to your verified sender
+	// 		subject: 'Sending with SendGrid is Fun',
+	// 		// text: 'and easy to do anywhere, even with Node.js',
+	// 		html: emails.resetPassword
+	// 			.replace('{{name}}', this.firstName)
+	// 			.replace('{{url}}', this.url)
+	// 	};
+	// 	sgMail
+	// 		.send(msg)
+	// 		.then(() => {
+	// 			console.log('Email sent');
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error(error);
+	// 		});
+	// }
 }
