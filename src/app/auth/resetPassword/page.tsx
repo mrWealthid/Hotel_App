@@ -22,10 +22,10 @@ const ResetPasswordComponent = () => {
 	const { isLoading, resetPassword } = useResetPassword();
 
 	async function onSubmit(payload: any) {
-		resetPassword(payload, { onSuccess: () => router.push('/dashboard') });
+		resetPassword(payload);
 	}
 
-	// const { errors, isSubmitting } = formState;
+	const { errors, isSubmitting } = formState;
 
 	function onError(err: any) {
 		console.log(err);
@@ -44,7 +44,10 @@ const ResetPasswordComponent = () => {
 							onSubmit={handleSubmit(onSubmit, onError)}
 							action=""
 							className="w-full flex flex-col justify-center gap-2 items-center">
-							<EmailInput name={'email'} label="Email">
+							<EmailInput
+								name={'email'}
+								label="Email"
+								error={errors?.['email']?.message?.toString()}>
 								<input
 									{...register('email', {
 										required: 'This field is required',

@@ -119,9 +119,11 @@ const LoginComponent = () => {
 							</section>
 							<p className="flex gap-3 text-sm text-primary dark:text-label-color">
 								Forgot Password ?
-								<small className="text-blue-600 cursor-pointer text-sm">
+								<Link
+									href={'/auth/resetPassword'}
+									className="text-blue-600 text-sm">
 									Reset
-								</small>
+								</Link>
 							</p>
 							<p className="flex gap-3 text-sm text-primary dark:text-label-color">
 								Need An Account ?

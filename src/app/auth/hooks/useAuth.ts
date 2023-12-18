@@ -5,6 +5,7 @@ import {
 	IRegister,
 	handleLogin,
 	handleLogout,
+	handlePasswordReset,
 	handleRegister
 } from '../service/auth-service';
 
@@ -48,8 +49,8 @@ export function useLogout(router: any) {
 }
 export function useResetPassword() {
 	const { isLoading, mutate: resetPassword } = useMutation({
-		mutationFn: () => handleLogout(),
-		// onSuccess: () => (),
+		mutationFn: (payload) => handlePasswordReset(payload),
+		onSuccess: (data) => toast.success(data.message),
 		onError: (err: any) => toast.error(handleClientErrorMessage(err))
 	});
 

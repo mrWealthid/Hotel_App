@@ -55,6 +55,17 @@ export async function handleRegister(payload: IRegister) {
 		throw Error(handleClientErrorMessage(err));
 	}
 }
+export async function handlePasswordReset(payload: any) {
+	try {
+		const res = await axios.post(`/api/auth/forgotPassword`, payload);
+
+		const data = await res.data;
+
+		return data;
+	} catch (err) {
+		throw Error(handleClientErrorMessage(err));
+	}
+}
 export async function handleLogout() {
 	try {
 		const res = await axios(`/api/auth/logout`);
