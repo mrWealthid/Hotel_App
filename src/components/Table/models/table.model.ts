@@ -1,13 +1,12 @@
 export interface ITable {
 	queryKey: string;
 	children: React.ReactNode;
-
 	columns: Icolumn[];
 	headerActions?: React.ReactNode;
-
 	limit?: number;
 	service: any;
-	actionable?:boolean
+	actionable?: boolean;
+	isDownloadable?: boolean;
 }
 
 interface TableConfig {

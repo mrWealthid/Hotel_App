@@ -1,5 +1,11 @@
 'use client';
-import React, { cloneElement, useContext, useEffect, useState } from 'react';
+import React, {
+	cloneElement,
+	useContext,
+	useEffect,
+	useRef,
+	useState
+} from 'react';
 import { createContext } from 'react';
 import { ITable, Icolumn } from './models/table.model';
 import { formatCurrency } from '@/utils/helpers';
@@ -9,7 +15,10 @@ import Modal from '../shared/Modal/Modal-component';
 import TextInput from '@/components/shared/Form-inputs/Text-Input';
 import { useForm } from 'react-hook-form';
 import ButtonComponent from '../shared/Form-inputs/Button';
-import { FcEmptyFilter, FcFilledFilter } from 'react-icons/fc';
+import { FcFilledFilter } from 'react-icons/fc';
+import { CiFilter } from 'react-icons/ci';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { IoCloudDownloadOutline } from 'react-icons/io5';
 
 const TableContext = createContext({});
 
@@ -17,11 +26,11 @@ function Table({
 	queryKey,
 	children,
 	columns,
-
 	headerActions,
 	service,
 	limit: limitVal,
-	actionable = true
+	actionable = true,
+	isDownloadable = true
 }: ITable) {
 	const [page, setPage] = useState(1);
 	const [limit, setLimit] = useState(limitVal || 5);
@@ -91,6 +100,7 @@ function Table({
 			)
 			.join('&');
 	}
+	const tableRef = useRef(null);
 
 	return (
 		<TableContext.Provider
@@ -108,14 +118,19 @@ function Table({
 				objectToQueryParams,
 				cancelFilter,
 				filterIsActive,
-				actionable
+				actionable,
+				tableRef,
+				queryKey,
+				isDownloadable
 			}}>
 			<div className=" overflow-x-auto   card p-2">
 				<TableHeaderAction handleFilter={handleFilter}>
 					{headerActions}
 				</TableHeaderAction>
 
-				<table className="w-full   text-sm  text-gray-500 ">
+				<table
+					ref={tableRef}
+					className="w-full   text-sm  text-gray-500 ">
 					{children}
 				</table>
 
@@ -250,7 +265,7 @@ function TableFilterForm({ column, onCloseModal }: any) {
 }
 
 function TableFilter() {
-	const { columns, filterIsActive }: any = useContext(TableContext);
+	const { columns, filterIsActive, tableRef }: any = useContext(TableContext);
 	return (
 		<div className="">
 			<Modal>
@@ -265,7 +280,7 @@ function TableFilter() {
 						{filterIsActive ? (
 							<FcFilledFilter size={15} color="green" />
 						) : (
-							<FcEmptyFilter size={15} />
+							<CiFilter size={15} />
 						)}
 						Filter
 					</button>
@@ -315,7 +330,8 @@ function TableHeader() {
 	);
 }
 export function TableHeaderAction({ children }: any) {
-	const { handleFilter }: any = useContext(TableContext);
+	const { handleFilter, tableRef, queryKey, isDownloadable }: any =
+		useContext(TableContext);
 	return (
 		<div className="flex flex-col flex-wrap items-center  justify-between mb-2 px-3 overflow-x-auto md:flex-row">
 			<div className="flex items-center gap-2 mt-4"></div>
@@ -325,13 +341,18 @@ export function TableHeaderAction({ children }: any) {
 
 				{cloneElement(children, { handleFilter })}
 
-				{/* <div className="">
-					<button
-						type="button"
-						className="w-full  text-xs px-6 py-2 rounded  bg-gray-50 font-light text-black border btn">
-						Export As
-					</button>
-				</div> */}
+				{isDownloadable && (
+					<DownloadTableExcel
+						filename={`${queryKey} table`}
+						sheet={queryKey}
+						currentTableRef={tableRef.current}>
+						<button
+							type="button"
+							className="w-full  text-xs px-6 py-2 gap-1 rounded-3xl flex items-center  bg-gray-50  dark:glass dark:border-none font-light text-black border btn">
+							<IoCloudDownloadOutline /> Export
+						</button>
+					</DownloadTableExcel>
+				)}
 
 				{/* <div className="flex gap-3 items-center">
 					<svg
