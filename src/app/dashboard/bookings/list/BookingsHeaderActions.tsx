@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import { TbShieldCheck, TbShieldQuestion } from 'react-icons/tb';
+import { ImExit } from 'react-icons/im';
 
 const BookingsHeaderActions = ({ handleFilter }: any) => {
 	const [query, setQuery] = useState<{
@@ -32,7 +34,8 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 					className={`${
 						query?.checkStatus === 'CHECKED_IN' &&
 						'!bg-primary text-white'
-					} w-full  text-xs px-6 py-2 rounded-3xl  bg-gray-50  dark:glass dark:border-none font-light text-black border btn`}>
+					} w-full  text-xs px-6 py-2 flex gap-1 items-center rounded-3xl  bg-gray-50  dark:glass dark:border-none font-light text-black border btn`}>
+					<TbShieldCheck />
 					Checked In
 				</button>
 			</div>
@@ -47,8 +50,8 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 					className={`${
 						query?.checkStatus === 'CHECKED_OUT' &&
 						'!bg-primary text-white'
-					} w-full  text-xs px-6 py-2 rounded-3xl  dark:glass dark:border-none bg-gray-50 font-light text-black border btn`}>
-					{' '}
+					} w-full flex gap-1 items-center  text-xs px-6 py-2 rounded-3xl  dark:glass dark:border-none bg-gray-50 font-light text-black border btn`}>
+					<ImExit />
 					Checked-Out
 				</button>
 			</div>
@@ -64,7 +67,8 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
 					className={`${
 						query?.checkStatus === 'UNCONFIRMED' &&
 						'!bg-primary text-white'
-					} w-full  text-xs px-6 py-2 rounded-3xl  dark:glass dark:border-none  bg-gray-50 font-light text-black border btn`}>
+					} w-full  text-xs px-6 py-2 flex items-center gap-1 rounded-3xl  dark:glass dark:border-none  bg-gray-50 font-light text-black border btn`}>
+					<TbShieldQuestion />
 					Un-Confirmed
 				</button>
 			</div>

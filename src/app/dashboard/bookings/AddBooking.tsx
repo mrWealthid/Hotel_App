@@ -3,20 +3,18 @@
 import React, { useState } from 'react';
 import BookingForm from './BookingForm';
 import Modal from '@/components/shared/Modal/Modal-component';
-import { getData } from '@/utils/apiRequests';
+
+import { CiCirclePlus } from 'react-icons/ci';
 
 const AddBooking = ({ settings }: any) => {
-	const [isOpen, setIsOpen] = useState(false);
-
-	function handleToggle() {
-		setIsOpen((prev) => !prev);
-	}
 	return (
 		<Modal>
 			<Modal.Open opens="Booking-form">
 				<div>
-					<button type="button" className="btn-primary rounded-3xl">
-						Add New Booking
+					<button
+						type="button"
+						className="btn-primary flex items-center gap-1 rounded-3xl">
+						<CiCirclePlus size={18} /> Add New Booking
 					</button>
 				</div>
 			</Modal.Open>
@@ -24,18 +22,6 @@ const AddBooking = ({ settings }: any) => {
 				<BookingForm settings={settings} />
 			</Modal.Window>
 		</Modal>
-
-		// <div>
-		// 	<div className="flex justify-end ">
-		// 		<ButtonComponent
-		// 			type="button"
-		// 			style="rounded-3xl  "
-		// 			btnText={'Add New Booking'}
-		// 			handleClick={handleToggle}></ButtonComponent>
-		// 	</div>
-
-		// 	{isOpen && <ModalComponent onClose={() => setIsOpen(false)} />}
-		// </div>
 	);
 };
 
