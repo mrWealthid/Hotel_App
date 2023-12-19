@@ -3,19 +3,31 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useRef, useState } from 'react';
 import useClickOutside from '@/components/shared/Hooks/ClickOutside';
+import { RiHomeLine, RiUserReceivedLine } from 'react-icons/ri';
+import { MdOutlineAirlineSeatIndividualSuite } from 'react-icons/md';
+import { CiSettings, CiUser } from 'react-icons/ci';
 
 export interface IRoute {
 	name: string;
 	path: string;
+	icon: any;
 }
 const SideBar = () => {
 	const routes: IRoute[] = [
-		{ name: 'Overview', path: '/dashboard' },
-		{ name: 'Bookings', path: '/dashboard/bookings' },
-		{ name: 'Cabins', path: '/dashboard/cabins' },
-		{ name: 'Users', path: '/dashboard/users' },
-		{ name: 'Guests', path: '/dashboard/guests' },
-		{ name: 'Settings', path: '/dashboard/settings' }
+		{ name: 'Overview', path: '/dashboard', icon: <RiHomeLine /> },
+		{
+			name: 'Bookings',
+			path: '/dashboard/bookings',
+			icon: <RiUserReceivedLine />
+		},
+		{
+			name: 'Cabins',
+			path: '/dashboard/cabins',
+			icon: <MdOutlineAirlineSeatIndividualSuite />
+		},
+		{ name: 'Users', path: '/dashboard/users', icon: <CiUser /> },
+		{ name: 'Guests', path: '/dashboard/guests', icon: <CiUser /> },
+		{ name: 'Settings', path: '/dashboard/settings', icon: <CiSettings /> }
 	];
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = useState(false);
@@ -75,6 +87,8 @@ const SideBar = () => {
 											? 'px-3   py-2 border-none  glass  text-white'
 											: ''
 									}`}>
+									{link.icon}
+
 									{link.name}
 								</Link>
 							);
