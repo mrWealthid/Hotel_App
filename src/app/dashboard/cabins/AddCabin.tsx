@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import CabinForm from './CabinForm';
 import Modal from '@/components/shared/Modal/Modal-component';

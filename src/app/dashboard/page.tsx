@@ -7,13 +7,13 @@ import {
 } from './hooks/useDashboard';
 import StatsComponent from '@/components/ui/StatsComponent';
 
-import StatComponent from '@/components/ui/StatComponent';
 import { useCabins } from './cabins/hooks/useCabins';
 import AreaCharts from '@/components/shared/Charts/AreaChart';
 import PieCharts from '@/components/shared/Charts/PieChart';
 import TodayActivity from './checkin/[bookingId]/TodayActivity';
 import TabComponent from '@/components/shared/Tabs/Tabs';
-import Example from '@/components/shared/Modal/ReceiptPopup';
+
+import { GiEntryDoor, GiExitDoor } from 'react-icons/gi';
 
 const Page = () => {
 	const [days, setDays] = useState<number>(7);
@@ -46,9 +46,10 @@ const Page = () => {
 	const tabData = [
 		{
 			title: 'Arriving',
-			order: 0
+			order: 0,
+			icon: <GiEntryDoor size={18} />
 		},
-		{ title: 'Departing', order: 1 }
+		{ title: 'Departing', order: 1, icon: <GiExitDoor size={18} /> }
 	];
 
 	return (

@@ -2,7 +2,7 @@ import { connect } from '@/dbConfig/dbConfig';
 import Settings from '@/model/settingsModel';
 import { NextRequest, NextResponse } from 'next/server';
 
-// connect();
+connect();
 
 export async function GET(request: NextRequest, { params }: any) {
 	try {
