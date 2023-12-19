@@ -3,7 +3,7 @@ import Booking from '@/model/bookingsModel';
 import APIFeatures from '../utils/apiFeatures';
 import { NextRequest, NextResponse } from 'next/server';
 
-connect();
+// connect();
 
 function calculateDaysBetweenDates(startDate: Date, endDate: Date) {
 	// One day in milliseconds

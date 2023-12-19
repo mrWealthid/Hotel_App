@@ -3,7 +3,7 @@ import Cabin from '@/model/cabinModel';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import APIFeatures from '../utils/apiFeatures';
-connect();
+// connect();
 
 export async function POST(request: NextRequest) {
 	try {

@@ -3,18 +3,13 @@ import Guest from '@/model/guestModel';
 import APIFeatures from '../utils/apiFeatures';
 import { NextRequest, NextResponse } from 'next/server';
 
-connect();
+// connect();
 
 export async function POST(request: NextRequest) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
 
 		let cookie = request.cookies.get('token')?.value || '';
-		// console.log(jwtVerifyPromisified('cookie'));
-
-		// console.log(getUserDetails(cookie));
-
-		// const userId = getUserDetails(cookie);
 
 		const body = await request.json();
 
@@ -61,30 +56,40 @@ export async function GET(request: NextRequest) {
 
 		// const body = await request.json();
 
+		let filter = {};
 		const query: any = request.nextUrl.searchParams;
-
 		const transformedQuery = mapToObject(query);
 
-		console.log(transformedQuery);
-
-		let filter = {};
 		const features = new APIFeatures(Guest.find(filter), transformedQuery)
 			.filter()
 			.sort()
 			.limitFields()
 			.paginate();
-		const cabin = await features.query;
 
-		//   const doc = await Model.create(req.body);
+		const guests = await features.query;
+
+		let count;
+
+		// console.log( await Model.find(req.query))
+
+		//I did this because pagination of filtered data was impossible, The endpoint keeps returning the total count of all document
+		console.log('Query', Object.values(transformedQuery).length);
+		if (Object.values(transformedQuery).length > 0) {
+			const excludedFields = ['page', 'sort', 'limit', 'fields'];
+			excludedFields.forEach((el) => delete transformedQuery[el]);
+			count = await Guest.find(filter).find(transformedQuery).count();
+		} else {
+			count = await Guest.count(filter);
+		}
+
 		// const user = await User.findOne({ _id: userId });
 
-		const response = NextResponse.json(
-			{
-				status: 'success',
-				data: cabin
-			},
-			{ status: 200 }
-		);
+		const response = NextResponse.json({
+			status: 'success',
+			totalRecords: count,
+			results: guests.length,
+			data: guests
+		});
 
 		return response;
 	} catch (error: any) {

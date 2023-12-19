@@ -3,12 +3,12 @@ import Booking from '@/model/bookingsModel';
 import { NextRequest, NextResponse } from 'next/server';
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-connect();
+// connect();
 
 export async function GET(request: NextRequest, { params }: any) {
 	console.log(params);
 
-    console.log({request})
+	console.log({ request });
 
 	const bookingId = params.query[0];
 
