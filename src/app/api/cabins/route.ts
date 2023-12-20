@@ -49,25 +49,16 @@ export async function GET(request: NextRequest) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
 
-		console.log('fetched from server');
+
 
 		let cookie = request.cookies.get('token')?.value || '';
-		// console.log(jwtVerifyPromisified('cookie'));
 
-		// console.log(getUserDetails(cookie));
-
-		// const userId = getUserDetails(cookie);
-
-		// const method = request.method;
-		// console.log(method);
-
-		// const body = await request.json();
 
 		const query: any = request.nextUrl.searchParams;
 
 		const transformedQuery = mapToObject(query);
 
-		console.log(transformedQuery);
+	
 
 		let filter = {};
 		const features = new APIFeatures(Cabin.find(filter), transformedQuery)
@@ -91,12 +82,15 @@ export async function GET(request: NextRequest) {
 			count = await Cabin.count(filter);
 		}
 
-		const response = NextResponse.json({
-			totalRecords: count,
-			results: cabin.length,
-			status: 'success',
-			data: cabin
-		});
+		const response = NextResponse.json(
+			{
+				totalRecords: count,
+				results: cabin.length,
+				status: 'success',
+				data: cabin
+			},
+			{ status: 200 }
+		);
 
 		return response;
 	} catch (error: any) {

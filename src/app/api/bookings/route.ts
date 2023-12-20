@@ -3,7 +3,7 @@ import Booking from '@/model/bookingsModel';
 import APIFeatures from '../utils/apiFeatures';
 import { NextRequest, NextResponse } from 'next/server';
 
-// connect();
+connect();
 
 function calculateDaysBetweenDates(startDate: Date, endDate: Date) {
 	// One day in milliseconds
@@ -34,11 +34,6 @@ export async function POST(request: NextRequest) {
 		//2) Check if user exists & password is correct after it's hashed
 
 		let cookie = request.cookies.get('token')?.value || '';
-		// console.log(jwtVerifyPromisified('cookie'));
-
-		// console.log(getUserDetails(cookie));
-
-		// const userId = getUserDetails(cookie);
 
 		const body = await request.json();
 
@@ -90,23 +85,9 @@ export async function GET(request: NextRequest) {
 
 		let cookie = request.cookies.get('token')?.value || '';
 
-		console.log('Table-cookies', cookie);
-		// console.log(jwtVerifyPromisified('cookie'));
-
-		// console.log(getUserDetails(cookie));
-
-		// const userId = getUserDetails(cookie);
-
-		// const method = request.method;
-		// console.log(method);
-
-		// const body = await request.json();
-
 		const query: any = request.nextUrl.searchParams;
 
 		const transformedQuery = mapToObject(query);
-
-		console.log(transformedQuery);
 
 		let filter = {};
 

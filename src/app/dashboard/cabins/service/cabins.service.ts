@@ -20,10 +20,10 @@ export async function fetchCabins(
 	}
 }
 
-export async function handleCreateCabin(data: any, cabin: any, isEditing: any) {
+export async function handleCreateCabin(data: any, cabinId: any, isEditing: any) {
 	try {
 		const res = isEditing
-			? await axios.patch(`/api/cabins/${cabin?.id}`, data)
+			? await axios.patch(`/api/cabins/${cabinId}`, data)
 			: await axios.post(`/api/cabins`, data);
 
 		const resData = await res.data;
