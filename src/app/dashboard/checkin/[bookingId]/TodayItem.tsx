@@ -30,58 +30,54 @@ const TodayItem = ({
 		);
 	}
 	return (
-		<section>
-			<div className="flex  text-xs justify-between  border-b dark:border-none dark:glass dark:p-2 dark:rounded   items-center pb-2 border-gray-50 ">
-				<p
-					className={`${
-						checkStatus === 'CHECKED_IN'
-							? 'bg-green-300 text-green-800'
-							: 'bg-blue-400 text-white'
-					}  rounded-3xl  py-1 px-2`}>
-					{checkStatus === 'CHECKED_IN' ? 'Departing' : 'Arriving'}
-				</p>
+		<div className="flex  text-xs justify-between  border-b dark:border-none dark:glass dark:p-2 dark:rounded   items-center pb-2 border-gray-50 ">
+			<p
+				className={`${
+					checkStatus === 'CHECKED_IN'
+						? 'bg-green-300 text-green-800'
+						: 'bg-blue-400 text-white'
+				}  rounded-3xl  py-1 px-2`}>
+				{checkStatus === 'CHECKED_IN' ? 'Departing' : 'Arriving'}
+			</p>
 
-				<div>
-					<p>{guests?.name}</p>
-					<small>{guests?.email}</small>
-				</div>
-
-				<p>{numNights} night(s)</p>
-
-				{checkStatus === 'UNCONFIRMED' && (
-					<div>
-						<button
-							type="button"
-							className=" bg-primary disabled:bg-primary-light disabled:cursor-not-allowed text-white px-4 py-2 rounded-3xl">
-							<Link href={`/dashboard/checkin/${_id}`}>
-								Check-In
-							</Link>
-						</button>
-					</div>
-				)}
-				{checkStatus === 'CHECKED_IN' && (
-					<div>
-						<Modal>
-							<Modal.Open opens="check-out">
-								<button className=" bg-primary disabled:bg-primary-light disabled:cursor-not-allowed text-white px-4 py-2 rounded-3xl">
-									Check-Out
-								</button>
-							</Modal.Open>
-
-							<Modal.Window name="check-out">
-								<ConfirmationPage
-									handler={(onCloseModal: any) => {
-										handleCheckout(onCloseModal);
-									}}
-									modalText={`Are you sure you want to checkout
-							 ${guests.name}`}
-								/>
-							</Modal.Window>
-						</Modal>
-					</div>
-				)}
+			<div>
+				<p>{guests?.name}</p>
+				<small>{guests?.email}</small>
 			</div>
-		</section>
+
+			<p>{numNights} night(s)</p>
+
+			{checkStatus === 'UNCONFIRMED' && (
+				<div>
+					<button
+						type="button"
+						className=" bg-primary disabled:bg-primary-light disabled:cursor-not-allowed text-white px-4 py-2 rounded-3xl">
+						<Link href={`/dashboard/checkin/${_id}`}>Check-In</Link>
+					</button>
+				</div>
+			)}
+			{checkStatus === 'CHECKED_IN' && (
+				<div>
+					<Modal>
+						<Modal.Open opens="check-out">
+							<button className=" bg-primary disabled:bg-primary-light disabled:cursor-not-allowed text-white px-4 py-2 rounded-3xl">
+								Check-Out
+							</button>
+						</Modal.Open>
+
+						<Modal.Window name="check-out">
+							<ConfirmationPage
+								handler={(onCloseModal: any) => {
+									handleCheckout(onCloseModal);
+								}}
+								modalText={`Are you sure you want to checkout
+							 ${guests.name}`}
+							/>
+						</Modal.Window>
+					</Modal>
+				</div>
+			)}
+		</div>
 	);
 };
 
