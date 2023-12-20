@@ -19,6 +19,7 @@ import { FcFilledFilter } from 'react-icons/fc';
 import { CiFilter } from 'react-icons/ci';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { IoCloudDownloadOutline } from 'react-icons/io5';
+import Image from 'next/image';
 
 const TableContext = createContext({});
 
@@ -123,16 +124,28 @@ function Table({
 				queryKey,
 				isDownloadable
 			}}>
-			<div className=" overflow-x-auto   card p-2">
+			<div className=" overflow-x-auto    card p-2">
 				<TableHeaderAction handleFilter={handleFilter}>
 					{headerActions}
 				</TableHeaderAction>
-
-				<table
-					ref={tableRef}
-					className="w-full   text-sm  text-gray-500 ">
-					{children}
-				</table>
+				{isLoading && (
+					<section className="flex justify-center items-center">
+						{' '}
+						<Image
+							width={100}
+							height={100}
+							alt="spinner"
+							src="/images/spinner.svg"
+						/>
+					</section>
+				)}
+				{!isLoading && (
+					<table
+						ref={tableRef}
+						className="w-full   text-sm  text-gray-500 ">
+						{children}
+					</table>
+				)}
 
 				<div className="mt-3 text-xs">
 					<Paginator
