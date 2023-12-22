@@ -53,7 +53,7 @@ const FooterComponent = () => {
 
 					<section className=" flex justify-end ">
 						<ButtonComponent
-							style="rounded-3xl !w-1/3 2xl:w-1/5"
+							styles="rounded-3xl !w-1/3 2xl:w-1/5"
 							btnText="Submit"
 							type="submit"
 							afterIcon="/assets/send.svg"

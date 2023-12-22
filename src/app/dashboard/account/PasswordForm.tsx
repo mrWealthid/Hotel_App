@@ -85,12 +85,12 @@ const PasswordForm = ({ stage, updateStage }: any) => {
 				<ButtonComponent
 					type="reset"
 					handleClick={() => updateStage(0)}
-					style="rounded-3xl"
+					styles="rounded-3xl"
 					btnText={'Cancel'}></ButtonComponent>
 
 				<ButtonComponent
 					type="submit"
-					style="rounded-3xl"
+					styles="rounded-3xl"
 					disabled={!formState.isValid}
 					btnText={'Update Profile'}></ButtonComponent>
 			</div>

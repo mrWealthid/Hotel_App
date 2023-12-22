@@ -4,7 +4,7 @@ import Reveal from '../Animations/Reveal';
 
 const ButtonComponent = ({
 	btnText,
-	style,
+	styles,
 	afterIcon,
 	beforeIcon,
 	type,
@@ -20,7 +20,7 @@ const ButtonComponent = ({
 			}}>
 			<button
 				onClick={handleClick}
-				className={` btn-primary ${style}`}
+				className={` btn-primary ${styles}`}
 				type={type}
 				disabled={disabled}>
 				{beforeIcon && (
@@ -74,15 +74,15 @@ enum ButtonTypes {
 	undefined
 }
 
-interface IButton {
+interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	btnText: string;
-	type: 'button' | 'submit' | 'reset' | undefined;
-	style?: string;
+	// type: 'button' | 'submit' | 'reset' | undefined;
+	styles?: string;
 	afterIcon?: string;
 	beforeIcon?: string;
 	loading?: boolean;
 	handleClick?: () => void;
-	disabled?: boolean;
+	// disabled?: boolean;
 }
 
 // interface IIcons {

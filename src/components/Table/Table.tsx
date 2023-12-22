@@ -258,13 +258,13 @@ function TableFilterForm({ column, onCloseModal }: any) {
 						cancelFilter();
 						onCloseModal();
 					}}
-					style="rounded-3xl"
+					styles="rounded-3xl"
 					btnText={'Cancel'}></ButtonComponent>
 
 				<ButtonComponent
 					type="submit"
 					// handleClick={onCloseModal}
-					style="rounded-3xl"
+					styles="rounded-3xl"
 					disabled={!formState.isValid}
 					btnText={`Search
 					`}></ButtonComponent>

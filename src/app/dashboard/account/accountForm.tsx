@@ -73,13 +73,13 @@ const AccountForm = ({ stage, updateStage, data }: any) => {
                  className="  border dark:border-none rounded-full mx-auto w-32 object-cover  h-32" height="820"
                  src='{{data?.imgUrl}}' width="900"> */}
 
-									<img
+									{/* <img
 										alt=""
 										className="  border rounded-full mx-auto w-32 object-cover  h-32"
 										height="820"
 										src={''}
 										width="900"
-									/>
+									/> */}
 
 									<label htmlFor="photo">
 										<i className="fa-solid absolute cursor-pointer bg-white text-green-900 border border-gray-200 rounded-full p-2 top-2 left-[90px] fa-arrow-up-from-bracket"></i>
@@ -128,12 +128,12 @@ const AccountForm = ({ stage, updateStage, data }: any) => {
 									<ButtonComponent
 										type="reset"
 										handleClick={() => updateStage(0)}
-										style="rounded-3xl"
+										styles="rounded-3xl"
 										btnText={'Cancel'}></ButtonComponent>
 
 									<ButtonComponent
 										type="submit"
-										style="rounded-3xl"
+										styles="rounded-3xl"
 										disabled={!formState.isValid}
 										btnText={
 											'Update Profile'

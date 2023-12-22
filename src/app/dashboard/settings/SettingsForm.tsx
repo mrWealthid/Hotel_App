@@ -137,7 +137,7 @@ const SettingsForm = ({ settings }: any) => {
 					<ButtonComponent
 						type="submit"
 						loading={isLoading}
-						style="rounded-3xl"
+						styles="rounded-3xl"
 						disabled={!formState.isValid}
 						btnText={'Update Setting'}></ButtonComponent>
 				</section>

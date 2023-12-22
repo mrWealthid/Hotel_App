@@ -126,12 +126,12 @@ const GuestForm = ({ guest, onCloseModal }: any) => {
 						<ButtonComponent
 							type="reset"
 							handleClick={() => onCloseModal?.()}
-							style="rounded-3xl"
+							styles="rounded-3xl"
 							btnText={'Cancel'}></ButtonComponent>
 
 						<ButtonComponent
 							type="submit"
-							style="rounded-3xl"
+							styles="rounded-3xl"
 							disabled={!formState.isValid || isSubmitting}
 							loading={isCreating}
 							btnText={` ${

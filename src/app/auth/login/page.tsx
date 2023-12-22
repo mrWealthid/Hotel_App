@@ -110,7 +110,7 @@ const LoginComponent = () => {
 
 							<section className=" ">
 								<ButtonComponent
-									style="rounded-3xl 2xl:w-1/5"
+									styles="rounded-3xl 2xl:w-1/5"
 									btnText="Submit"
 									loading={isLoading}
 									type="submit"
