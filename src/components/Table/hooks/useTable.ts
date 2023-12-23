@@ -1,6 +1,6 @@
-import { IListResponse } from '@/app/dashboard/cabins/hooks/useCabins';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import { IListResponse } from '../models/table.model';
 
 export function useTable(
 	page: number,
@@ -9,7 +9,7 @@ export function useTable(
 	queryKey: string,
 	search?: any
 ): IListResponse {
-	const { isLoading, data, error } = useQuery({
+	const { isLoading, data, error, isRefetching } = useQuery({
 		queryKey: [queryKey, limit, page, search],
 		queryFn: () => service(page, limit, search),
 		keepPreviousData: true
@@ -17,6 +17,7 @@ export function useTable(
 
 	return {
 		isLoading,
+		isRefetching,
 		error,
 		data: data?.data,
 		totalRecords: data?.totalRecords,

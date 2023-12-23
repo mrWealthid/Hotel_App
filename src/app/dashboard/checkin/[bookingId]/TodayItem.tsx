@@ -70,6 +70,7 @@ const TodayItem = ({
 								handler={(onCloseModal: any) => {
 									handleCheckout(onCloseModal);
 								}}
+								isLoading={isCheckingOut}
 								modalText={`Are you sure you want to checkout
 							 ${guests.name}`}
 							/>

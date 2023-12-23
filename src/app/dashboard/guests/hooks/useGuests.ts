@@ -8,13 +8,7 @@ import {
 	handleDeleteGuests
 } from '../service/guests.service';
 
-export interface IListResponse {
-	isLoading: boolean;
-	error: any;
-	data: any[];
-	totalRecords: number;
-	results: number;
-}
+
 
 export function useCreateGuest(GuestId: any, isEditing: any, close: any) {
 	const queryClient = useQueryClient();

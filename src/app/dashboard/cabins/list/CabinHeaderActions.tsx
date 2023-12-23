@@ -38,11 +38,10 @@ const CabinHeaderActions = ({ handleFilter }: any) => {
 					type="button"
 					className={`${
 						query?.discount === 0 && '!bg-primary text-white'
-					} w-full  flex gap-1 items-center  dark:glass dark:border-none  text-xs px-4 py-2 rounded-3xl  bg-gray-50 font-light  border btn`}>
+					} w-full flex gap-1 items-center  text-xs px-6 py-2 rounded-3xl  dark:glass dark:border-none bg-gray-50 font-light text-black border btn`}>
 					<TbDiscount2Off /> No discount
 				</button>
 			</div>
-
 			<Menu as="div" className=" inline-block text-left">
 				<div>
 					<Menu.Button className="w-full  flex gap-1 items-center  dark:glass dark:border-none  text-xs px-4 py-2 rounded-3xl  bg-gray-50 font-light text-black border btn">

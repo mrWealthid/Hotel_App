@@ -1,24 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import toast from 'react-hot-toast';
 import {
-	fetchBookings,
 	handleCheckout,
 	handleCreateBooking,
 	handleDeleteBookings
 } from '../service/bookings.service';
 
-export interface IListResponse {
-	isLoading: boolean;
-	error: any;
-	data: any[];
-	totalRecords: number;
-	results: number;
-}
-
 export function useCreateBooking(bookingId: any, isEditing: any, close: any) {
 	const queryClient = useQueryClient();
-	const { isLoading: isCreating, mutate: createBooking,  } = useMutation({
+	const { isLoading: isCreating, mutate: createBooking } = useMutation({
 		mutationFn: (payload) =>
 			handleCreateBooking(payload, bookingId, isEditing),
 		onSuccess: () => {

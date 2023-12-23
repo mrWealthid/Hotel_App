@@ -27,3 +27,13 @@ export interface Icolumn {
 	searchType?: 'TEXT' | 'DROPDOWN' | 'NUMBER';
 	selectOptions?: Object[];
 }
+
+
+export interface IListResponse {
+	isLoading: boolean;
+	error: any;
+	data: any[];
+	totalRecords: number;
+	results: number;
+	isRefetching: boolean;
+}

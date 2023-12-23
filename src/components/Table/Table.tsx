@@ -7,9 +7,9 @@ import React, {
 	useState
 } from 'react';
 import { createContext } from 'react';
-import { ITable, Icolumn } from './models/table.model';
+import { IListResponse, ITable, Icolumn } from './models/table.model';
 import { formatCurrency } from '@/utils/helpers';
-import { IListResponse } from '@/app/dashboard/cabins/hooks/useCabins';
+
 import { useTable } from './hooks/useTable';
 import Modal from '../shared/Modal/Modal-component';
 import TextInput from '@/components/shared/Form-inputs/Text-Input';
@@ -38,8 +38,14 @@ function Table({
 	const [search, setSearch] = useState<string | null>(null);
 	const [filterIsActive, setfilterIsActive] = useState(false);
 
-	const { isLoading, error, data, totalRecords, results }: IListResponse =
-		useTable(page, limit, service, queryKey, search);
+	const {
+		isLoading,
+		error,
+		data,
+		totalRecords,
+		results,
+		isRefetching
+	}: IListResponse = useTable(page, limit, service, queryKey, search);
 
 	function handleFilter(val: { key: string; value: string | number } | null) {
 		let transformedSearchQuery = '';
@@ -122,7 +128,8 @@ function Table({
 				actionable,
 				tableRef,
 				queryKey,
-				isDownloadable
+				isDownloadable,
+				isRefetching
 			}}>
 			<div className=" overflow-x-auto    card p-2">
 				<TableHeaderAction handleFilter={handleFilter}>
@@ -159,14 +166,13 @@ function Table({
 }
 
 function TableFilterForm({ column, onCloseModal }: any) {
-	const { objectToQueryParams, handleFilter, cancelFilter }: any =
-		useContext(TableContext);
-	const { register, handleSubmit, getValues, formState } = useForm({
+	const { handleFilter, cancelFilter }: any = useContext(TableContext);
+	const { register, handleSubmit, formState } = useForm({
 		mode: 'onChange'
 	});
-	const { errors, isSubmitting } = formState;
+	// const { errors, isSubmitting } = formState;
 
-	const { columns }: any = useContext(TableContext);
+	const { columns, isRefetching }: any = useContext(TableContext);
 
 	async function onSubmit(data: any, onCloseModal: any) {
 		handleFilter(data);
@@ -186,10 +192,7 @@ function TableFilterForm({ column, onCloseModal }: any) {
 							<TextInput
 								key={column.accessor}
 								name={column.header}
-								label={column.header}
-								error={errors?.[
-									`${column.header}`
-								]?.message?.toString()}>
+								label={column.header}>
 								<input
 									{...register(column.header, {})}
 									className="input-style"
@@ -205,10 +208,7 @@ function TableFilterForm({ column, onCloseModal }: any) {
 							<TextInput
 								key={column.accessor}
 								name={column.header}
-								label={column.header}
-								error={errors?.[
-									`${column.header}`
-								]?.message?.toString()}>
+								label={column.header}>
 								<input
 									{...register(column.header)}
 									className="input-style"
@@ -263,15 +263,12 @@ function TableFilterForm({ column, onCloseModal }: any) {
 
 				<ButtonComponent
 					type="submit"
+					loading={isRefetching}
 					// handleClick={onCloseModal}
 					styles="rounded-3xl"
 					disabled={!formState.isValid}
 					btnText={`Search
 					`}></ButtonComponent>
-
-				{/* <button type="submit" onClick={onCloseModal}>
-					search
-				</button> */}
 			</section>
 		</form>
 	);

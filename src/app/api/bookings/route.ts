@@ -120,6 +120,14 @@ export async function GET(request: NextRequest) {
 			count = await Booking.count(filter);
 		}
 
+		// const modifiedBooking = bookings.map((booking: any) => ({
+		// 	...booking,
+		// 	guestName: booking.guests.name,
+		// 	cabinName: booking.cabin.name
+		// }));
+
+		// console.log(modifiedBooking);
+
 		const response = NextResponse.json(
 			{
 				status: 'success',

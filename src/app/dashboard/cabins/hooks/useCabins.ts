@@ -6,17 +6,10 @@ import {
 	handleDuplicateCabin
 } from '../service/cabins.service';
 import toast from 'react-hot-toast';
-
-export interface IListResponse {
-	isLoading: boolean;
-	error: any;
-	data: any[];
-	totalRecords: number;
-	results: number;
-}
+import { IListResponse } from '@/components/Table/models/table.model';
 
 export function useCabins(page: number = 1, limit: number = 10): IListResponse {
-	const { isLoading, data, error } = useQuery({
+	const { isLoading, data, error, isRefetching } = useQuery({
 		queryKey: ['cabins'],
 		queryFn: () => fetchCabins(page, limit)
 	});
@@ -26,7 +19,8 @@ export function useCabins(page: number = 1, limit: number = 10): IListResponse {
 		error,
 		data: data?.data,
 		totalRecords: data?.totalRecords,
-		results: data?.results
+		results: data?.results,
+		isRefetching
 	};
 }
 
