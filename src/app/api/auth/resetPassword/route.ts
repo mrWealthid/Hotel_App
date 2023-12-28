@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 		console.log('Hashed', hashedToken);
 
 		const user = await User.findOne({
-			passwordResetToken: hashedToken,
+			// passwordResetToken: hashedToken,
 			passwordResetExpires: { $gt: Date.now() }
 		});
 
