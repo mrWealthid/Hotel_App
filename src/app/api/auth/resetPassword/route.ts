@@ -30,7 +30,9 @@ export async function POST(request: NextRequest) {
 		const user = await User.findOne({
 			passwordResetToken: hashedToken,
 			passwordResetExpires: { $gt: Date.now() }
-		}).select('+password');
+		});
+
+		console.log('NOW', Date.now());
 
 		console.log('User', user);
 
