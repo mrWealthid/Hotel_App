@@ -108,10 +108,10 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.methods.correctPassword = async function (
-	candidatePassword,
+	newPassword,
 	userPassword
 ) {
-	return await bcrypt.compare(candidatePassword, userPassword);
+	return await bcrypt.compare(newPassword, userPassword);
 };
 
 userSchema.methods.createPasswordResetToken = function () {
@@ -124,6 +124,8 @@ userSchema.methods.createPasswordResetToken = function () {
 	console.log({ resetToken }, this.passwordResetToken);
 	//for 10mins
 	this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+	console.log('Test', this.passwordResetToken);
 
 	return resetToken;
 };

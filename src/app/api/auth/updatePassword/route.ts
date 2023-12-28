@@ -12,38 +12,25 @@ const signToken = (id: any) =>
 	});
 
 export async function POST(request: NextRequest) {
-	const { email } = await request.json();
+	const { email, newPassword, currentPassword, confirmNewPassword } =
+		await request.json();
 	try {
-		//1) Check if emails and password exists
-		if (!email) {
-			return NextResponse.json(
-				{ error: 'Please provide an email' },
-				{ status: 400 }
-			);
+		const user = await User.find({ email }).select('+password');
+
+		//2 Check if the password is correct
+		if (
+			!(await user.correctPassword(
+				newPassword,
+				user.password
+			))
+		) {
+			return NextResponse.json({error:'Your current password is wrong'},{status: 400});
 		}
-		//2) Check if user exists & password is correct after it's hashed
-		const user = await User.findOne({
-			email
-		}).select('+password');
+		//3 If so, update password
 
-		if (!user) {
-			return NextResponse.json(
-				{ error: 'User does not exist' },
-				{ status: 400 }
-			);
-		}
-
-		const resetToken = user.createPasswordResetToken();
-		await user.save({ validateBeforeSave: false });
-
-		let resetURL =
-			process.env.NODE_ENV === 'development'
-				? `http://localhost:3000/auth/updatePassword/${resetToken}`
-				: `https://hotel-app-blush-beta.vercel.app/auth/updatePassword/${resetToken}`;
-
-		await new Emails(user, resetURL).sendPasswordReset();
-
-		//3) If everything is ok, send token to client
+		user.password = newPassword;
+		user.passwordConfirm = newPassword;
+		await user.save();
 
 		const token = signToken(user._id);
 		const response = NextResponse.json({

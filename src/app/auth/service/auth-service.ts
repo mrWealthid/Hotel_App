@@ -1,34 +1,11 @@
 import { handleClientErrorMessage } from '@/utils/helpers';
 import axios from 'axios';
-
-export interface ILogin {
-	email: string;
-	password: string;
-}
-
-export interface IRegister {
-	name: string;
-	email: string;
-	password: string;
-	role?: 'user' | 'admin';
-}
+import { ILogin, IRegister, IUpdatePassword } from '../model/model';
 
 export async function handleLogin(payload: ILogin) {
 	try {
-		const res = await axios.post(
-			`/api/auth/login`,
-
-			payload
-		);
-
-		// router.push('/dashboard');
-
-		const data = await res.data; // parses JSON response into native JavaScript objects
-
-		// localStorage.setItem('token', data.token);
-
-		// console.log(data.token);
-
+		const res = await axios.post(`/api/auth/login`, payload);
+		const data = await res.data;
 		return data;
 	} catch (err: any) {
 		throw Error(handleClientErrorMessage(err));
@@ -36,28 +13,26 @@ export async function handleLogin(payload: ILogin) {
 }
 export async function handleRegister(payload: IRegister) {
 	try {
-		const res = await axios.post(
-			`/api/auth/register`,
-
-			payload
-		);
-
-		// router.push('/dashboard');
-
-		const data = await res.data; // parses JSON response into native JavaScript objects
-
-		// localStorage.setItem('token', data.token);
-
-		// console.log(data.token);
+		const res = await axios.post(`/api/auth/register`, payload);
+		const data = await res.data;
 
 		return data;
 	} catch (err) {
 		throw Error(handleClientErrorMessage(err));
 	}
 }
-export async function handlePasswordReset(payload: any) {
+export async function handleForgetPassword(payload: any) {
 	try {
 		const res = await axios.post(`/api/auth/forgotPassword`, payload);
+		const data = await res.data;
+		return data;
+	} catch (err) {
+		throw Error(handleClientErrorMessage(err));
+	}
+}
+export async function handleUpdatePassword(payload: IUpdatePassword) {
+	try {
+		const res = await axios.post(`/api/auth/updatePassword`, payload);
 
 		const data = await res.data;
 
@@ -66,9 +41,18 @@ export async function handlePasswordReset(payload: any) {
 		throw Error(handleClientErrorMessage(err));
 	}
 }
+export async function handleResetPassword(payload: IUpdatePassword) {
+	try {
+		const res = await axios.post(`/api/auth/resetPassword`, payload);
+		const data = await res.data;
+		return data;
+	} catch (err) {
+		throw Error(handleClientErrorMessage(err));
+	}
+}
 export async function handleLogout() {
 	try {
-		const res = await axios(`/api/auth/logout`);
+		await axios(`/api/auth/logout`);
 	} catch (err) {
 		throw Error(handleClientErrorMessage(err));
 	}
