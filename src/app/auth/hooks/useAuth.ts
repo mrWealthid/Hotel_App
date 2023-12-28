@@ -1,16 +1,21 @@
 import { Router } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 import {
-	ILogin,
-	IRegister,
+	handleForgetPassword,
 	handleLogin,
 	handleLogout,
-	handlePasswordReset,
-	handleRegister
+	handleRegister,
+	handleResetPassword
 } from '../service/auth-service';
 
 import toast from 'react-hot-toast';
 import { handleClientErrorMessage } from '@/utils/helpers';
+import {
+	ILogin,
+	IRegister,
+	IResetPassword,
+	IUpdatePassword
+} from '../model/model';
 
 export function useLogin() {
 	const { isLoading, mutate: login } = useMutation({
@@ -49,7 +54,7 @@ export function useLogout(router: any) {
 }
 export function useResetPassword() {
 	const { isLoading, mutate: resetPassword } = useMutation({
-		mutationFn: (payload) => handlePasswordReset(payload),
+		mutationFn: (payload: IResetPassword) => handleForgetPassword(payload),
 		onSuccess: (data) => toast.success(data.message),
 		onError: (err: any) => toast.error(handleClientErrorMessage(err))
 	});
@@ -57,6 +62,18 @@ export function useResetPassword() {
 	return {
 		isLoading,
 		resetPassword
+	};
+}
+export function useUpdatePassword() {
+	const { isLoading, mutate: updatePassword } = useMutation({
+		mutationFn: (payload: IUpdatePassword) => handleResetPassword(payload),
+		onSuccess: (data) => toast.success(data.message),
+		onError: (err: any) => toast.error(handleClientErrorMessage(err))
+	});
+
+	return {
+		isLoading,
+		updatePassword
 	};
 }
 
