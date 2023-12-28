@@ -92,27 +92,15 @@ const UpdatePasswordComponent = ({ params }: any) => {
 								<div className="input-style !p-0 !pr-2 !overflow-hidden">
 									<input
 										className="w-full  dark:bg-transparent   border-none outline-none focus:ring-0 ring-0 "
-										type={
-											showPassword ? 'text' : 'password'
-										}
+										// type={
+										// 	showPassword ? 'text' : 'password'
+										// }
 										{...register('newPassword', {
 											required: 'This field is required'
 										})}
 										id="newPassword"
 										placeholder="Enter New  Password"
 									/>
-
-									{!showPassword ? (
-										<FaEyeSlash
-											className="text-primary cursor-pointer"
-											onClick={togglePassword}
-										/>
-									) : (
-										<FaEye
-											className="text-primary cursor-pointer"
-											onClick={togglePassword}
-										/>
-									)}
 								</div>
 							</TextInput>
 							<TextInput
@@ -124,27 +112,15 @@ const UpdatePasswordComponent = ({ params }: any) => {
 								<div className="input-style !p-0 !pr-2 !overflow-hidden">
 									<input
 										className="w-full  dark:bg-transparent   border-none outline-none focus:ring-0 ring-0 "
-										type={
-											showPassword ? 'text' : 'password'
-										}
+										// type={
+										// 	showPassword ? 'text' : 'password'
+										// }
 										{...register('confirmNewPassword', {
 											required: 'This field is required'
 										})}
 										placeholder="Confirm New Password"
 										id="confirmPassword"
 									/>
-
-									{!showPassword ? (
-										<FaEyeSlash
-											className="text-primary cursor-pointer"
-											onClick={togglePassword}
-										/>
-									) : (
-										<FaEye
-											className="text-primary cursor-pointer"
-											onClick={togglePassword}
-										/>
-									)}
 								</div>
 							</TextInput>
 

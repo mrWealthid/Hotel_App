@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 
 		if (currentPassword === newPassword) {
 			return NextResponse.json(
-				{ error: 'You cant use your old password' },
+				{ error: "You can't use your old password" },
 				{ status: 400 }
 			);
 		}

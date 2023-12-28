@@ -68,7 +68,7 @@ export function useUpdatePassword() {
 	const { isLoading, mutate: updatePassword } = useMutation({
 		mutationFn: (payload: IUpdatePassword) => handleResetPassword(payload),
 		onSuccess: (data) => toast.success(data.message),
-		onError: (err: any) => toast.error(handleClientErrorMessage(err))
+		onError: (err: any) => toast.error(err.message)
 	});
 
 	return {
