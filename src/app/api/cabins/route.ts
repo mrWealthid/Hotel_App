@@ -49,16 +49,11 @@ export async function GET(request: NextRequest) {
 	try {
 		//2) Check if user exists & password is correct after it's hashed
 
-
-
 		let cookie = request.cookies.get('token')?.value || '';
-
 
 		const query: any = request.nextUrl.searchParams;
 
 		const transformedQuery = mapToObject(query);
-
-	
 
 		let filter = {};
 		const features = new APIFeatures(Cabin.find(filter), transformedQuery)

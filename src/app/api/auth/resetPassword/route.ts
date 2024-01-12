@@ -2,7 +2,6 @@ import { connect } from '@/dbConfig/dbConfig';
 import User from '@/model/userModel';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { Emails } from '@/utils/email-resend';
 import crypto from 'crypto';
 
 connect();
@@ -16,16 +15,11 @@ export async function POST(request: NextRequest) {
 	const { newPassword, currentPassword, confirmNewPassword, resetToken } =
 		await request.json();
 
-	console.log('RESET', resetToken);
 	try {
-		//3 If so, update password
-
 		const hashedToken = crypto
 			.createHash('sha256')
 			.update(resetToken)
 			.digest('hex');
-
-		console.log('Hashed', hashedToken);
 
 		const user = await User.findOne({
 			passwordResetToken: hashedToken,
@@ -33,8 +27,6 @@ export async function POST(request: NextRequest) {
 		}).select('+password');
 
 		console.log('User', user);
-
-		// console.log({ Password: user.password });
 
 		// 2 Check if current the password is correct
 		if (!(await user.correctPassword(currentPassword, user.password))) {
@@ -45,7 +37,6 @@ export async function POST(request: NextRequest) {
 		}
 
 		//3 Check if the current password and the new password is the same
-
 		if (currentPassword === newPassword) {
 			return NextResponse.json(
 				{ error: "You can't use your old password" },
@@ -65,8 +56,8 @@ export async function POST(request: NextRequest) {
 		user.passwordResetToken = undefined;
 		user.passwordResetExpires = undefined;
 		await user.save();
-		//3 Update changedpasswordAt property for the user
 
+		//3 Update changedpasswordAt property for the user
 		//4 Log the user in, send JWT
 
 		const token = signToken(user._id);

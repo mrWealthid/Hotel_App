@@ -67,3 +67,5 @@ export const formatCurrency = (value, currency = 'USD', locale = 'en') => {
 export function handleClientErrorMessage(err) {
 	return err.response.data.error;
 }
+
+
