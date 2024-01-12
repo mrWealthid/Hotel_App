@@ -5,13 +5,13 @@ export function useAutoComplete(
 	service: any,
 	queryKey: string = ''
 ) {
-	const { isLoading, data, error } = useQuery({
+	const { isLoading, data, error, isRefetching } = useQuery({
 		queryKey: ['search' + queryKey + search],
 		queryFn: () => service(search),
 		keepPreviousData: true
 	});
 
-	return {
+	return {isRefetching ,
 		autoCompleteLoading: isLoading,
 		autoCompleteError: error,
 		autoCompleteResult: data?.data

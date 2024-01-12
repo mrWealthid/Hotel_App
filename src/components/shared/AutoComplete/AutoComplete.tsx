@@ -7,6 +7,7 @@ import Label from '../Form-inputs/Label';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { useDebounce } from '@uidotdev/usehooks';
 import { formatCurrency } from '@/utils/helpers';
+import { ImSpinner9 } from 'react-icons/im';
 
 export default function AutoComplete({
 	service,
@@ -23,6 +24,7 @@ export default function AutoComplete({
 	const debouncedSearchTerm = useDebounce(query, 500);
 
 	const {
+		isRefetching,
 		autoCompleteLoading,
 		autoCompleteError,
 		autoCompleteResult: data
@@ -48,10 +50,14 @@ export default function AutoComplete({
 							onChange={(event) => setQuery(event.target.value)}
 						/>
 						<Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-							<SelectorIcon
-								className="h-5 w-5 text-gray-400"
-								aria-hidden="true"
-							/>
+							{isRefetching ? (
+								<ImSpinner9 className="h-3 w-3 animate-spin text-primary" />
+							) : (
+								<SelectorIcon
+									className="h-5 w-5 text-gray-400"
+									aria-hidden="true"
+								/>
+							)}
 						</Combobox.Button>
 					</div>
 					<Transition
