@@ -1,7 +1,10 @@
+import Guest from '@/model/guestModel';
 import { connect } from '@/dbConfig/dbConfig';
 import Booking from '@/model/bookingsModel';
+
 import APIFeatures from '../utils/apiFeatures';
 import { NextRequest, NextResponse } from 'next/server';
+import Cabin from '@/model/cabinModel';
 
 connect();
 
@@ -98,6 +101,23 @@ export async function GET(request: NextRequest) {
 			},
 			{ path: 'cabin', select: 'name ' }
 		]);
+
+		//This is to implement search for nested fields (populated fields)
+		if ('guests' in transformedQuery) {
+			const guestName = transformedQuery['guests'];
+			const guestFound = await Guest.findOne({ name: guestName });
+			// console.log('guest found', guestFound);
+			transformedQuery['guests'] = guestFound ? guestFound._id : null;
+			// delete transformedQuery['guest'];
+		}
+		if ('cabin' in transformedQuery) {
+			const cabinName = transformedQuery['cabin'];
+			const cabinFound = await Cabin.findOne({ name: cabinName });
+			// console.log('guest found', guestFound);
+			transformedQuery['cabin'] = cabinFound ? cabinFound._id : null;
+			// delete transformedQuery['guest'];
+		}
+
 		const features = new APIFeatures(bookingQuery, transformedQuery)
 			.filter()
 			.sort()

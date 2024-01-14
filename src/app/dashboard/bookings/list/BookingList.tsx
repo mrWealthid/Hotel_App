@@ -13,13 +13,15 @@ const BookingsList = () => {
 		{
 			header: 'guest',
 			accessor: 'guests.name',
-			searchType: 'TEXT'
+			searchType: 'TEXT',
+			filterKey: 'guests'
 		},
 		{ header: 'amount', accessor: 'totalPrice', searchType: 'NUMBER' },
 		{
 			header: 'status',
 			accessor: 'checkStatus',
-			searchType: 'DROPDOWN'
+			searchType: 'DROPDOWN',
+			filterKey: 'checkStatus'
 		},
 
 		{

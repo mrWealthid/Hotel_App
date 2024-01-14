@@ -26,8 +26,8 @@ export interface Icolumn {
 	};
 	searchType?: 'TEXT' | 'DROPDOWN' | 'NUMBER';
 	selectOptions?: Object[];
+	filterKey?: string;
 }
-
 
 export interface IListResponse {
 	isLoading: boolean;

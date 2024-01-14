@@ -186,7 +186,7 @@ function TableFilterForm({ column, onCloseModal }: any) {
 			onSubmit={handleSubmit((data) => onSubmit(data, onCloseModal))}
 			className=' flex flex-col gap-3 p-6  items-center"'>
 			<section className=" grid  gap-3   grid-cols-1 ">
-				{columns.map((column: any) => {
+				{columns.map((column: Icolumn) => {
 					if (column.searchType === 'TEXT') {
 						return (
 							<TextInput
@@ -194,7 +194,12 @@ function TableFilterForm({ column, onCloseModal }: any) {
 								name={column.header}
 								label={column.header}>
 								<input
-									{...register(column.header, {})}
+									{...register(
+										column.filterKey
+											? column.filterKey
+											: column.header,
+										{}
+									)}
 									className="input-style"
 									placeholder={`Enter ${column.header}`}
 									type="text"
@@ -210,7 +215,11 @@ function TableFilterForm({ column, onCloseModal }: any) {
 								name={column.header}
 								label={column.header}>
 								<input
-									{...register(column.header)}
+									{...register(
+										column.filterKey
+											? column.filterKey
+											: column.header
+									)}
 									className="input-style"
 									type="number"
 									id={column.header}

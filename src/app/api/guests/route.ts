@@ -60,6 +60,7 @@ export async function GET(request: NextRequest) {
 		const query: any = request.nextUrl.searchParams;
 		const transformedQuery = mapToObject(query);
 
+	
 		const features = new APIFeatures(Guest.find(filter), transformedQuery)
 			.filter()
 			.sort()
