@@ -95,14 +95,12 @@ userSchema.methods.changedPasswordAfter = async function (JWTTimestamp) {
 		);
 		return JWTTimestamp < changedTimeStamp;
 	}
-
 	return false;
 };
 
 userSchema.pre('save', function (next) {
 	if (!this.isModified('password') || this.isNew) return next();
 	this.passwordChangedAt = Date.now() - 1000;
-
 	//I did that substraction because the token is created faster most times before this runs...It's a quick fix
 	next();
 });
@@ -124,7 +122,6 @@ userSchema.methods.createPasswordResetToken = function () {
 	console.log({ resetToken }, this.passwordResetToken);
 	//for 10mins
 	this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-
 	return resetToken;
 };
 
