@@ -151,7 +151,7 @@ const SignupComponent = () => {
 
 						<section className=" ">
 							<ButtonComponent
-								styles="rounded-3xl 2xl:w-1/5"
+								styles="rounded-3xl"
 								btnText="Submit"
 								type="submit"
 								loading={isLoading}
