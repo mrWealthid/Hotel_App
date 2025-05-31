@@ -151,9 +151,9 @@ const SignupComponent = () => {
 
 						<section className=' '>
 							<ButtonComponent
-								styles='rounded-3xl'
-								btnText='Submit'
-								type='submit'
+								styles="rounded-3xl"
+								btnText="Submit"
+								type="submit"
 								loading={isLoading}
 								disabled={!formState.isValid || isLoading}
 								// afterIcon="/assets/send.svg"

@@ -112,6 +112,7 @@ const LoginComponent = () => {
 								<ButtonComponent
 									styles='rounded-3xl'
 									btnText='Submit'
+
 									loading={isLoading}
 									type='submit'
 									disabled={!formState.isValid || isLoading}
