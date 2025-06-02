@@ -1,0 +1,11 @@
+:root {
+  --dashboard-header-height: 10vh;
+}
+
+.dashboard-header {
+  height: var(--dashboard-header-height);
+}
+
+.dashboard-body {
+  height: calc(100vh - var(--dashboard-header-height));
+}
