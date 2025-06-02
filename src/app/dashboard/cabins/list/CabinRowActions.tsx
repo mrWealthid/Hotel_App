@@ -25,7 +25,7 @@ const CabinRowActions = ({ rowData }: any) => {
 
   return (
     <td className="p-2 md:px-2 md:py-2 space-x-3">
-      <Modal>
+      <Modal title="Edit Cabin" description="Edit cabin details">
         <Menu as="div" className="relative inline-block text-left">
           {({ open }) => (
             <>
@@ -53,8 +53,12 @@ const CabinRowActions = ({ rowData }: any) => {
                     <Menu.Item>
                       {({ active }) => (
                         <Modal.Open opens="edit-cabin-form">
-                          <button className="group text-black flex w-full gap-1   items-center rounded-md px-2 py-2 text-sm">
-                            {active ? <HiPencil /> : <HiPencil />}
+                          <button className="group gap-2 flex w-full  duration-700 transition-all hover:bg-gray-100   items-center rounded-md px-2 py-2 text-sm">
+                            {active ? (
+                              <HiPencil color="green" />
+                            ) : (
+                              <HiPencil color="green" />
+                            )}
                             Edit
                           </button>
                         </Modal.Open>
@@ -63,8 +67,12 @@ const CabinRowActions = ({ rowData }: any) => {
                     <Menu.Item>
                       {({ active }) => (
                         <Modal.Open opens="confirm-modal">
-                          <button className="group text-black   gap-1 flex w-full items-center rounded-md px-2 py-2 text-sm">
-                            {active ? <HiTrash /> : <HiTrash />}
+                          <button className="group gap-2 flex w-full  duration-700 transition-all hover:bg-gray-100   items-center rounded-md px-2 py-2 text-sm">
+                            {active ? (
+                              <HiTrash color="red" />
+                            ) : (
+                              <HiTrash color="red" />
+                            )}
                             Delete
                           </button>
                         </Modal.Open>

@@ -7,7 +7,7 @@ import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 const UserRowAction = () => {
   return (
     <td className="p-2 md:px-2 md:py-2 space-x-3">
-      <Modal>
+      <Modal title="Edit User" description="Edit user details">
         <Menu as="div" className="relative inline-block text-left">
           {({ open }) => (
             <>

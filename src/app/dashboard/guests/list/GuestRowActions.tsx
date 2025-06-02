@@ -42,7 +42,7 @@ const GuestRowActions = ({ rowData }: any) => {
 
   return (
     <td className="py-2 px-4  md:px-2 md:py-4 space-x-3">
-      <Modal>
+      <Modal title="Edit Guest" description="Edit guest details">
         <Menu as="div" className="relative  inline-block text-left">
           {({ open }) => (
             <>
