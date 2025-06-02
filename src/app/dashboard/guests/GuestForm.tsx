@@ -50,7 +50,7 @@ const GuestForm = ({ guest, onCloseModal }: any) => {
     <div className="w-full">
       <form
         onSubmit={handleSubmit(onSubmit, onError)}
-        className="flex flex-1 sm:p-6   items-center"
+        className="flex flex-1 items-center"
       >
         <section className="flex-col flex gap-2 w-full">
           <TextInput

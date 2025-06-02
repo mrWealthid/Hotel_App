@@ -64,10 +64,10 @@ const Window = ({ name, children }: WindowProps) => {
         <div className={`${size} relative p-6 h-auto`}>
           <div className="card flex flex-col gap-6 skin rounded-2xl shadow p-6">
             <div className="flex justify-between">
-              <section>
+              <section className="flex flex-col gap-1">
                 <h3>{title}</h3>
                 {description && (
-                  <p className="text-sm text-gray-500 dark:text-secondary">
+                  <p className="text-xs text-gray-500 dark:text-secondary">
                     {description}
                   </p>
                 )}
@@ -97,7 +97,7 @@ const Window = ({ name, children }: WindowProps) => {
                 </button>
               </div>
             </div>
-
+            <hr className="-mx-6" />
             <>
               {React.isValidElement(children)
                 ? cloneElement(children, { onCloseModal: close })

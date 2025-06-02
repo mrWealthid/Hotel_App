@@ -42,7 +42,7 @@ const GuestRowActions = ({ rowData }: any) => {
 
   return (
     <td className="py-2 px-4  md:px-2 md:py-4 space-x-3">
-      <Modal title="Edit Guest" description="Edit guest details">
+      <Modal title="Manage Guest" description="Manage your guest list">
         <Menu as="div" className="relative  inline-block text-left">
           {({ open }) => (
             <>
@@ -111,36 +111,38 @@ const GuestRowActions = ({ rowData }: any) => {
                       )}
                     </Menu.Item>
 
-                    <Menu.Item>
-                      {({ active }) => (
-                        <Modal.Open opens="delete-guest">
-                          <button className="group gap-2 flex w-full  duration-700 transition-all hover:bg-gray-100   items-center rounded-md px-2 py-2 text-sm">
-                            {active ? (
-                              <HiTrash color="red" />
-                            ) : (
-                              <HiTrash color="red" />
-                            )}
-                            Delete
-                          </button>
-                        </Modal.Open>
-                      )}
-                    </Menu.Item>
+                    <Modal>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Modal.Open opens="delete-guest">
+                            <button className="group gap-2 flex w-full  duration-700 transition-all hover:bg-gray-100   items-center rounded-md px-2 py-2 text-sm">
+                              {active ? (
+                                <HiTrash color="red" />
+                              ) : (
+                                <HiTrash color="red" />
+                              )}
+                              Delete
+                            </button>
+                          </Modal.Open>
+                        )}
+                      </Menu.Item>
+
+                      <Modal.Window name="delete-guest">
+                        <ConfirmationPage
+                          handler={(onCloseModal: any) => {
+                            handleDelete(onCloseModal);
+                          }}
+                          isLoading={isDeleting}
+                          modalText={"Are you sure you want to delete guest?"}
+                        />
+                      </Modal.Window>
+                    </Modal>
                   </div>
                 </Menu.Items>
               </Transition>
             </>
           )}
         </Menu>
-
-        <Modal.Window name="delete-guest">
-          <ConfirmationPage
-            handler={(onCloseModal: any) => {
-              handleDelete(onCloseModal);
-            }}
-            isLoading={isDeleting}
-            modalText={"Are you sure you want to delete cabin"}
-          />
-        </Modal.Window>
 
         <Modal.Window name="edit-guest">
           <GuestForm guest={rowData} />

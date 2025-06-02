@@ -1,7 +1,7 @@
 export interface ModalProps {
   children: React.ReactNode;
   size?: string;
-  title: string;
+  title?: string;
   description?: string;
 }
 
@@ -20,6 +20,6 @@ export interface ModalContextProps {
   close: () => void;
   open: (name: string) => void;
   size?: string;
-  title: string;
+  title?: string;
   description?: string;
 }

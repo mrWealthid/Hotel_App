@@ -25,7 +25,7 @@ const CabinRowActions = ({ rowData }: any) => {
 
   return (
     <td className="p-2 md:px-2 md:py-2 space-x-3">
-      <Modal title="Edit Cabin" description="Edit cabin details">
+      <Modal title="Manage Cabin" description="Manage your cabin details">
         <Menu as="div" className="relative inline-block text-left">
           {({ open }) => (
             <>
