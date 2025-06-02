@@ -20,6 +20,8 @@ export async function GET(request: NextRequest) {
 
     const user = await User.findById((currentUser as JwtPayload).id);
 
+    console.log("current-user", user);
+
     if (!user) NextResponse.json({ error: "User not found" }, { status: 404 });
 
     const response = NextResponse.json(
