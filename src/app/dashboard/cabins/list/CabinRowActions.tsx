@@ -1,7 +1,7 @@
 "use client";
 import React, { Fragment } from "react";
 
-import Modal from "@/components/shared/Modal/Modal-component";
+import Modal from "@/components/shared/modal/Modal";
 import CabinForm from "../CabinForm";
 import ConfirmationPage from "../../../../components/ui/ConfirmationPage";
 import { Menu, Transition } from "@headlessui/react";

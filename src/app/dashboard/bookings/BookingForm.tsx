@@ -1,12 +1,12 @@
 "use client";
 
-import TextInput from "@/components/shared/Form-inputs/Text-Input";
-import ButtonComponent from "@/components/shared/Form-inputs/Button";
+import TextInput from "@/components/shared/form-elements/Text-Input";
+import ButtonComponent from "@/components/shared/form-elements/Button";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import AutoComplete from "@/components/shared/AutoComplete/AutoComplete";
+import AutoComplete from "@/components/shared/auto-complete/AutoComplete";
 import { fetchCabins, fetchGuests } from "./service/bookings.service";
-import { DateRangePicker } from "@/components/shared/DatePicker/DatePicker";
+import { DateRangePicker } from "@/components/shared/date-picker/DatePicker";
 import {
   addDays,
   differenceInDays,
@@ -157,11 +157,11 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 
                 max: {
                   value: settings.maxGuestsPerBooking,
-                  message: `Number of Guests must not be greater than five ${settings.maxGuestsPerBooking}`,
+                  message: `Number of guests must not be greater than five ${settings.maxGuestsPerBooking}`,
                 },
                 min: {
                   value: 1,
-                  message: "Number of Guests must be greater than one",
+                  message: "Number of guests must be greater than one",
                 },
               })}
               className="input-style"
@@ -364,7 +364,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
               styles="rounded-3xl"
               disabled={!formState.isValid || isSubmitting}
               loading={isCreating}
-              btnText={` ${isEditing ? "Update Booking" : " Make Booking"}`}
+              btnText={`${isEditing ? "Update Booking" : " Make Booking"}`}
             ></ButtonComponent>
           </section>
         </section>

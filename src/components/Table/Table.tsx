@@ -11,10 +11,10 @@ import { IListResponse, ITable, Icolumn } from "./models/table.model";
 import { formatCurrency } from "@/utils/helpers";
 
 import { useTable } from "./hooks/useTable";
-import Modal from "../shared/Modal/Modal-component";
-import TextInput from "@/components/shared/Form-inputs/Text-Input";
+import Modal from "../shared/modal/Modal";
+import TextInput from "@/components/shared/form-elements/Text-Input";
 import { useForm } from "react-hook-form";
-import ButtonComponent from "../shared/Form-inputs/Button";
+import ButtonComponent from "../shared/form-elements/Button";
 import { FcFilledFilter } from "react-icons/fc";
 import { CiFilter } from "react-icons/ci";
 import { DownloadTableExcel } from "react-export-table-to-excel";

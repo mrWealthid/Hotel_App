@@ -1,7 +1,7 @@
 "use client";
 
-import TextInput from "@/components/shared/Form-inputs/Text-Input";
-import ButtonComponent from "@/components/shared/Form-inputs/Button";
+import TextInput from "@/components/shared/form-elements/Text-Input";
+import ButtonComponent from "@/components/shared/form-elements/Button";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./hooks/useCabins";

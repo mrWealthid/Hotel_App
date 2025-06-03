@@ -1,8 +1,8 @@
 "use client";
 // import axiosInstance from '@/app/utils/intercerptor';
-import EmailInput from "@/components/shared/Form-inputs/Email-Input";
-import TextInput from "@/components/shared/Form-inputs/Text-Input";
-import ButtonComponent from "@/components/shared/Form-inputs/Button";
+import EmailInput from "@/components/shared/form-elements/Email-Input";
+import TextInput from "@/components/shared/form-elements/Text-Input";
+import ButtonComponent from "@/components/shared/form-elements/Button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";

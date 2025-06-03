@@ -1,4 +1,4 @@
-import Modal from "@/components/shared/Modal/Modal-component";
+import Modal from "@/components/shared/modal/Modal";
 import React, { Fragment } from "react";
 import CabinForm from "../../cabins/CabinForm";
 import { Menu, Transition } from "@headlessui/react";

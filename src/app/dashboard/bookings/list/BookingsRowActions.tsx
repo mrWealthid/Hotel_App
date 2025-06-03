@@ -4,7 +4,7 @@ import React, { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 
 import Link from "next/link";
-import Modal from "@/components/shared/Modal/Modal-component";
+import Modal from "@/components/shared/modal/Modal";
 
 import ConfirmationPage from "../../../../components/ui/ConfirmationPage";
 
@@ -17,7 +17,7 @@ import {
 } from "react-icons/hi2";
 import { MdOutlineLocalPrintshop, MdOutlinePrint } from "react-icons/md";
 
-import ReceiptPopup from "@/components/shared/Modal/ReceiptPopup";
+import ReceiptPopup from "@/components/shared/modal/ReceiptPopup";
 
 const BookingsRowActions = ({ rowData }: any) => {
   const { isDeleting, deleteBooking } = useDeleteBooking();

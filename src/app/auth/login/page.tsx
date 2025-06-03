@@ -1,8 +1,8 @@
 "use client";
 
-import EmailInput from "@/components/shared/Form-inputs/Email-Input";
-import TextInput from "@/components/shared/Form-inputs/Text-Input";
-import ButtonComponent from "@/components/shared/Form-inputs/Button";
+import EmailInput from "@/components/shared/form-elements/Email-Input";
+import TextInput from "@/components/shared/form-elements/Text-Input";
+import ButtonComponent from "@/components/shared/form-elements/Button";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";

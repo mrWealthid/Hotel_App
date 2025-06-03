@@ -3,18 +3,18 @@
 @tailwind utilities;
 
 :root {
-	--primary-color: #1F295A;
-	--primary-color-light: #62698c;
-	--primary-mix: linear-gradient(to right bottom, #d3f2f7, #1c97ae);
-	--secondary-color: #2b2727;
-	--color-text-base: coral;
-	--success-color: green;
-	--input-label: white;
-	--error-color: rgb(220, 38, 38);
-	--pending-color: rgb(244, 130, 32);
-	--light-blue: blue;
-	--background-color: #eceef1;
-	--text-color: #0000004d
+  --primary-color: #1f295a;
+  --primary-color-light: #62698c;
+  --primary-mix: linear-gradient(to right bottom, #d3f2f7, #1c97ae);
+  --secondary-color: #2b2727;
+  --color-text-base: coral;
+  --success-color: green;
+  --input-label: white;
+  --error-color: rgb(220, 38, 38);
+  --pending-color: rgb(244, 130, 32);
+  --light-blue: blue;
+  --background-color: #eceef1;
+  --text-color: #0000004d;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -30,53 +30,54 @@
 } */
 
 body {
-
-	transition: color 0.3s, background-color 0.3s;
+  transition: color 0.3s, background-color 0.3s;
 }
 
 @layer components {
-	.container {
-		@apply w-full md:w-5/6 mx-auto;
-	}
+  .container {
+    @apply w-full md:w-5/6 mx-auto;
+  }
 
-	.card {
-		@apply text-secondary bg-white rounded-lg py-4 px-5 dark:text-white dark:glass;
-	}
+  .card {
+    @apply text-secondary bg-white rounded-lg py-4 px-5 dark:text-white dark:glass;
+  }
 
-	.container-text {
-		@apply px-4 md:px-4 2xl:px-10;
-	}
+  .container-text {
+    @apply px-4 md:px-4 2xl:px-10;
+  }
 
-	.clip-path {
-		clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100%);
-	}
+  .clip-path {
+    clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100%);
+  }
 
+  .title {
+    @apply dark:text-white text-secondary md:text-xl mb-2 font-semibold;
+  }
 
-	.title {
-		@apply dark:text-white text-secondary md:text-xl mb-2 font-semibold;
-	}
+  .glass {
+    backdrop-filter: blur(30px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
 
-	.glass {
-		backdrop-filter: blur(30px);
-		background: rgba(255, 255, 255, 0.1);
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-		z-index: 1;
-	}
-
-	.glass-input {
-		background: rgba(255, 255, 255, 0.3);
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-	}
+  .glass-input {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .input-style {
-	@apply border text-sm rounded border-blue-100 dark:glass-input dark:border-none flex justify-between focus-within:border-blue-100 items-center my-1 px-2 py-3 focus-within:ring-0 w-full;
+  @apply border text-sm rounded border-gray-200 dark:glass-input dark:border-none flex justify-between focus-within:border-blue-100 items-center my-1 px-2 py-3 focus-within:ring-0 w-full;
 }
 
 input::placeholder {
-	@apply text-xs;
+  @apply text-xs;
 }
 
+.input-error-msg {
+  @apply text-xs text-error;
+}
 
 /* .btn-primary {
 	@apply py-3 px-5 w-full transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none outline-none hover:bg-primary-light dark:hover:bg-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-gradient-to-r from-primary to-gray-50 hover:bg-gradient-to-l my-1;
@@ -86,23 +87,21 @@ input::placeholder {
 	@apply bg-primary-light dark:glass text-base-color hover:text-white cursor-not-allowed;
 } */
 .btn-primary {
-	@apply py-3 px-5 w-full dark:glass transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none outline-none hover:bg-primary-light dark:hover:bg-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-primary;
+  @apply py-3 px-5 w-full dark:glass transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none outline-none hover:bg-primary-light dark:hover:bg-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-primary;
 }
 
 .btn-primary:disabled {
-	@apply bg-primary-light dark:glass text-white hover:text-white cursor-not-allowed;
+  @apply bg-primary-light dark:glass text-white hover:text-white cursor-not-allowed;
 }
 
-
 .ellipsis-overflow {
-	@apply overflow-ellipsis overflow-hidden whitespace-nowrap w-[50px] lg:w-[70px]
+  @apply overflow-ellipsis overflow-hidden whitespace-nowrap w-[50px] lg:w-[70px];
 }
 
 /* Date Range Picker */
 .react-datepicker-wrapper {
-	width: 100%;
+  width: 100%;
 }
-
 
 /* @media print {
 	body * {
