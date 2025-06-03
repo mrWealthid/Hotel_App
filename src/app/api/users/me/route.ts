@@ -1,50 +1,59 @@
 import { connect } from "@/dbConfig/dbConfig";
 import User from "@/model/userModel";
-import { JwtPayload, verify } from "jsonwebtoken";
+import { verify, JwtPayload } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
 connect();
 
 export async function GET(request: NextRequest) {
   try {
-    //2) Check if user exists & password is correct after it's hashed
+    // Extract token from cookies
+    const token = request.cookies.get("token")?.value;
 
-    // const cookie = cookies()?.get('token')?.value;
-    let cookie = request.cookies.get("token")?.value || "";
+    if (!token) {
+      return NextResponse.json(
+        { error: "Authentication token not found" },
+        { status: 401 }
+      );
+    }
 
-    console.log("check-token", request.cookies.has("token"));
+    // Decode JWT
+    const decoded = verifyToken(token);
+    if (!decoded || typeof decoded === "string" || !("id" in decoded)) {
+      return NextResponse.json(
+        { error: "Invalid or expired token" },
+        { status: 401 }
+      );
+    }
 
-    console.log("my-cookie", cookie);
+    const userId = decoded.id;
+    const user = await User.findById(userId);
 
-    const currentUser = getUserDetails(cookie!);
-
-    const user = await User.findById((currentUser as JwtPayload).id);
-
-    console.log("current-user", user);
-
-    if (!user)
+    if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
-    const response = NextResponse.json(
+    return NextResponse.json(
       {
         status: "success",
         data: user,
       },
       { status: 200 }
     );
-    return response;
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("GET /api/user error:", error.message);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
-function getUserDetails(token: string): JwtPayload | string {
-  // 2. Verify and decode the JWT
-  let decoded;
+function verifyToken(token: string): JwtPayload | null {
   try {
-    decoded = verify(token, process.env.JWT_SECRET!);
-  } catch (err: any) {
-    return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+    return verify(token, process.env.JWT_SECRET!) as JwtPayload;
+  } catch (error) {
+    console.error("JWT verification error:", (error as Error).message);
+    return null;
   }
-  return decoded;
 }
