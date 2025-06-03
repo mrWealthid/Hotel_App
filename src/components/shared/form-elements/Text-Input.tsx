@@ -1,8 +1,6 @@
 import React from "react";
 import Label from "./Label";
-import { FaExclamationCircle, FaInfo } from "react-icons/fa";
-import { MdOutlineErrorOutline } from "react-icons/md";
-import ErrorMessage from "./Error";
+import ErrorMessage from "./ErrorMessage";
 
 const TextInput = ({
   label,

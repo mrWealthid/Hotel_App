@@ -1,6 +1,6 @@
 import React from "react";
 import Label from "./Label";
-import ErrorMessage from "./Error";
+import ErrorMessage from "./ErrorMessage";
 
 const EmailInput = ({ label, name, style, children, error }: IEmailInput) => {
   return (
