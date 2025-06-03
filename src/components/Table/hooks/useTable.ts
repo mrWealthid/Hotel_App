@@ -1,28 +1,28 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
-import { IListResponse } from '../models/table.model';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { IListResponse } from "../models/table.model";
 
 export function useTable(
-	page: number,
-	limit: number,
-	service: any,
-	queryKey: string,
-	search?: any
+  page: number,
+  limit: number,
+  service: any,
+  queryKey: string,
+  search?: any
 ): IListResponse {
-	const { isLoading, data, error, isRefetching } = useQuery({
-		queryKey: [queryKey, limit, page, search],
-		queryFn: () => service(page, limit, search),
-		keepPreviousData: true
-	});
+  const { isLoading, data, error, isRefetching } = useQuery({
+    queryKey: [queryKey, limit, page, search],
+    queryFn: () => service(page, limit, search),
+    keepPreviousData: true,
+  });
 
-	return {
-		isLoading,
-		isRefetching,
-		error,
-		data: data?.data,
-		totalRecords: data?.totalRecords,
-		results: data?.results
-	};
+  return {
+    isLoading,
+    isRefetching,
+    error,
+    data: data?.data,
+    totalRecords: data?.totalRecords,
+    results: data?.results,
+  };
 }
 
 // export function usePaginate(

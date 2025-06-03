@@ -19,6 +19,8 @@ export async function GET(request: NextRequest) {
 
     // Decode JWT
     const decoded = verifyToken(token);
+
+    console.log("Decoded token:", decoded);
     if (!decoded || typeof decoded === "string" || !("id" in decoded)) {
       return NextResponse.json(
         { error: "Invalid or expired token" },
