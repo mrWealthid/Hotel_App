@@ -9,7 +9,6 @@ import React, {
 import { createContext } from "react";
 import { IListResponse, ITable, Icolumn } from "./models/table.model";
 import { formatCurrency } from "@/utils/helpers";
-
 import { useTable } from "./hooks/useTable";
 import Modal from "../shared/modal/Modal";
 import TextInput from "@/components/shared/form-elements/Text-Input";
