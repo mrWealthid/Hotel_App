@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState } from "react";
+import React from "react";
 import BookingForm from "./BookingForm";
 import Modal from "@/components/shared/modal/Modal";
 

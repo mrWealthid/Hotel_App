@@ -1,13 +1,9 @@
 "use client";
 import React, { Fragment, useState } from "react";
-
 import { Menu, Transition } from "@headlessui/react";
-
 import Link from "next/link";
 import Modal from "@/components/shared/modal/Modal";
-
-import ConfirmationPage from "../../../../components/ui/ConfirmationPage";
-
+import ConfirmationPage from "@/components/ui/ConfirmationPage";
 import { useDeleteBooking, useCheckOutBooking } from "../hooks/useBookings";
 import {
   HiArrowDownOnSquare,
@@ -16,8 +12,8 @@ import {
   HiTrash,
 } from "react-icons/hi2";
 import { MdOutlineLocalPrintshop, MdOutlinePrint } from "react-icons/md";
-
 import ReceiptPopup from "@/components/shared/modal/ReceiptPopup";
+import { CgMenuGridO } from "react-icons/cg";
 
 const BookingsRowActions = ({ rowData }: any) => {
   const { isDeleting, deleteBooking } = useDeleteBooking();
@@ -47,17 +43,12 @@ const BookingsRowActions = ({ rowData }: any) => {
             <>
               <div>
                 <Menu.Button
-                  className={`inline-flex w-full justify-center rounded-md border px-4 py-2 text-sm font-medium text-primary dark:text-white
+                  className={`inline-flex w-full justify-center rounded-full border p-3 text-sm font-medium text-primary dark:text-white
           dark:focus:border-transparent
-          ${open ? "  bg-gray-50 " : ""}
+          ${open ? " ring-1 ring-primary ring-offset-1 bg-gray-50 " : ""}
         `}
                 >
-                  {" "}
-                  <span>...</span>
-                  {/* <ChevronDownIcon
-								className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
-								aria-hidden="true"
-							/> */}
+                  <CgMenuGridO />
                 </Menu.Button>
               </div>
               <Transition

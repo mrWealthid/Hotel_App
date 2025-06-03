@@ -1,25 +1,13 @@
 "use client";
 import React, { Fragment, useState } from "react";
-
 import { Menu, Transition } from "@headlessui/react";
-
-import Link from "next/link";
 import Modal from "@/components/shared/modal/Modal";
-
-import ConfirmationPage from "../../../../components/ui/ConfirmationPage";
-
+import ConfirmationPage from "@/components/ui/ConfirmationPage";
 import { useDeleteGuest } from "../hooks/useGuests";
-import {
-  HiArrowDownOnSquare,
-  HiArrowUpOnSquare,
-  HiEye,
-  HiPencil,
-  HiTrash,
-} from "react-icons/hi2";
-import { MdOutlineLocalPrintshop, MdOutlinePrint } from "react-icons/md";
+import { HiPencil, HiTrash } from "react-icons/hi2";
 
-import ReceiptPopup from "@/components/shared/modal/ReceiptPopup";
 import GuestForm from "../GuestForm";
+import { CgMenuGridO } from "react-icons/cg";
 
 const GuestRowActions = ({ rowData }: any) => {
   const { isDeleting, deleteGuest } = useDeleteGuest();
@@ -48,12 +36,16 @@ const GuestRowActions = ({ rowData }: any) => {
             <>
               <div>
                 <Menu.Button
-                  className={`inline-flex w-full justify-center rounded-md border px-4 py-2 text-sm font-medium text-primary dark:text-white
-          dark:focus:border-transparent
-          ${open ? "  bg-gray-50 " : ""}
-        `}
+                  className={`inline-flex w-full justify-center rounded-full border p-3 text-sm font-medium text-primary dark:text-white
+                    dark:focus:border-transparent
+                    ${
+                      open
+                        ? " ring-1 ring-primary ring-offset-1 bg-gray-50 "
+                        : ""
+                    }
+                  `}
                 >
-                  <span>...</span>
+                  <CgMenuGridO />
                 </Menu.Button>
                 {/* ...existing code... */}
               </div>

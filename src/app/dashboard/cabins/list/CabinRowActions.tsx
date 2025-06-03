@@ -1,12 +1,12 @@
 "use client";
 import React, { Fragment } from "react";
-
 import Modal from "@/components/shared/modal/Modal";
 import CabinForm from "../CabinForm";
-import ConfirmationPage from "../../../../components/ui/ConfirmationPage";
+import ConfirmationPage from "@/components/ui/ConfirmationPage";
 import { Menu, Transition } from "@headlessui/react";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { useDeleteCabin, useDuplicateCabin } from "../hooks/useCabins";
+import { CgMenuGridO } from "react-icons/cg";
 
 const CabinRowActions = ({ rowData }: any) => {
   const { isDeleting, deleteCabin } = useDeleteCabin();
@@ -31,12 +31,16 @@ const CabinRowActions = ({ rowData }: any) => {
             <>
               <div>
                 <Menu.Button
-                  className={`inline-flex w-full justify-center rounded-md border px-4 py-2 text-sm font-medium text-primary dark:text-white
-          focus-within:border-primary dark:focus:border-transparent
-          ${open ? "bg-gray-50" : ""}
-        `}
+                  className={`inline-flex w-full justify-center rounded-full border p-3 text-sm font-medium text-primary dark:text-white
+                     dark:focus:border-transparent
+                     ${
+                       open
+                         ? " ring-1 ring-primary ring-offset-1 bg-gray-50 "
+                         : ""
+                     }
+                   `}
                 >
-                  <span className="">...</span>
+                  <CgMenuGridO />
                 </Menu.Button>
               </div>
               <Transition
