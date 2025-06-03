@@ -60,21 +60,27 @@ const TodayItem = ({
       )}
       {checkStatus === "CHECKED_IN" && (
         <div>
-          <Modal>
+          <Modal
+            title="Checkout Booking"
+            description="By checking out this booking, you will mark it as completed."
+          >
             <Modal.Open opens="check-out">
               <button className=" bg-primary disabled:bg-primary-light disabled:cursor-not-allowed text-white px-4 py-2 rounded-3xl">
                 Check-Out
               </button>
             </Modal.Open>
-
             <Modal.Window name="check-out">
               <ConfirmationPage
                 handler={(onCloseModal: any) => {
                   handleCheckout(onCloseModal);
                 }}
                 isLoading={isCheckingOut}
-                modalText={`Are you sure you want to checkout
-							 ${guests.name}`}
+                modalText={
+                  <span>
+                    Are you sure you want to checkout
+                    <b>{guests.name}</b>
+                  </span>
+                }
               />
             </Modal.Window>
           </Modal>
