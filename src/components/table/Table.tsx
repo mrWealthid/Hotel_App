@@ -179,7 +179,7 @@ function TableFilterForm({ column, onCloseModal }: any) {
   return (
     <form
       onSubmit={handleSubmit((data) => onSubmit(data, onCloseModal))}
-      className=' flex flex-col gap-3 p-6  items-center"'
+      className=' flex flex-col gap-3  items-center"'
     >
       <section className=" grid  gap-3   grid-cols-1 ">
         {columns.map((column: Icolumn) => {
@@ -253,8 +253,8 @@ function TableFilterForm({ column, onCloseModal }: any) {
 					id={column.header}
 				/>
 			</TextInput> */}
-
-      <section className="flex justify-end gap-4">
+      <hr className="-mx-6 my-3" />
+      <section className="flex justify-end  gap-4">
         <ButtonComponent
           type="reset"
           handleClick={() => {
@@ -283,7 +283,7 @@ function TableFilter() {
   const { columns, filterIsActive, tableRef }: any = useContext(TableContext);
   return (
     <div className="">
-      <Modal>
+      <Modal title="Manage Filters">
         <Modal.Open opens="filter-form">
           <button
             type="button"
