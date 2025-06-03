@@ -1,7 +1,7 @@
 export interface ModalProps {
   children: React.ReactNode;
   size?: string;
-  title?: string;
+  title: string;
   description?: string;
 }
 
