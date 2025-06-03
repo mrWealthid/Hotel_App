@@ -87,7 +87,7 @@ input::placeholder {
 	@apply bg-primary-light dark:glass text-base-color hover:text-white cursor-not-allowed;
 } */
 .btn-primary {
-  @apply py-3 px-5 w-full dark:glass transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none outline-none hover:bg-primary-light dark:hover:bg-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-primary;
+  @apply py-3 px-5  dark:glass transition-all ease-in-out duration-1000 hover:translate-y-1 text-sm font-medium gap-2 text-white border border-none outline-none hover:bg-primary-light dark:hover:bg-primary dark:border-none hover:text-white dark:hover:text-white inline-flex justify-center items-center bg-primary;
 }
 
 .btn-primary:disabled {

@@ -106,15 +106,14 @@ const LoginComponent = () => {
                 </div>
               </TextInput>
 
-              <section className=" ">
-                <ButtonComponent
-                  styles="rounded-3xl"
-                  btnText="Submit"
-                  loading={isLoading}
-                  type="submit"
-                  disabled={!formState.isValid || isLoading}
-                />
-              </section>
+              <ButtonComponent
+                styles="w-full mt-4"
+                btnText="Submit"
+                loading={isLoading}
+                type="submit"
+                disabled={!formState.isValid || isLoading}
+              />
+
               <p className="flex gap-3 text-sm text-primary dark:text-label-color">
                 Forgot Password ?
                 <Link

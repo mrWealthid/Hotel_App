@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "../profile/Profile";
 import Link from "next/link";
-import SwitchToggle from "@/components/shared/Switch/SwitchToggle";
+import SwitchToggle from "@/components/shared/switch/SwitchToggle";
 
 import Logout from "./Logout";
 

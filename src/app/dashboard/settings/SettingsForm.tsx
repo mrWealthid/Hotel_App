@@ -128,7 +128,8 @@ const SettingsForm = ({ settings }: any) => {
         {/* <label htmlFor="photo">Photo</label>
 					<p>Image Upload</p> */}
 
-        <section className="flex justify-end gap-4">
+        <hr className="-mx-6 my-3" />
+        <section className="flex justify-end  gap-4">
           {/* <ButtonComponent
 						type="reset"
 						style="rounded-3xl"

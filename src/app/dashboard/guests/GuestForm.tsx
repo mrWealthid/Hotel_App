@@ -121,7 +121,8 @@ const GuestForm = ({ guest, onCloseModal }: any) => {
             />
           </TextInput>
 
-          <section className="flex justify-end gap-4">
+          <hr className="-mx-6 my-3" />
+          <section className="flex justify-end  gap-4">
             <ButtonComponent
               type="reset"
               handleClick={() => onCloseModal?.()}
