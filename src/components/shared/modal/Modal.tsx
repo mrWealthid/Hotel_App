@@ -37,6 +37,8 @@ const Open = React.forwardRef<HTMLButtonElement, any>(
   }
 );
 
+Open.displayName = "Open";
+
 const Window = ({ name, children, title, description }: WindowProps) => {
   const { openName, close, open, size }: ModalContextProps =
     useContext(ModalContext);
