@@ -1,3 +1,4 @@
+import Modal from "@/components/shared/modal/Modal";
 import BookingsRowActions from "./BookingsRowActions";
 import { formatCurrency } from "@/utils/helpers";
 
@@ -95,7 +96,9 @@ function BookingRow({ data }: any) {
               </span>
             </td>
 
-            <BookingsRowActions rowData={row} />
+            <Modal>
+              <BookingsRowActions rowData={row} />
+            </Modal>
           </tr>
         );
       })}

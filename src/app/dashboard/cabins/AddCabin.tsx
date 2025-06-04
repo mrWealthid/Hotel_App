@@ -6,7 +6,7 @@ import { CiCirclePlus } from "react-icons/ci";
 
 const AddCabin = () => {
   return (
-    <Modal title="Add Cabin" description="Add a new cabin to your list">
+    <Modal>
       <Modal.Open opens="cabin-form">
         <div>
           <button
@@ -17,7 +17,11 @@ const AddCabin = () => {
           </button>
         </div>
       </Modal.Open>
-      <Modal.Window name="cabin-form">
+      <Modal.Window
+        title="Add Cabin"
+        description="Add a new cabin to your list"
+        name="cabin-form"
+      >
         <CabinForm />
       </Modal.Window>
     </Modal>
