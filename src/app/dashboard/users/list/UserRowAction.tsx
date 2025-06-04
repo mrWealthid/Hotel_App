@@ -2,22 +2,28 @@ import Modal from "@/components/shared/modal/Modal";
 import React, { Fragment } from "react";
 import CabinForm from "../../cabins/CabinForm";
 import { Menu, Transition } from "@headlessui/react";
-import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import { HiPencil, HiTrash } from "react-icons/hi2";
+import { CgMenuGridO } from "react-icons/cg";
 
 const UserRowAction = () => {
   return (
     <td className="p-2 md:px-2 md:py-2 space-x-3">
-      <Modal title="Manage User" description="Manage user details">
+      <Modal>
         <Menu as="div" className="relative inline-block text-left">
           {({ open }) => (
             <>
               <div>
                 <Menu.Button
-                  className={`inline-flex w-full justify-center rounded-md border dark:glass  dark:focus:border-transparent focus:border-2 px-4 py-2 text-sm font-medium text-primary dark:text-white ${
-                    open ? "bg-gray-50 " : ""
-                  }`}
+                  className={`inline-flex card w-full justify-center rounded-full border p-3 text-sm font-medium text-primary dark:text-white
+                                  dark:focus:border-transparent
+                                  ${
+                                    open
+                                      ? " ring-1 ring-primary ring-offset-1 bg-gray-50 "
+                                      : ""
+                                  }
+                                `}
                 >
-                  <span className="">...</span>
+                  <CgMenuGridO />
                 </Menu.Button>
               </div>
 
@@ -39,8 +45,8 @@ const UserRowAction = () => {
                   <div className="px-1 py-1 ">
                     <Menu.Item>
                       {({ active }) => (
-                        <Modal.Open opens="edit-cabin-form">
-                          <button className="group text-black flex w-full gap-1   items-center rounded-md px-2 py-2 text-sm">
+                        <Modal.Open opens="edit-user">
+                          <button className="group gap-2 flex w-full  duration-700 transition-all hover:bg-gray-100   items-center rounded-md px-2 py-2 text-sm">
                             {active ? <HiPencil /> : <HiPencil />}
                             Edit
                           </button>
@@ -66,7 +72,12 @@ const UserRowAction = () => {
           )}
         </Menu>
 
-        <Modal.Window name="edit-cabin-form">
+        {/* Modal Window */}
+        <Modal.Window
+          title="Manage User"
+          description="Manage user details"
+          name="edit-user"
+        >
           <CabinForm />
         </Modal.Window>
 
