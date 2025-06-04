@@ -146,16 +146,15 @@ const SignupComponent = () => {
               </TextInput>
             </div>
 
-            <section className=" ">
-              <ButtonComponent
-                styles="rounded-3xl"
-                btnText="Register"
-                type="submit"
-                loading={isLoading}
-                disabled={!formState.isValid || isLoading}
-                // afterIcon="/assets/send.svg"
-              />
-            </section>
+            <ButtonComponent
+              styles="w-full mt-4"
+              btnText="Register"
+              type="submit"
+              loading={isLoading}
+              disabled={!formState.isValid || isLoading}
+              // afterIcon="/assets/send.svg"
+            />
+
             <p className="text-sm text-primary dark:text-label-color flex gap-2">
               Already Have An Account ?
               <Link href={"/auth/login"} className="text-blue-600 text-sm">

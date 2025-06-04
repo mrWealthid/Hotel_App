@@ -68,15 +68,13 @@ const ResetPasswordComponent = () => {
                 />
               </EmailInput>
 
-              <section className=" ">
-                <ButtonComponent
-                  styles="rounded-3xl 2xl:w-1/5"
-                  btnText="Reset"
-                  loading={isLoading}
-                  type="submit"
-                  disabled={!formState.isValid || isLoading}
-                />
-              </section>
+              <ButtonComponent
+                styles="w-full mt-4"
+                btnText="Reset"
+                loading={isLoading}
+                type="submit"
+                disabled={!formState.isValid || isLoading}
+              />
 
               <p className="flex gap-3 text-sm text-primary dark:text-label-color">
                 Need An Account ?
