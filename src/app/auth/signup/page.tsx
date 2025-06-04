@@ -149,7 +149,7 @@ const SignupComponent = () => {
             <section className=" ">
               <ButtonComponent
                 styles="rounded-3xl"
-                btnText="Submit"
+                btnText="Register"
                 type="submit"
                 loading={isLoading}
                 disabled={!formState.isValid || isLoading}

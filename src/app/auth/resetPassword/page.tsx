@@ -71,7 +71,7 @@ const ResetPasswordComponent = () => {
               <section className=" ">
                 <ButtonComponent
                   styles="rounded-3xl 2xl:w-1/5"
-                  btnText="Submit"
+                  btnText="Reset"
                   loading={isLoading}
                   type="submit"
                   disabled={!formState.isValid || isLoading}

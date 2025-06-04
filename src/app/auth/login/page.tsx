@@ -108,7 +108,7 @@ const LoginComponent = () => {
 
               <ButtonComponent
                 styles="w-full mt-4"
-                btnText="Submit"
+                btnText="Login"
                 loading={isLoading}
                 type="submit"
                 disabled={!formState.isValid || isLoading}
