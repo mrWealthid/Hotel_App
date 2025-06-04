@@ -1,8 +1,6 @@
 export interface ModalProps {
   children: React.ReactNode;
   size?: string;
-  title: string;
-  description?: string;
 }
 
 export interface OpenProps {
@@ -12,6 +10,8 @@ export interface OpenProps {
 
 export interface WindowProps {
   name: string;
+  title: string;
+  description?: string;
   children: React.ReactElement<{ onCloseModal?: () => void }>;
 }
 

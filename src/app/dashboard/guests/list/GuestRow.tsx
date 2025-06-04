@@ -1,3 +1,4 @@
+import Modal from "@/components/shared/modal/Modal";
 import GuestsRowActions from "./GuestRowActions";
 import { formatCurrency } from "@/utils/helpers";
 
@@ -63,8 +64,9 @@ function GuestsRow({ data }: any) {
                 {row.nationality}
               </span>
             </td>
-
-            <GuestsRowActions rowData={row} />
+            <Modal>
+              <GuestsRowActions rowData={row} />
+            </Modal>
           </tr>
         );
       })}

@@ -282,8 +282,8 @@ function TableFilterForm({ column, onCloseModal }: any) {
 function TableFilter() {
   const { columns, filterIsActive, tableRef }: any = useContext(TableContext);
   return (
-    <div className="">
-      <Modal title="Manage Filters">
+    <div>
+      <Modal>
         <Modal.Open opens="filter-form">
           <button
             type="button"
@@ -302,7 +302,7 @@ function TableFilter() {
           </button>
         </Modal.Open>
 
-        <Modal.Window name="filter-form">
+        <Modal.Window title="Manage Filters" name="filter-form">
           <TableFilterForm />
         </Modal.Window>
       </Modal>
