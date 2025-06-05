@@ -31,7 +31,7 @@ export default function RootLayout({
             success: { duration: 3000 },
             error: { duration: 4000 },
             style: {
-              fontSize: "16px",
+              fontSize: "14px",
               maxWidth: "500px",
               padding: "16px 24px",
             },
