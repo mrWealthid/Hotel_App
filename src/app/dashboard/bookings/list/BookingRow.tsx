@@ -1,21 +1,22 @@
 import Modal from "@/components/shared/modal/Modal";
 import BookingsRowActions from "./BookingsRowActions";
 import { formatCurrency } from "@/utils/helpers";
+import { CheckStatus } from "../model/booking.model";
 
 function BookingRow({ data }: any) {
   function getStatusColor(val: string): string {
     let style = "";
-    if (val === "UNCONFIRMED") {
+    if (val === CheckStatus.UNCONFIRMED) {
       style = "bg-pending text-white";
     }
     if (val === "APPROVED") {
       style = "bg-success text-white";
     }
-    if (val === "CHECKED_OUT") {
+    if (val === CheckStatus.CHECKED_OUT) {
       style = "bg-gray-300";
     }
 
-    if (val === "CHECKED_IN") {
+    if (val === CheckStatus.CHECKED_IN) {
       style = "bg-success text-white";
     }
     return style;

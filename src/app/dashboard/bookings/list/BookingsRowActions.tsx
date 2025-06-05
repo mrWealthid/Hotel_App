@@ -14,6 +14,7 @@ import {
 import { MdOutlineLocalPrintshop, MdOutlinePrint } from "react-icons/md";
 import ReceiptPopup from "@/components/shared/modal/ReceiptPopup";
 import { CgMenuGridO } from "react-icons/cg";
+import { CheckStatus } from "../model/booking.model";
 
 const BookingsRowActions = ({ rowData }: any) => {
   const { isDeleting, deleteBooking } = useDeleteBooking();
@@ -21,14 +22,14 @@ const BookingsRowActions = ({ rowData }: any) => {
 
   const [open, setOpen] = useState(false);
 
-  function handleDelete(onCloseModal: any) {
+  function handleDelete(onCloseModal: () => void) {
     deleteBooking(rowData.id, {
       onSuccess: () => onCloseModal(),
     });
   }
   function handleCheckout(onCloseModal: any) {
     checkOutBooking(
-      { checkStatus: "CHECKED_OUT" },
+      { checkStatus: CheckStatus.CHECKED_OUT },
       {
         onSuccess: () => onCloseModal(),
       }
@@ -61,7 +62,7 @@ const BookingsRowActions = ({ rowData }: any) => {
             >
               <Menu.Items className="absolute text-black z-50 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                 <div className="px-1 py-1 ">
-                  {rowData.checkStatus === "CHECKED_IN" && (
+                  {rowData.checkStatus === CheckStatus.CHECKED_IN && (
                     <Menu.Item>
                       {({ active }) => (
                         <Modal.Open opens="check-out">
@@ -77,7 +78,7 @@ const BookingsRowActions = ({ rowData }: any) => {
                       )}
                     </Menu.Item>
                   )}
-                  {rowData.checkStatus === "CHECKED_OUT" && (
+                  {rowData.checkStatus === CheckStatus.CHECKED_OUT && (
                     <Menu.Item>
                       {({ active }) => (
                         <button
@@ -111,7 +112,7 @@ const BookingsRowActions = ({ rowData }: any) => {
                   </Menu.Item>
                 </div>
                 <div className="px-1 py-1">
-                  {rowData.checkStatus === "UNCONFIRMED" && (
+                  {rowData.checkStatus === CheckStatus.UNCONFIRMED && (
                     <Menu.Item>
                       {({ active }) => (
                         <Link
@@ -128,8 +129,8 @@ const BookingsRowActions = ({ rowData }: any) => {
                       )}
                     </Menu.Item>
                   )}
-                  {(rowData.checkStatus === "UNCONFIRMED" ||
-                    rowData.checkStatus === "CHECKED_OUT") && (
+                  {(rowData.checkStatus === CheckStatus.UNCONFIRMED ||
+                    rowData.checkStatus === CheckStatus.CHECKED_OUT) && (
                     <Menu.Item>
                       {({ active }) => (
                         <Modal.Open opens="delete-booking">

@@ -7,6 +7,7 @@ import {
 } from "../service/cabins.service";
 import toast from "react-hot-toast";
 import { IListResponse } from "@/components/table/models/table.model";
+import { CabinPayload } from "../model/cabin.model";
 
 export function useCabins(page: number = 1, limit: number = 10): IListResponse {
   const { isLoading, data, error, isRefetching } = useQuery({
@@ -28,7 +29,7 @@ export function useDuplicateCabin() {
   const queryClient = useQueryClient();
 
   const { isLoading: isDuplicating, mutate: duplicateCabin } = useMutation({
-    mutationFn: (row: any) => handleDuplicateCabin(row),
+    mutationFn: (row: CabinPayload) => handleDuplicateCabin(row),
     onSuccess: () => {
       toast.success("Cabin successfully duplicated");
       queryClient.invalidateQueries({
@@ -52,7 +53,8 @@ export function useDuplicateCabin() {
 export function useCreateCabin(cabinId: any, isEditing: any, close: any) {
   const queryClient = useQueryClient();
   const { isLoading: isCreating, mutate: createCabin } = useMutation({
-    mutationFn: (payload) => handleCreateCabin(payload, cabinId, isEditing),
+    mutationFn: (payload: CabinPayload) =>
+      handleCreateCabin(payload, cabinId, isEditing),
     onSuccess: () => {
       toast.success("Cabin successfully created...");
 
@@ -69,7 +71,7 @@ export function useCreateCabin(cabinId: any, isEditing: any, close: any) {
 export function useDeleteCabin() {
   const queryClient = useQueryClient();
   const { isLoading: isDeleting, mutate: deleteCabin } = useMutation({
-    mutationFn: (id: any) => handleDelete(id),
+    mutationFn: (id: string) => handleDelete(id),
     onSuccess: () => {
       toast.success("Cabin successfully deleted");
       queryClient.invalidateQueries({

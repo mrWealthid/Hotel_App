@@ -1,29 +1,34 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import {
-	handleCheckout,
-	handleCreateBooking,
-	handleDeleteBookings
-} from '../service/bookings.service';
+  handleCheckout,
+  handleCreateBooking,
+  handleDeleteBookings,
+} from "../service/bookings.service";
+import { BookingPayload } from "../model/booking.model";
 
-export function useCreateBooking(bookingId: any, isEditing: any, close: any) {
-	const queryClient = useQueryClient();
-	const { isLoading: isCreating, mutate: createBooking } = useMutation({
-		mutationFn: (payload) =>
-			handleCreateBooking(payload, bookingId, isEditing),
-		onSuccess: () => {
-			toast.success('Bookings successfully created...');
-			queryClient.invalidateQueries({
-				queryKey: ['bookings']
-			});
+export function useCreateBooking(
+  bookingId: string,
+  isEditing: boolean,
+  close: () => void
+) {
+  const queryClient = useQueryClient();
+  const { isLoading: isCreating, mutate: createBooking } = useMutation({
+    mutationFn: (payload: BookingPayload) =>
+      handleCreateBooking(payload, bookingId, isEditing),
+    onSuccess: () => {
+      toast.success("Bookings successfully created...");
+      queryClient.invalidateQueries({
+        queryKey: ["bookings"],
+      });
 
-			close();
-		},
-		onError: (err: any) => toast.error(err.message)
-	});
+      close();
+    },
+    onError: (err: { message: string }) => toast.error(err.message),
+  });
 
-	return { isCreating, createBooking };
+  return { isCreating, createBooking };
 }
 // export function useBookings(page: number, limit: number): IListResponse {
 // 	const { isLoading, data, error } = useQuery({
@@ -57,34 +62,34 @@ export function useCreateBooking(bookingId: any, isEditing: any, close: any) {
 // 	return { isDuplicating, duplicateCabin };
 // }
 export function useDeleteBooking() {
-	const queryClient = useQueryClient();
-	const { isLoading: isDeleting, mutate: deleteBooking } = useMutation({
-		mutationFn: (id: any) => handleDeleteBookings(id),
-		onSuccess: () => {
-			toast.success('Bookings successfully deleted');
-			queryClient.invalidateQueries({
-				queryKey: ['bookings']
-			});
-		},
-		onError: (err: any) => toast.error(err.message)
-	});
+  const queryClient = useQueryClient();
+  const { isLoading: isDeleting, mutate: deleteBooking } = useMutation({
+    mutationFn: (id: string) => handleDeleteBookings(id),
+    onSuccess: () => {
+      toast.success("Bookings successfully deleted");
+      queryClient.invalidateQueries({
+        queryKey: ["bookings"],
+      });
+    },
+    onError: (err: any) => toast.error(err.message),
+  });
 
-	return { isDeleting, deleteBooking };
+  return { isDeleting, deleteBooking };
 }
-export function useCheckOutBooking(id: any) {
-	const queryClient = useQueryClient();
-	const { isLoading: isCheckingOut, mutate: checkOutBooking } = useMutation({
-		mutationFn: (payload: any) => handleCheckout(payload, id),
-		onSuccess: () => {
-			toast.success('Bookings checked-out successfully');
-			queryClient.invalidateQueries({
-				queryKey: ['bookings']
-			});
-		},
-		onError: (err: any) => toast.error(err.message)
-	});
+export function useCheckOutBooking(id: string) {
+  const queryClient = useQueryClient();
+  const { isLoading: isCheckingOut, mutate: checkOutBooking } = useMutation({
+    mutationFn: (payload: any) => handleCheckout(payload, id),
+    onSuccess: () => {
+      toast.success("Bookings checked-out successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["bookings"],
+      });
+    },
+    onError: (err: any) => toast.error(err.message),
+  });
 
-	return { isCheckingOut, checkOutBooking };
+  return { isCheckingOut, checkOutBooking };
 }
 
 // export function useDeleteCabin(id: number) {

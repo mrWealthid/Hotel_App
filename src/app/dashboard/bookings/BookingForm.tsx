@@ -2,7 +2,7 @@
 
 import TextInput from "@/components/shared/form-elements/Text-Input";
 import ButtonComponent from "@/components/shared/form-elements/Button";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import AutoComplete from "@/components/shared/auto-complete/AutoComplete";
 import { fetchCabins, fetchGuests } from "./service/bookings.service";
@@ -17,32 +17,34 @@ import {
 } from "date-fns";
 import { formatCurrency } from "@/utils/helpers";
 import { useCreateBooking } from "./hooks/useBookings";
+import { BookingPayload } from "./model/booking.model";
+import { Guest } from "../guests/model/guest.model";
+import { Cabin } from "../cabins/model/cabin.model";
 
 const BookingForm = ({ booking, onCloseModal, settings }: any) => {
   const isEditing = !!booking?.id;
   const [autoCompleteValue, setAutoCompleteValue] = useState<{
-    guests: any;
-    cabin: any;
+    guests: Guest;
+    cabin: Cabin;
   } | null>(null);
 
-  const [startDate, setStartDate] = useState<any>(null);
-  const [endDate, setEndDate] = useState<any>(null);
-
-  const [breakfastPrice, setBreakfastPrice] = useState<any>(0);
-  const { register, handleSubmit, getValues, formState } = useForm({
+  const [breakfastPrice, setBreakfastPrice] = useState<number>(0);
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState,
+    setValue,
+    watch,
+    trigger,
+  } = useForm({
     mode: "all",
     defaultValues: isEditing ? { ...booking } : {},
-    values: {
-      cabin: autoCompleteValue?.cabin?.id,
-      guests: autoCompleteValue?.guests?.id,
-      startDate: startDate,
-      endDate: endDate,
-    },
   });
 
   const [hasBreakfast, setHasBreakFast] = useState(false);
 
-  const { errors, isSubmitting } = formState;
+  const { errors, isSubmitting, isValid, isDirty } = formState;
   const { isCreating, createBooking } = useCreateBooking(
     booking?.id,
     isEditing,
@@ -51,47 +53,69 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
 
   function handleAutoCompleteValues(values: any) {
     setAutoCompleteValue({ ...autoCompleteValue, ...values });
+    if (values.guests) setValue("guests", values.guests.id);
+    if (values.cabin) setValue("cabin", values.cabin.id);
   }
 
+  const startDateValue = watch("startDate");
+  const endDateValue = watch("endDate");
+
   function handleStartDate(date: any) {
-    setStartDate(date);
+    setValue("startDate", date);
+    trigger("startDate"); // Trigger validation for startDate
   }
   function handleEndDate(date: any) {
-    setEndDate(date);
+    setValue("endDate", date);
+    trigger("endDate"); // Trigger validation for endDate
   }
+
+  const calculateBreakfastPrice = useCallback(() => {
+    const diffInDays = differenceInDays(
+      new Date(endDateValue),
+      new Date(startDateValue)
+    );
+
+    return (
+      parseInt(settings.breakfastPrice) *
+      diffInDays *
+      parseInt(getValues().numGuests)
+    );
+  }, [endDateValue, startDateValue, settings.breakfastPrice, getValues]);
 
   useEffect(() => {
     setBreakfastPrice(calculateBreakfastPrice());
-  }, [formState.isValid]);
+  }, [isValid, calculateBreakfastPrice]);
 
-  async function onSubmit(data: any) {
+  async function onSubmit(data: BookingPayload) {
+    createBooking(BuildPayload(data));
+  }
+
+  function BuildPayload(data: BookingPayload): BookingPayload {
     const { cabin }: any = autoCompleteValue;
-    const diffInDays = differenceInDays(new Date(endDate), new Date(startDate));
+    const diffInDays = differenceInDays(
+      new Date(endDateValue),
+      new Date(startDateValue)
+    );
 
-    const dateObject_Start = new Date(startDate);
-    const dateObject_End = new Date(endDate);
+    const dateObject_Start = new Date(startDateValue);
+    const dateObject_End = new Date(endDateValue);
 
     const start_date = startOfDay(dateObject_Start);
     const end_date = endOfDay(dateObject_End);
 
-    const payload = {
+    //TODO:To verify if the cabin discount is used
+    return {
       ...data,
-      discount: cabin.discount,
+      // discount: cabin.discount,
       cabinPrice: cabin.regularPrice,
       startDate: start_date,
       endDate: end_date,
       numNights: diffInDays,
+      ...(hasBreakfast && {
+        hasBreakfast: hasBreakfast,
+        extraPrice: breakfastPrice,
+      }),
     };
-
-    console.log(payload);
-
-    if (hasBreakfast) {
-      payload.hasBreakfast = hasBreakfast;
-      payload.extraPrice =
-        settings.breakfastPrice * diffInDays * parseInt(getValues().numGuests);
-    }
-
-    createBooking(payload);
   }
 
   function onError(err: any) {
@@ -102,15 +126,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
     setHasBreakFast(e.target.checked);
   }
 
-  function calculateBreakfastPrice() {
-    const diffInDays = differenceInDays(new Date(endDate), new Date(startDate));
-
-    return (
-      parseInt(settings.breakfastPrice) *
-      diffInDays *
-      parseInt(getValues().numGuests)
-    );
-  }
   return (
     <div className="w-full">
       <form
@@ -126,7 +141,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
             displayValue={"name"}
             handler={handleAutoCompleteValues}
           />
-
           <div className="hidden">
             <TextInput
               name={"guests"}
@@ -148,7 +162,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
           <TextInput
             name={"numGuests"}
             placeholder="Enter Number Of Guests"
-            label="Number Of Guest"
+            label="Number of Guest"
             error={errors?.["numGuests"]?.message?.toString()}
           >
             <input
@@ -165,7 +179,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
                 },
               })}
               className="input-style"
-              type="number"
+              type="text"
               disabled={isSubmitting}
               id="numGuests"
             />
@@ -196,7 +210,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
               />
             </TextInput>
           </div>
-
           <section className="flex items-center gap-2">
             <TextInput
               name={"regularPrice"}
@@ -206,9 +219,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
             >
               <input
                 title="regularPrice"
-                // {...register('regularPrice', {
-                // 	required: 'This field is required'
-                // })}
                 value={autoCompleteValue?.cabin?.regularPrice || ""}
                 readOnly
                 className="input-style"
@@ -224,9 +234,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
             >
               <input
                 title="discount"
-                // {...register('discount', {
-                // 	required: 'This field is required'
-                // })}
                 value={autoCompleteValue?.cabin?.discount || ""}
                 className="input-style"
                 type="number"
@@ -235,30 +242,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
               />
             </TextInput>
           </section>
-          {/* <TextInput
-						name={'discount'}
-						placeholder="Enter Discount"
-						label="Discount"
-						type="number"
-						error={errors?.['discount']?.message?.toString()}>
-						<input
-							{...register('discount', {
-								required: 'This field is required',
-								validate: (val) =>
-									val <
-										parseInt(
-											autoCompleteValue?.cabin
-												?.regularPrice
-										) ||
-									' regular price should be more than discount'
-							})}
-							disabled={isSubmitting}
-							className="input-style"
-							type="number"
-							id="discount"
-							defaultValue={0}
-						/>
-					</TextInput> */}
 
           <TextInput
             name={"observations"}
@@ -277,11 +260,10 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
               rows={3}
             ></textarea>
           </TextInput>
-
           <DateRangePicker
             labelText={"Duration"}
-            startDate={startDate}
-            endDate={endDate}
+            startDate={startDateValue}
+            endDate={endDateValue}
             handleStartDate={handleStartDate}
             handleEndDate={handleEndDate}
             minStartDate={addDays(new Date(), 1)}
@@ -291,13 +273,12 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
             // 		: null
             // }
             minEndDate={
-              startDate
-                ? addDays(startDate, settings.minBookingLength)
+              startDateValue
+                ? addDays(startDateValue, settings.minBookingLength)
                 : // ? addDays(startDate, settings.minBookingLength)
                   null
             }
           />
-
           <div className="hidden">
             <TextInput name={"startDate"}>
               <input
@@ -326,7 +307,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
               />
             </TextInput>
           </div>
-
           {formState.isValid && (
             <section className=" text-xs dark:text-white  items-center flex gap-2  mt-1">
               <input
@@ -350,7 +330,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
               </span>
             </section>
           )}
-
           <hr className="-mx-6 my-3" />
           <section className="flex justify-end  gap-4">
             <ButtonComponent
@@ -363,7 +342,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
             <ButtonComponent
               type="submit"
               styles="rounded-3xl"
-              disabled={!formState.isValid || isSubmitting}
+              disabled={!isValid || isSubmitting || !isDirty}
               loading={isCreating}
               btnText={`${isEditing ? "Update Booking" : " Make Booking"}`}
             ></ButtonComponent>

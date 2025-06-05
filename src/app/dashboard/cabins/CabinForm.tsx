@@ -5,11 +5,18 @@ import ButtonComponent from "@/components/shared/form-elements/Button";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./hooks/useCabins";
+import { Cabin, CabinPayload } from "./model/cabin.model";
 
-const CabinForm = ({ cabin, onCloseModal }: any) => {
+const CabinForm = ({
+  cabin,
+  onCloseModal,
+}: {
+  cabin: Cabin;
+  onCloseModal: () => void;
+}) => {
   const isEditing = !!cabin?.id;
 
-  const { register, handleSubmit, getValues, formState } = useForm({
+  const { register, handleSubmit, getValues, formState } = useForm<Cabin>({
     mode: "onChange",
     defaultValues: isEditing ? { ...cabin } : {},
   });
@@ -19,9 +26,9 @@ const CabinForm = ({ cabin, onCloseModal }: any) => {
     onCloseModal
   );
 
-  const { errors, isSubmitting } = formState;
+  const { errors, isSubmitting, isDirty, isValid } = formState;
 
-  async function onSubmit(data: any) {
+  async function onSubmit(data: CabinPayload) {
     createCabin(data);
   }
 
@@ -104,7 +111,7 @@ const CabinForm = ({ cabin, onCloseModal }: any) => {
               {...register("discount", {
                 required: "This field is required",
                 validate: (val) =>
-                  val < parseInt(getValues().regularPrice) ||
+                  Number(val) < Number(getValues().regularPrice) ||
                   " regular price should be more than discount",
               })}
               disabled={isSubmitting}
@@ -148,7 +155,7 @@ const CabinForm = ({ cabin, onCloseModal }: any) => {
             <ButtonComponent
               type="submit"
               styles="rounded-3xl"
-              disabled={!formState.isValid || isSubmitting}
+              disabled={!isValid || isSubmitting || !isDirty}
               loading={isCreating}
               btnText={` ${isEditing ? "Update Cabin" : " Add  Cabin"}`}
             ></ButtonComponent>
