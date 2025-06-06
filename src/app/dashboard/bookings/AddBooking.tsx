@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { FC } from "react";
 import BookingForm from "./BookingForm";
 import Modal from "@/components/shared/modal/Modal";
 
 import { CiCirclePlus } from "react-icons/ci";
+import { AddBookingProps } from "./model/booking.model";
 
-const AddBooking = ({ settings }: any) => {
+const AddBooking: FC<AddBookingProps> = ({ settings }) => {
   return (
     <Modal>
       <Modal.Open opens="Booking-form">

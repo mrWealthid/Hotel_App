@@ -1,10 +1,10 @@
 "use client";
-import React from "react";
+import React, { FC, ReactNode } from "react";
 import CabinForm from "./CabinForm";
 import Modal from "@/components/shared/modal/Modal";
 import { CiCirclePlus } from "react-icons/ci";
 
-const AddCabin = () => {
+const AddCabin: FC = () => {
   return (
     <Modal>
       <Modal.Open opens="cabin-form">

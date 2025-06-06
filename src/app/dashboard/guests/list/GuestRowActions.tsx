@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment, useState } from "react";
+import React, { FC, Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Modal from "@/components/shared/modal/Modal";
 import ConfirmationPage from "@/components/ui/ConfirmationPage";
@@ -8,14 +8,16 @@ import { HiPencil, HiTrash } from "react-icons/hi2";
 
 import GuestForm from "../GuestForm";
 import { CgMenuGridO } from "react-icons/cg";
+import { GuestRowActionProps } from "../model/guest.model";
 
-const GuestRowActions = ({ rowData }: any) => {
+const GuestRowActions: FC<GuestRowActionProps> = ({ guest }) => {
   const { isDeleting, deleteGuest } = useDeleteGuest();
 
   const [open, setOpen] = useState(false);
 
   function handleDelete(onCloseModal: any) {
-    deleteGuest(rowData.id, {
+    if (!guest?.id) return;
+    deleteGuest(guest.id, {
       onSuccess: () => onCloseModal(),
     });
   }
@@ -101,7 +103,7 @@ const GuestRowActions = ({ rowData }: any) => {
         description="Manage your guest list"
         name="edit-guest"
       >
-        <GuestForm guest={rowData} />
+        <GuestForm guest={guest} />
       </Modal.Window>
       <Modal.Window
         title="Delete Guest"
@@ -115,7 +117,7 @@ const GuestRowActions = ({ rowData }: any) => {
           isLoading={isDeleting}
           modalText={
             <span>
-              Are you sure you want to delete <b>{rowData.name}</b>
+              Are you sure you want to delete <b>{guest?.name}</b>
             </span>
           }
         />

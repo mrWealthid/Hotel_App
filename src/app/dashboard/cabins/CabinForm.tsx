@@ -2,28 +2,21 @@
 
 import TextInput from "@/components/shared/form-elements/Text-Input";
 import ButtonComponent from "@/components/shared/form-elements/Button";
-import React from "react";
+import React, { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./hooks/useCabins";
-import { Cabin, CabinPayload } from "./model/cabin.model";
+import { Cabin, CabinFormProps, CabinPayload } from "./model/cabin.model";
 
-const CabinForm = ({
-  cabin,
-  onCloseModal,
-}: {
-  cabin?: Cabin;
-  onCloseModal?: () => void;
-}) => {
+const CabinForm: FC<CabinFormProps> = ({ cabin, onCloseModal }) => {
   const isEditing = !!cabin?.id;
-
   const { register, handleSubmit, getValues, formState } = useForm<Cabin>({
     mode: "onChange",
     defaultValues: isEditing ? { ...cabin } : {},
   });
   const { isCreating, createCabin } = useCreateCabin(
-    cabin?.id,
     isEditing,
-    onCloseModal
+    onCloseModal,
+    cabin?.id
   );
 
   const { errors, isSubmitting, isDirty, isValid } = formState;

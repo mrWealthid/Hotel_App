@@ -4,8 +4,10 @@ import BookingHeaderActions from "./BookingsHeaderActions";
 import { Icolumn } from "@/components/table/models/table.model";
 import BookingRow from "./BookingRow";
 import { fetchBookings } from "../service/bookings.service";
+import { FC } from "react";
+import { Booking } from "../model/booking.model";
 
-const BookingsList = () => {
+const BookingsList: FC = () => {
   // const cabins = await getData('/api/cabins', 'cabins', 'no-discount');
 
   const columns: Icolumn[] = [
@@ -32,14 +34,14 @@ const BookingsList = () => {
 
   return (
     <div className="h-80">
-      <Table
+      <Table<Booking>
         service={fetchBookings}
         queryKey="bookings"
         headerActions={<BookingHeaderActions />}
         columns={columns}
       >
         <Table.TableHeader />
-        <Table.TableRow customRow={true}>
+        <Table.TableRow<Booking> customRow={true}>
           <BookingRow />
         </Table.TableRow>
       </Table>

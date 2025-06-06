@@ -1,9 +1,9 @@
 import Modal from "@/components/shared/modal/Modal";
 import BookingsRowActions from "./BookingsRowActions";
 import { formatCurrency } from "@/utils/helpers";
-import { CheckStatus } from "../model/booking.model";
+import { Booking, BookingRowProps, CheckStatus } from "../model/booking.model";
 
-function BookingRow({ data }: any) {
+function BookingRow({ data }: BookingRowProps) {
   function getStatusColor(val: string): string {
     let style = "";
     if (val === CheckStatus.UNCONFIRMED) {
@@ -98,7 +98,7 @@ function BookingRow({ data }: any) {
             </td>
 
             <Modal>
-              <BookingsRowActions rowData={row} />
+              <BookingsRowActions booking={row} />
             </Modal>
           </tr>
         );

@@ -9,7 +9,17 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { formatCurrency } from "@/utils/helpers";
 import { ImSpinner9 } from "react-icons/im";
 
-export default function AutoComplete({
+interface AutoCompleteProps<T> {
+  service: (query: string) => Promise<T[]>;
+  queryKey: string;
+  label: string;
+  key?: string;
+  displayValue: keyof T;
+  handler: (value: Record<string, unknown>) => void;
+  custom?: keyof T;
+}
+
+export default function AutoComplete<T extends Record<string, unknown>>({
   service,
   queryKey,
   label,
@@ -17,11 +27,11 @@ export default function AutoComplete({
   displayValue,
   handler,
   custom,
-}: any) {
-  const [selected, setSelected] = useState<any>({});
+}: AutoCompleteProps<T>) {
+  const [selected, setSelected] = useState<T | null>(null);
   const [query, setQuery] = useState("");
 
-  const debouncedSearchTerm = useDebounce(query, 500);
+  const debouncedSearchTerm = useDebounce(query, 1000);
 
   const {
     isRefetching,
@@ -30,7 +40,7 @@ export default function AutoComplete({
     autoCompleteResult: data,
   } = useAutoComplete(debouncedSearchTerm, service, queryKey);
 
-  function handleChangeEvent(val: any) {
+  function handleChangeEvent(val: T) {
     setSelected(val);
     handler({ [queryKey]: val });
   }
@@ -38,16 +48,17 @@ export default function AutoComplete({
   return (
     <div className=" w-full">
       <Label name={""} text={label} />
-      {/* <p>{selected?.id}</p> */}
       <Combobox
         value={selected}
-        onChange={(selected) => handleChangeEvent(selected)}
+        onChange={(selected: T) => handleChangeEvent(selected)}
       >
         <div className="relative mt-1">
           <div className="">
             <Combobox.Input
               className="w-full dark:border-none input-style  py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-              displayValue={(result: any) => result[displayValue]}
+              displayValue={(result: T) =>
+                result ? (result[displayValue] as string) : ""
+              }
               onChange={(event) => setQuery(event.target.value)}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -74,33 +85,36 @@ export default function AutoComplete({
                   Nothing found.
                 </div>
               ) : (
-                data?.map((result: any) => (
+                data?.map((result: T) => (
                   <Combobox.Option
-                    key={result.id}
-                    className={({ active }) =>
+                    key={result[key as keyof T] as string | number}
+                    className={({ active }: { active: boolean }) =>
                       `relative z-50 cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? "bg-primary text-white" : "text-gray-900"
                       }`
                     }
                     value={result}
                   >
-                    {({ selected, active }) => (
+                    {({
+                      selected,
+                      active,
+                    }: {
+                      selected: boolean;
+                      active: boolean;
+                    }) => (
                       <>
                         <span
                           className={`flex justify-between truncate ${
                             selected ? "font-medium" : "font-normal"
                           } text-xs sm:text-sm`}
                         >
-                          {result[displayValue]}
+                          {result[displayValue] as string}
 
-                          {/* I did this to customize
-													the list options! This is
-													not neccessary */}
                           {custom && (
                             <span>
                               {custom === "regularPrice"
                                 ? formatCurrency(result[custom])
-                                : result[custom]}
+                                : (result[custom] as string)}
                             </span>
                           )}
                         </span>

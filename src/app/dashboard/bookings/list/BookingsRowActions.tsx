@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment, useState } from "react";
+import React, { FC, Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import Modal from "@/components/shared/modal/Modal";
@@ -14,16 +14,19 @@ import {
 import { MdOutlineLocalPrintshop, MdOutlinePrint } from "react-icons/md";
 import ReceiptPopup from "@/components/shared/modal/ReceiptPopup";
 import { CgMenuGridO } from "react-icons/cg";
-import { CheckStatus } from "../model/booking.model";
+import { BookingRowActionsProps, CheckStatus } from "../model/booking.model";
 
-const BookingsRowActions = ({ rowData }: any) => {
+const BookingsRowActions: FC<BookingRowActionsProps> = ({ booking }) => {
   const { isDeleting, deleteBooking } = useDeleteBooking();
-  const { isCheckingOut, checkOutBooking } = useCheckOutBooking(rowData.id);
+  const { isCheckingOut, checkOutBooking } = useCheckOutBooking(
+    booking?.id ?? ""
+  );
 
   const [open, setOpen] = useState(false);
 
   function handleDelete(onCloseModal: () => void) {
-    deleteBooking(rowData.id, {
+    if (!booking) return;
+    deleteBooking(booking.id, {
       onSuccess: () => onCloseModal(),
     });
   }
@@ -62,7 +65,7 @@ const BookingsRowActions = ({ rowData }: any) => {
             >
               <Menu.Items className="absolute text-black z-50 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                 <div className="px-1 py-1 ">
-                  {rowData.checkStatus === CheckStatus.CHECKED_IN && (
+                  {booking?.checkStatus === CheckStatus.CHECKED_IN && (
                     <Menu.Item>
                       {({ active }) => (
                         <Modal.Open opens="check-out">
@@ -78,7 +81,7 @@ const BookingsRowActions = ({ rowData }: any) => {
                       )}
                     </Menu.Item>
                   )}
-                  {rowData.checkStatus === CheckStatus.CHECKED_OUT && (
+                  {booking?.checkStatus === CheckStatus.CHECKED_OUT && (
                     <Menu.Item>
                       {({ active }) => (
                         <button
@@ -98,7 +101,7 @@ const BookingsRowActions = ({ rowData }: any) => {
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        href={`bookings/${rowData.id}`}
+                        href={`bookings/${booking?.id}`}
                         className="group gap-2 flex w-full  duration-700 transition-all hover:bg-gray-100   items-center rounded-md px-2 py-2 text-sm"
                       >
                         {active ? (
@@ -112,11 +115,11 @@ const BookingsRowActions = ({ rowData }: any) => {
                   </Menu.Item>
                 </div>
                 <div className="px-1 py-1">
-                  {rowData.checkStatus === CheckStatus.UNCONFIRMED && (
+                  {booking?.checkStatus === CheckStatus.UNCONFIRMED && (
                     <Menu.Item>
                       {({ active }) => (
                         <Link
-                          href={`checkin/${rowData.id}`}
+                          href={`checkin/${booking?.id}`}
                           className="group gap-2 flex w-full  duration-700 transition-all hover:bg-gray-100   items-center rounded-md px-2 py-2 text-sm"
                         >
                           {active ? (
@@ -129,8 +132,8 @@ const BookingsRowActions = ({ rowData }: any) => {
                       )}
                     </Menu.Item>
                   )}
-                  {(rowData.checkStatus === CheckStatus.UNCONFIRMED ||
-                    rowData.checkStatus === CheckStatus.CHECKED_OUT) && (
+                  {(booking?.checkStatus === CheckStatus.UNCONFIRMED ||
+                    booking?.checkStatus === CheckStatus.CHECKED_OUT) && (
                     <Menu.Item>
                       {({ active }) => (
                         <Modal.Open opens="delete-booking">
@@ -165,7 +168,7 @@ const BookingsRowActions = ({ rowData }: any) => {
           modalText={
             <span>
               Are you sure you want to checkout
-              <b>{rowData.guests.name}</b>
+              <b>{booking?.guests?.name}</b>
             </span>
           }
         />
@@ -184,14 +187,14 @@ const BookingsRowActions = ({ rowData }: any) => {
           modalText={
             <span>
               Are you sure you want to delete{" "}
-              <b>{rowData.guests.name}&#39;s </b> booking
+              <b>{booking?.guests?.name}&#39;s </b> booking
             </span>
           }
         />
       </Modal.Window>
 
       {open && (
-        <ReceiptPopup activity={rowData} open={open} setOpen={setOpen} />
+        <ReceiptPopup activity={booking} open={open} setOpen={setOpen} />
       )}
     </td>
   );

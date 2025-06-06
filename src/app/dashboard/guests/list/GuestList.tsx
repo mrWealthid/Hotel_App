@@ -5,8 +5,9 @@ import GuestRow from "./GuestRow";
 import { fetchGuests } from "../service/guests.service";
 
 import GuestHeaderActions from "./GuestHeaderActions";
+import { FC } from "react";
 
-const GuestList = () => {
+const GuestList: FC = () => {
   const columns: Icolumn[] = [
     { header: "name", accessor: "name", searchType: "TEXT" },
     { header: "email", accessor: "email" },

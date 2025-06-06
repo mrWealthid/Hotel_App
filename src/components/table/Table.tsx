@@ -7,7 +7,13 @@ import React, {
   useState,
 } from "react";
 import { createContext } from "react";
-import { IListResponse, ITable, Icolumn } from "./models/table.model";
+import {
+  IListResponse,
+  ITable,
+  Icolumn,
+  TableResponse,
+  ITableRow,
+} from "./models/table.model";
 import { formatCurrency } from "@/utils/helpers";
 
 import { useTable } from "./hooks/useTable";
@@ -23,7 +29,7 @@ import Image from "next/image";
 
 const TableContext = createContext({});
 
-function Table({
+function Table<T>({
   queryKey,
   children,
   columns,
@@ -35,7 +41,7 @@ function Table({
 }: ITable) {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(limitVal || 5);
-  const [search, setSearch] = useState<string | null>(null);
+  const [search, setSearch] = useState<string>("");
   const [filterIsActive, setfilterIsActive] = useState(false);
 
   const {
@@ -45,13 +51,13 @@ function Table({
     totalRecords,
     results,
     isRefetching,
-  }: IListResponse = useTable(page, limit, service, queryKey, search);
+  }: TableResponse<T> = useTable<T>(page, limit, service, queryKey, search);
 
   function handleFilter(val: { key: string; value: string | number } | null) {
     let transformedSearchQuery = "";
     if (!val) {
       setfilterIsActive(false);
-      setSearch(null);
+      setSearch("");
       return;
     }
 
@@ -65,7 +71,7 @@ function Table({
 
   function cancelFilter() {
     setfilterIsActive(false);
-    setSearch(null);
+    setSearch("");
   }
 
   // const queryClient = useQueryClient();
@@ -383,7 +389,7 @@ export function TableHeaderAction({ children }: any) {
     </div>
   );
 }
-function TableRow({ children, customRow }: any) {
+function TableRow<T>({ children, customRow }: ITableRow<T>) {
   const { columns, data, actionable }: any = useContext(TableContext);
 
   if (data?.length < 1) {

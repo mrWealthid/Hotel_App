@@ -1,8 +1,9 @@
 import Modal from "@/components/shared/modal/Modal";
 import GuestsRowActions from "./GuestRowActions";
 import { formatCurrency } from "@/utils/helpers";
+import { GuestRowProps } from "../model/guest.model";
 
-function GuestsRow({ data }: any) {
+function GuestsRow({ data }: GuestRowProps) {
   function getStatusColor(val: string): string {
     let style = "";
     if (val === "UNCONFIRMED") {
@@ -65,7 +66,7 @@ function GuestsRow({ data }: any) {
               </span>
             </td>
             <Modal>
-              <GuestsRowActions rowData={row} />
+              <GuestsRowActions guest={row} />
             </Modal>
           </tr>
         );

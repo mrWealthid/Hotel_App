@@ -7,11 +7,12 @@ import {
   handleDeleteBookings,
 } from "../service/bookings.service";
 import { BookingPayload } from "../model/booking.model";
+import { ApiError } from "@/components/shared/model/model";
 
 export function useCreateBooking(
   bookingId: string,
   isEditing: boolean,
-  close: () => void
+  close?: () => void
 ) {
   const queryClient = useQueryClient();
   const { isLoading: isCreating, mutate: createBooking } = useMutation({
@@ -23,9 +24,9 @@ export function useCreateBooking(
         queryKey: ["bookings"],
       });
 
-      close();
+      close?.();
     },
-    onError: (err: { message: string }) => toast.error(err.message),
+    onError: (err: ApiError) => toast.error(err.message),
   });
 
   return { isCreating, createBooking };
@@ -71,7 +72,7 @@ export function useDeleteBooking() {
         queryKey: ["bookings"],
       });
     },
-    onError: (err: any) => toast.error(err.message),
+    onError: (err: ApiError) => toast.error(err.message),
   });
 
   return { isDeleting, deleteBooking };
@@ -79,14 +80,15 @@ export function useDeleteBooking() {
 export function useCheckOutBooking(id: string) {
   const queryClient = useQueryClient();
   const { isLoading: isCheckingOut, mutate: checkOutBooking } = useMutation({
-    mutationFn: (payload: any) => handleCheckout(payload, id),
+    mutationFn: (payload: Partial<BookingPayload>) =>
+      handleCheckout(payload, id),
     onSuccess: () => {
       toast.success("Bookings checked-out successfully");
       queryClient.invalidateQueries({
         queryKey: ["bookings"],
       });
     },
-    onError: (err: any) => toast.error(err.message),
+    onError: (err: ApiError) => toast.error(err.message),
   });
 
   return { isCheckingOut, checkOutBooking };

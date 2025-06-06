@@ -2,7 +2,7 @@
 
 import TextInput from "@/components/shared/form-elements/Text-Input";
 import ButtonComponent from "@/components/shared/form-elements/Button";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import AutoComplete from "@/components/shared/auto-complete/AutoComplete";
 import { fetchCabins, fetchGuests } from "./service/bookings.service";
@@ -17,11 +17,19 @@ import {
 } from "date-fns";
 import { formatCurrency } from "@/utils/helpers";
 import { useCreateBooking } from "./hooks/useBookings";
-import { BookingPayload } from "./model/booking.model";
+import {
+  BookingFormProps,
+  BookingPayload,
+  IBookingForm,
+} from "./model/booking.model";
 import { Guest } from "../guests/model/guest.model";
 import { Cabin } from "../cabins/model/cabin.model";
 
-const BookingForm = ({ booking, onCloseModal, settings }: any) => {
+const BookingForm: FC<BookingFormProps> = ({
+  settings,
+  booking,
+  onCloseModal,
+}) => {
   const isEditing = !!booking?.id;
   const [autoCompleteValue, setAutoCompleteValue] = useState<{
     guests: Guest;
@@ -37,16 +45,28 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
     setValue,
     watch,
     trigger,
-  } = useForm({
+  } = useForm<IBookingForm>({
     mode: "all",
-    defaultValues: isEditing ? { ...booking } : {},
+    defaultValues: isEditing
+      ? {
+          ...booking,
+          guests:
+            typeof booking.guests === "object"
+              ? booking.guests.id
+              : booking.guests,
+          cabin:
+            typeof booking.cabin === "object"
+              ? booking.cabin.id
+              : booking.cabin,
+        }
+      : {},
   });
 
   const [hasBreakfast, setHasBreakFast] = useState(false);
 
   const { errors, isSubmitting, isValid, isDirty } = formState;
   const { isCreating, createBooking } = useCreateBooking(
-    booking?.id,
+    booking?.id ?? "",
     isEditing,
     onCloseModal
   );
@@ -75,22 +95,18 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
       new Date(startDateValue)
     );
 
-    return (
-      parseInt(settings.breakfastPrice) *
-      diffInDays *
-      parseInt(getValues().numGuests)
-    );
+    return settings.breakfastPrice * diffInDays * getValues().numGuests;
   }, [endDateValue, startDateValue, settings.breakfastPrice, getValues]);
 
   useEffect(() => {
     setBreakfastPrice(calculateBreakfastPrice());
   }, [isValid, calculateBreakfastPrice]);
 
-  async function onSubmit(data: BookingPayload) {
+  async function onSubmit(data: IBookingForm) {
     createBooking(BuildPayload(data));
   }
 
-  function BuildPayload(data: BookingPayload): BookingPayload {
+  function BuildPayload(data: IBookingForm): BookingPayload {
     const { cabin }: any = autoCompleteValue;
     const diffInDays = differenceInDays(
       new Date(endDateValue),
@@ -103,6 +119,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
     const start_date = startOfDay(dateObject_Start);
     const end_date = endOfDay(dateObject_End);
 
+    //TODO:To verify if the cabin discount is used
     //TODO:To verify if the cabin discount is used
     return {
       ...data,
@@ -215,7 +232,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
               name={"regularPrice"}
               placeholder="Enter regularPrice"
               label="Regular Price"
-              error={errors?.["regularPrice"]?.message?.toString()}
             >
               <input
                 title="regularPrice"
@@ -230,7 +246,6 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
               name={"discount"}
               placeholder="Enter discount"
               label="Discount"
-              error={errors?.["discount"]?.message?.toString()}
             >
               <input
                 title="discount"
@@ -274,7 +289,7 @@ const BookingForm = ({ booking, onCloseModal, settings }: any) => {
             // }
             minEndDate={
               startDateValue
-                ? addDays(startDateValue, settings.minBookingLength)
+                ? addDays(new Date(startDateValue), settings.minBookingLength)
                 : // ? addDays(startDate, settings.minBookingLength)
                   null
             }
