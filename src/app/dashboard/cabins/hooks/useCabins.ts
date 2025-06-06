@@ -6,10 +6,14 @@ import {
   handleDuplicateCabin,
 } from "../service/cabins.service";
 import toast from "react-hot-toast";
-import { IListResponse } from "@/components/table/models/table.model";
-import { CabinPayload } from "../model/cabin.model";
+import { TableResponse } from "@/components/table/models/table.model";
+import { Cabin, CabinPayload } from "../model/cabin.model";
+import { ApiError } from "@/components/shared/model/model";
 
-export function useCabins(page: number = 1, limit: number = 10): IListResponse {
+export function useCabins(
+  page: number = 1,
+  limit: number = 10
+): TableResponse<Cabin> {
   const { isLoading, data, error, isRefetching } = useQuery({
     queryKey: ["cabins"],
     queryFn: () => fetchCabins(page, limit),
@@ -36,7 +40,7 @@ export function useDuplicateCabin() {
         queryKey: ["cabins"],
       });
     },
-    onError: (err: any) => toast.error(err.message),
+    onError: (err: ApiError) => toast.error(err.message),
   });
 
   return { isDuplicating, duplicateCabin };
@@ -50,20 +54,24 @@ export function useDuplicateCabin() {
 // 	});
 // }
 
-export function useCreateCabin(cabinId: any, isEditing: any, close: any) {
+export function useCreateCabin(
+  isEditing: boolean,
+  close?: () => void,
+  cabinId?: string
+) {
   const queryClient = useQueryClient();
   const { isLoading: isCreating, mutate: createCabin } = useMutation({
     mutationFn: (payload: CabinPayload) =>
-      handleCreateCabin(payload, cabinId, isEditing),
+      handleCreateCabin(payload, isEditing, cabinId),
     onSuccess: () => {
       toast.success("Cabin successfully created...");
 
-      close();
+      close?.();
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
     },
-    onError: (err: any) => toast.error(err.message),
+    onError: (err: ApiError) => toast.error(err.message),
   });
 
   return { isCreating, createCabin };
@@ -78,7 +86,7 @@ export function useDeleteCabin() {
         queryKey: ["cabins", 5, 1, null],
       });
     },
-    onError: (err: any) => toast.error(err.message),
+    onError: (err: ApiError) => toast.error(err.message),
   });
 
   return { isDeleting, deleteCabin };

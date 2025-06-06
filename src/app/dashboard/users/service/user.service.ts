@@ -1,22 +1,24 @@
+import axios from "axios";
+
 export async function fetchUsers(
-	page: number,
-	limit: number,
-	search: string | null
+  page: number,
+  limit: number,
+  search: string | null
 ) {
-	const url = !search
-		? `/api/users?limit=${limit}&page=${page}`
-		: `/api/users?limit=${limit}&page=${page}&${search}`;
-	try {
-		const response = await fetch(url);
+  const url = !search
+    ? `/api/users?limit=${limit}&page=${page}`
+    : `/api/users?limit=${limit}&page=${page}&${search}`;
+  try {
+    const response = await axios(url);
 
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-
-		const data = await response.json();
-
-		return data;
-	} catch (err) {
-		console.log(err);
-	}
+    const data = await response.data;
+    return data;
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err) && err.response) {
+      throw new Error(
+        `Users could not be loaded Status: ${err.response.status}`
+      );
+    }
+    throw new Error("Users could not be loaded");
+  }
 }

@@ -4,6 +4,7 @@ import CabinRowActions from "./CabinRowActions";
 import CabinHeaderActions from "./CabinHeaderActions";
 import { Icolumn } from "@/components/table/models/table.model";
 import { fetchCabins } from "../service/cabins.service";
+import { Cabin } from "../model/cabin.model";
 
 const CabinList = () => {
   // const cabins = await getData('/api/cabins', 'cabins', 'no-discount');
@@ -27,14 +28,14 @@ const CabinList = () => {
   ];
 
   return (
-    <Table
+    <Table<Cabin>
       service={fetchCabins}
       queryKey="cabins"
       headerActions={<CabinHeaderActions />}
       columns={columns}
     >
       <Table.TableHeader />
-      <Table.TableRow>
+      <Table.TableRow<Cabin>>
         <CabinRowActions />
       </Table.TableRow>
     </Table>

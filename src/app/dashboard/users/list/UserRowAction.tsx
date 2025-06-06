@@ -1,11 +1,11 @@
 import Modal from "@/components/shared/modal/Modal";
-import React, { Fragment } from "react";
+import React, { FC, Fragment } from "react";
 import CabinForm from "../../cabins/CabinForm";
 import { Menu, Transition } from "@headlessui/react";
 import { HiPencil, HiTrash } from "react-icons/hi2";
 import { CgMenuGridO } from "react-icons/cg";
 
-const UserRowAction = () => {
+const UserRowAction: FC = () => {
   return (
     <td className="p-2 md:px-2 md:py-2 space-x-3">
       <Modal>

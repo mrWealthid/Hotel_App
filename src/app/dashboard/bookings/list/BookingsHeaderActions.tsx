@@ -1,23 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { TbShieldCheck, TbShieldQuestion } from "react-icons/tb";
 import { ImExit } from "react-icons/im";
-import { CheckStatus } from "../model/booking.model";
+import {
+  BookingFilterQuery,
+  BookingQueryprops,
+  CheckStatus,
+} from "../model/booking.model";
 
-const BookingsHeaderActions = ({ handleFilter }: any) => {
-  const [query, setQuery] = useState<{
-    checkStatus: string;
-  } | null>(null);
+const BookingsHeaderActions: FC<BookingQueryprops> = ({ handleFilter }) => {
+  const [query, setQuery] = useState<BookingFilterQuery | null>(null);
 
-  async function handleClick(query: any) {
+  async function handleClick(query: { checkStatus: string } | null) {
     setQuery(query);
-    query ? handleFilter(query) : handleFilter(null);
+    if (handleFilter) {
+      query ? handleFilter(query) : handleFilter(null);
+    }
   }
 
   return (
     <>
-      <div className="">
+      <div>
         <button
           onClick={() => handleClick(null)}
           type="button"
@@ -29,7 +33,7 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
         </button>
       </div>
 
-      <div className="">
+      <div>
         <button
           onClick={() => handleClick({ checkStatus: CheckStatus.CHECKED_IN })}
           type="button"
@@ -42,7 +46,7 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
           Checked In
         </button>
       </div>
-      <div className="">
+      <div>
         <button
           onClick={() =>
             handleClick({
@@ -60,7 +64,7 @@ const BookingsHeaderActions = ({ handleFilter }: any) => {
         </button>
       </div>
 
-      <div className="">
+      <div>
         <button
           onClick={() =>
             handleClick({

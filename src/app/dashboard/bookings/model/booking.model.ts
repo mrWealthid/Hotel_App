@@ -1,3 +1,7 @@
+import { Cabin } from "../../cabins/model/cabin.model";
+import { Guest } from "../../guests/model/guest.model";
+import { Setting } from "../../settings/model/settings";
+
 export interface Booking {
   id: string;
   startDate: Date | string;
@@ -14,8 +18,8 @@ export interface Booking {
   hasBreakfast?: boolean;
   isPaid?: boolean;
   observations?: string;
-  guests: string; // Guest _id as string
-  cabin: string; // Cabin _id as string
+  guests: Guest;
+  cabin: Cabin;
   createdAt: Date | string;
 }
 
@@ -25,4 +29,51 @@ export enum CheckStatus {
   UNCONFIRMED = "UNCONFIRMED",
 }
 
-export type BookingPayload = Omit<Booking, "id" | "createdAt">;
+export interface BookingPayload
+  extends Omit<Booking, "id" | "createdAt" | "guests" | "cabin"> {
+  guests: string; // Guest ObjectId as string
+  cabin: string; // Cabin ObjectId as string
+}
+
+export type ViewBookingProps = {
+  params: {
+    bookingId: string;
+  };
+};
+
+export type BookingRowActionsProps = {
+  booking?: Booking;
+};
+export type AddBookingProps = {
+  settings: Setting;
+};
+
+export type BookingFormProps = {
+  settings: Setting;
+  booking?: Booking;
+  onCloseModal?: () => void;
+};
+
+export interface IBookingForm {
+  startDate: Date | string;
+  endDate: Date | string;
+  numNights: number;
+  numGuests: number;
+  cabinPrice: number;
+  totalPrice: number;
+  observations: string;
+  guests: string; // Guest ObjectId as string
+  cabin: string; // Cabin ObjectId as string
+}
+
+export type BookingQueryprops = {
+  handleFilter?: (query: { checkStatus?: string } | null) => void;
+};
+
+export type BookingFilterQuery = {
+  checkStatus?: string;
+};
+
+export type BookingRowProps = {
+  data?: Booking[];
+};

@@ -2,19 +2,20 @@
 
 import TextInput from "@/components/shared/form-elements/Text-Input";
 import ButtonComponent from "@/components/shared/form-elements/Button";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateGuest } from "./hooks/useGuests";
 import EmailInput from "@/components/shared/form-elements/Email-Input";
+import { GuestFormProps, IGuestForm } from "./model/guest.model";
 
-const GuestForm = ({ guest, onCloseModal }: any) => {
+const GuestForm: FC<GuestFormProps> = ({ guest, onCloseModal }) => {
   const isEditing = !!guest?.id;
   const [autoCompleteValue, setAutoCompleteValue] = useState<{
     guests: any;
     cabin: any;
   } | null>(null);
 
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm<IGuestForm>({
     mode: "all",
     defaultValues: isEditing ? { ...guest } : {},
   });

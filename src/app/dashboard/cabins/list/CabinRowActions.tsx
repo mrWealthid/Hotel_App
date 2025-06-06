@@ -1,6 +1,5 @@
 "use client";
-import React, { Fragment } from "react";
-
+import React, { FC, Fragment } from "react";
 import CabinForm from "../CabinForm";
 import { Menu, Transition } from "@headlessui/react";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
@@ -8,18 +7,21 @@ import { useDeleteCabin, useDuplicateCabin } from "../hooks/useCabins";
 import { CgMenuGridO } from "react-icons/cg";
 import ConfirmationPage from "@/components/ui/ConfirmationPage";
 import Modal from "@/components/shared/modal/Modal";
+import { CabinRowActionsProps } from "../model/cabin.model";
 
-const CabinRowActions = ({ rowData }: any) => {
+const CabinRowActions: FC<CabinRowActionsProps> = ({ cabin }) => {
   const { isDeleting, deleteCabin } = useDeleteCabin();
   const { isDuplicating, duplicateCabin } = useDuplicateCabin();
 
-  function handleDelete(onCloseModal: any) {
-    deleteCabin(rowData.id, {
+  function handleDelete(onCloseModal: () => void) {
+    if (!cabin || !cabin.id) return;
+    deleteCabin(cabin.id, {
       onSuccess: () => onCloseModal(),
     });
   }
-  function handleDuplicate(onCloseModal: any) {
-    duplicateCabin(rowData, {
+  function handleDuplicate(onCloseModal: () => void) {
+    if (!cabin) return;
+    duplicateCabin(cabin, {
       onSuccess: () => onCloseModal(),
     });
   }
@@ -121,7 +123,7 @@ const CabinRowActions = ({ rowData }: any) => {
             }}
             modalText={
               <span>
-                Are you sure you want to delete <b>{rowData.name}</b>
+                Are you sure you want to delete <b>{cabin?.name}</b>
               </span>
             }
           />
@@ -132,7 +134,7 @@ const CabinRowActions = ({ rowData }: any) => {
           description="Manage your cabin details"
           name="edit-cabin-form"
         >
-          <CabinForm cabin={rowData} />
+          <CabinForm cabin={cabin} />
         </Modal.Window>
 
         <Modal.Window
@@ -147,7 +149,7 @@ const CabinRowActions = ({ rowData }: any) => {
             }}
             modalText={
               <span>
-                Are you sure you want to duplicate <b>{rowData.name}</b>
+                Are you sure you want to duplicate <b>{cabin?.name}</b>
               </span>
             }
           />

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import {
   useDailyActivites,
   useRecentBookings,
@@ -14,13 +14,15 @@ import TodayActivity from "./checkin/[bookingId]/TodayActivity";
 import TabComponent from "@/components/shared/tabs/Tabs";
 
 import { GiEntryDoor, GiExitDoor } from "react-icons/gi";
+import { ITab } from "@/components/shared/model/model";
+import { Booking, CheckStatus } from "./bookings/model/booking.model";
 
-const Page = () => {
+const Page: FC = () => {
   const [days, setDays] = useState<number>(7);
   const [activeTab, setActiveTab] = useState<number>(0);
 
   // console.log(query);
-  async function handleClick(query: any) {
+  async function handleClick(query: number) {
     setDays(query);
     // handleFilter(query);
   }
@@ -29,21 +31,22 @@ const Page = () => {
     bookingsError,
     bookingsLoading,
     bookings = [],
-  } = useRecentBookings(days);
+  } = useRecentBookings<Booking>(days);
   const {
     staysLoading,
     staysError,
     stays = [],
     numDays,
-  } = useRecentStays(days);
-  const { dailyLoading, dailyError, daily = [] } = useDailyActivites();
+  } = useRecentStays<Booking>(days);
+
+  const { dailyLoading, dailyError, daily = [] } = useDailyActivites<Booking>();
   const { totalRecords = 0 } = useCabins();
 
   function updateOrder(values: number) {
     setActiveTab(values);
   }
 
-  const tabData = [
+  const tabData: ITab[] = [
     {
       title: "Arriving",
       order: 0,
@@ -55,7 +58,7 @@ const Page = () => {
   return (
     <div className=" flex flex-col gap-5">
       <section className="flex mt justify-between items-center">
-        <h1 className="title">Overview</h1>
+        <h2 className="title">Overview</h2>
 
         <section className=" flex gap-2 justify-end">
           <div className="">
@@ -112,8 +115,8 @@ const Page = () => {
           <TodayActivity
             daily={daily?.filter((data: any) =>
               activeTab === 0
-                ? data.checkStatus === "UNCONFIRMED"
-                : data.checkStatus === "CHECKED_IN"
+                ? data.checkStatus === CheckStatus.UNCONFIRMED
+                : data.checkStatus === CheckStatus.CHECKED_IN
             )}
           />
         </section>

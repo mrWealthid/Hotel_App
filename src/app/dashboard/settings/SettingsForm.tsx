@@ -1,12 +1,13 @@
 "use client";
 import TextInput from "@/components/shared/form-elements/Text-Input";
 import ButtonComponent from "@/components/shared/form-elements/Button";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Setting, SettingsProps } from "./model/settings";
 
-const SettingsForm = ({ settings }: any) => {
+const SettingsForm: FC<SettingsProps> = ({ settings }) => {
   const { register, handleSubmit, getValues, formState } = useForm({
     mode: "onChange",
     defaultValues: { ...settings },
@@ -15,7 +16,7 @@ const SettingsForm = ({ settings }: any) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  async function onSubmit(data: any) {
+  async function onSubmit(data: Partial<Setting>) {
     setIsLoading(true);
     try {
       const res = await axios.patch(`/api/settings/${settings.id}`, data);
@@ -85,7 +86,7 @@ const SettingsForm = ({ settings }: any) => {
           name={"maxGuestPerBooking"}
           placeholder="Enter Maximum Guest/Booking"
           label="Maximum Guest/Booking"
-          error={errors?.["maxGuestPerBooking"]?.message?.toString()}
+          error={errors?.["maxGuestsPerBooking"]?.message?.toString()}
         >
           <input
             {...register("maxGuestsPerBooking", {
@@ -104,7 +105,7 @@ const SettingsForm = ({ settings }: any) => {
             type="number"
             disabled={isSubmitting}
             id="max-guest"
-            defaultValue={settings.maxGuestPerBooking}
+            defaultValue={settings.maxGuestsPerBooking}
           />
         </TextInput>
         <TextInput

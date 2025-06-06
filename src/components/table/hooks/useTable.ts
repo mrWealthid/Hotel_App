@@ -1,15 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { IListResponse } from "../models/table.model";
+import { IListResponse, TableResponse } from "../models/table.model";
 
-export function useTable(
+export function useTable<T>(
   page: number,
   limit: number,
-  service: any,
+  service: (
+    page: number,
+    limit: number,
+    search?: string
+  ) => Promise<TableResponse<T>>,
   queryKey: string,
-  search?: any
-): IListResponse {
-  const { isLoading, data, error, isRefetching } = useQuery({
+  search?: string
+): TableResponse<T> {
+  const { isLoading, data, error, isRefetching } = useQuery<TableResponse<T>>({
     queryKey: [queryKey, limit, page, search],
     queryFn: () => service(page, limit, search),
     keepPreviousData: true,
@@ -19,9 +23,9 @@ export function useTable(
     isLoading,
     isRefetching,
     error,
-    data: data?.data,
-    totalRecords: data?.totalRecords,
-    results: data?.results,
+    data: data?.data ?? [],
+    totalRecords: data?.totalRecords ?? 0,
+    results: data?.results ?? 0,
   };
 }
 

@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import GuestForm from "./GuestForm";
 import Modal from "@/components/shared/modal/Modal";
 
 import { CiCirclePlus } from "react-icons/ci";
 
-const AddGuest = () => {
+const AddGuest: FC = () => {
   return (
     <Modal>
       <Modal.Open opens="Guest-form">

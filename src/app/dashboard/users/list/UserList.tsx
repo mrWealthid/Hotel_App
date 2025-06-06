@@ -1,12 +1,12 @@
 "use client";
 import { Icolumn } from "@/components/table/models/table.model";
 import Table from "@/components/table/Table";
-import React from "react";
+import React, { FC } from "react";
 import { fetchUsers } from "../service/user.service";
 import UserRowAction from "./UserRowAction";
 import UserHeaderActions from "./UserHeaderActions";
 
-const UserList = () => {
+const UserList: FC = () => {
   const columns: Icolumn[] = [
     // { header: 'image', accessor: 'image' },
     { header: "name", accessor: "name", searchType: "TEXT" },
