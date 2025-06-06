@@ -11,8 +11,8 @@ const CabinForm = ({
   cabin,
   onCloseModal,
 }: {
-  cabin: Cabin;
-  onCloseModal: () => void;
+  cabin?: Cabin;
+  onCloseModal?: () => void;
 }) => {
   const isEditing = !!cabin?.id;
 
