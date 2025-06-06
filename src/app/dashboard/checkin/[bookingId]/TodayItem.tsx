@@ -3,6 +3,7 @@ import React from "react";
 import { useCheckOutBooking } from "../../hooks/useDashboard";
 import Modal from "@/components/shared/modal/Modal";
 import ConfirmationPage from "@/components/ui/ConfirmationPage";
+import { CheckStatus } from "../../bookings/model/booking.model";
 
 const TodayItem = ({
   activity,
@@ -18,7 +19,7 @@ const TodayItem = ({
   function handleCheckout(onCloseModal: any) {
     checkOutBooking(
       {
-        checkStatus: "CHECKED_OUT",
+        checkStatus: CheckStatus.CHECKED_OUT,
       },
       {
         onSuccess: function () {
