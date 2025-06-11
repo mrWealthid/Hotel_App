@@ -21,7 +21,7 @@ import { ApiError } from "@/components/shared/model/model";
 export function useLogin() {
   const { isLoading, mutate: login } = useMutation({
     mutationFn: (payload: ILogin) => handleLogin(payload),
-    onError: (err: ApiError) => console.error(err.message),
+    onError: (err: ApiError) => toast.error(err.message),
   });
 
   return {

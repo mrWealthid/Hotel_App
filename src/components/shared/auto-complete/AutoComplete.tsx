@@ -13,17 +13,17 @@ interface AutoCompleteProps<T> {
   service: (query: string) => Promise<T[]>;
   queryKey: string;
   label: string;
-  key?: string;
+  optionKey?: string;
   displayValue: keyof T;
   handler: (value: Record<string, unknown>) => void;
   custom?: keyof T;
 }
 
-export default function AutoComplete<T extends Record<string, unknown>>({
+export default function AutoComplete<T>({
   service,
   queryKey,
   label,
-  key = "id",
+  optionKey = "id",
   displayValue,
   handler,
   custom,
@@ -85,9 +85,9 @@ export default function AutoComplete<T extends Record<string, unknown>>({
                   Nothing found.
                 </div>
               ) : (
-                data?.map((result: T) => (
+                data?.map((result: T, idx: number) => (
                   <Combobox.Option
-                    key={result[key as keyof T] as string | number}
+                    key={(result as any)[optionKey] ?? idx}
                     className={({ active }: { active: boolean }) =>
                       `relative z-50 cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? "bg-primary text-white" : "text-gray-900"
