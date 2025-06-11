@@ -48,7 +48,7 @@ const SideBar = () => {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="shadow  z-40 fixed top-2 bg-white dark:glass items-center p-2 w-8 h-8 flex mt-1   ml-3 text-sm text-gray-500 justify-center  rounded-full sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="shadow z-50 fixed top-2 bg-white dark:glass items-center p-2 w-8 h-8 flex mt-1   ml-3 text-sm text-gray-500 justify-center  rounded-full sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         >
           <span className="sr-only">Open sidebar</span>
           <svg

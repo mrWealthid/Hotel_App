@@ -57,7 +57,7 @@ const Page: FC = () => {
 
   return (
     <div className=" flex flex-col gap-5">
-      <section className="flex mt justify-between items-center">
+      <section className="flex flex-wrap justify-between items-center">
         <h2 className="title">Overview</h2>
 
         <section className=" flex gap-2 justify-end">
