@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import EmailInput from "@/components/shared/form-elements/Email-Input";
 import { useProfile } from "../profile/hooks/useProfile";
 import PasswordForm from "./PasswordForm";
+import { FaFileUpload } from "react-icons/fa";
+import { FiUpload } from "react-icons/fi";
 
 const AccountForm = ({ stage, updateStage, data }: any) => {
   // const isEditing = !!cabin?.id;
@@ -49,9 +51,7 @@ const AccountForm = ({ stage, updateStage, data }: any) => {
     console.log(err);
   }
 
-  function onFileSelected(val: any) {
-    console.log(val);
-  }
+  function onFileSelected(val: any) {}
 
   return (
     <>
@@ -69,21 +69,28 @@ const AccountForm = ({ stage, updateStage, data }: any) => {
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className="flex flex-col gap-3"
               >
-                <div className="py-3 relative w-32 ">
-                  {/* <img  alt=""
-                 className="  border dark:border-none rounded-full mx-auto w-32 object-cover  h-32" height="820"
-                 src='{{data?.imgUrl}}' width="900"> */}
+                <div className="py-3 relative">
+                  <img
+                    alt=""
+                    className="border dark:border-none rounded-full  w-32 object-cover  h-32"
+                    height="820"
+                    src={data?.photo || "/images/default.jpg"}
+                    width="900"
+                  />
 
                   {/* <img
-										alt=""
-										className="  border rounded-full mx-auto w-32 object-cover  h-32"
-										height="820"
-										src={''}
-										width="900"
-									/> */}
+                    alt=""
+                    className="  border rounded-full mx-auto w-32 object-cover  h-32"
+                    height="820"
+                    src={""}
+                    width="900"
+                  /> */}
 
                   <label htmlFor="photo">
-                    <i className="fa-solid absolute cursor-pointer bg-white text-green-900 border border-gray-200 rounded-full p-2 top-2 left-[90px] fa-arrow-up-from-bracket"></i>
+                    {/* <i className="fa-solid absolute cursor-pointer bg-white text-green-900 border border-gray-200 rounded-full p-2 top-2 left-[90px] fa-arrow-up-from-bracket"></i> */}
+                    <span className=" absolute cursor-pointer bg-white text-green-900 border border-gray-200 rounded-full p-2 top-2 left-[90px]">
+                      <FiUpload />
+                    </span>
                   </label>
 
                   <input
