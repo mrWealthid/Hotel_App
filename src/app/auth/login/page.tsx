@@ -25,6 +25,10 @@ const LoginComponent = () => {
     login(payload, { onSuccess: () => router.push("/dashboard") });
   }
 
+  // useEffect(() => {
+  //   router.prefetch("/dashboard");
+  // }, []);
+
   const { errors, isSubmitting } = formState;
 
   function onError(err: any) {
