@@ -30,7 +30,7 @@ const BookingsRowActions: FC<BookingRowActionsProps> = ({ booking }) => {
       onSuccess: () => onCloseModal(),
     });
   }
-  function handleCheckout(onCloseModal: any) {
+  function handleCheckout(onCloseModal: () => void) {
     checkOutBooking(
       { checkStatus: CheckStatus.CHECKED_OUT },
       {

@@ -11,10 +11,7 @@ export interface Booking {
   cabinPrice?: number;
   extrasPrice?: number;
   totalPrice?: number;
-  checkStatus?:
-    | CheckStatus.CHECKED_IN
-    | CheckStatus.UNCONFIRMED
-    | CheckStatus.CHECKED_OUT;
+  checkStatus?: CheckStatus;
   hasBreakfast?: boolean;
   isPaid?: boolean;
   observations?: string;
@@ -34,6 +31,8 @@ export interface BookingPayload
   guests: string; // Guest ObjectId as string
   cabin: string; // Cabin ObjectId as string
 }
+
+export type CheckOutPayload = Pick<Booking, "checkStatus">;
 
 export type ViewBookingProps = {
   params: {

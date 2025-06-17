@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Booking, CheckOutPayload } from "../model/booking.model";
 
 export async function fetchBookings(
   page: number,
@@ -82,7 +83,7 @@ export async function handleCreateBooking(
   }
 }
 
-export async function handleDeleteBookings(id: any) {
+export async function handleDeleteBookings(id: string) {
   try {
     const res = await axios.delete(`/api/bookings/${id}`);
 
@@ -98,7 +99,7 @@ export async function handleDeleteBookings(id: any) {
   }
 }
 
-export async function handleCheckout(payload: any, id: any) {
+export async function handleCheckout(payload: CheckOutPayload, id: string) {
   try {
     const res = await axios.patch(`/api/bookings/${id}`, payload);
 

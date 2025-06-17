@@ -80,11 +80,11 @@ const BookingForm: FC<BookingFormProps> = ({
   const startDateValue = watch("startDate");
   const endDateValue = watch("endDate");
 
-  function handleStartDate(date: any) {
+  function handleStartDate(date: string) {
     setValue("startDate", date);
     trigger("startDate"); // Trigger validation for startDate
   }
-  function handleEndDate(date: any) {
+  function handleEndDate(date: string) {
     setValue("endDate", date);
     trigger("endDate"); // Trigger validation for endDate
   }
@@ -164,7 +164,7 @@ const BookingForm: FC<BookingFormProps> = ({
               error={errors?.["guests"]?.message?.toString()}
             >
               <input
-                title="cabin"
+                title="guests"
                 {...register("guests", {
                   required: "This field is required",
                 })}

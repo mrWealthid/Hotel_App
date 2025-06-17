@@ -6,7 +6,7 @@ import {
   handleCreateBooking,
   handleDeleteBookings,
 } from "../service/bookings.service";
-import { BookingPayload } from "../model/booking.model";
+import { BookingPayload, CheckOutPayload } from "../model/booking.model";
 import { ApiError } from "@/components/shared/model/model";
 
 export function useCreateBooking(
@@ -80,8 +80,7 @@ export function useDeleteBooking() {
 export function useCheckOutBooking(id: string) {
   const queryClient = useQueryClient();
   const { isLoading: isCheckingOut, mutate: checkOutBooking } = useMutation({
-    mutationFn: (payload: Partial<BookingPayload>) =>
-      handleCheckout(payload, id),
+    mutationFn: (payload: CheckOutPayload) => handleCheckout(payload, id),
     onSuccess: () => {
       toast.success("Bookings checked-out successfully");
       queryClient.invalidateQueries({
